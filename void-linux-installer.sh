@@ -33,7 +33,7 @@
 # Updating Live CD kernel will result in "[*]" as an option to install
 # Not checked if label can be set in efibootmgr-kernel-hook
 # Not tested bluetooth
-# /home/$user/.asoundrc - unsure what increased volume
+# /home/$user/.asoundrc - increases volume
 # efibootmgr default label "Void Linux With Kernel 5.7"
 # ATAPI CD0 = HL-DT-STDVDRAM GT33N
 # efifb: mode is 640x480x32
@@ -46,13 +46,13 @@
 # Need to 'exit' twice to continue booting and 'enter' to display login prompt
 # fat 32 failed to unmount properly
 # Bash script buffquote initially only showed the first quote in bash (RANDOM couldn't be found)
-# due to /bin/sh -> dash (works in dash)
+# due to /bin/sh -> dash (works in dash) - needed to remove sh
 ##########################################################################################
 ##########################################################################################
 ####                      Preparatory Instructions                                    ####
 ##########################################################################################
-# 8GB usb or larger required for repository (void repository = ~1TB)                                            #
-# Install void-live-x86_64-musl-20191109.iso to usb drive - ie. with PassMark imgUSB     #
+# 8GB usb or larger required for repository (void repository = ~1TB)                                                                                                            #
+# Install void-live-x86_64-musl-20191109.iso to usb drive - ie. with PassMark imgUSB                                                                                                #
 # usb will have /dev/sdc1 and /dev/sdc2                                                  #
 # format unallocated space - mkfs.f2fs /dev/sdc3                                         #
 # use sdc3 for repository, *this* script et. al                                          #
@@ -114,7 +114,7 @@ echo '*********************************************'
 # bind-utils - dig (dns lookup), nslookup, host
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
-# Created /var/log/grafana manually
+# Create /var/log/grafana manually
 # login admin/admin
 # ---
 # [!] IMPORTANT [!] alsa-utils >>> alsamixer is required to un-mute 
@@ -122,7 +122,7 @@ echo '*********************************************'
 # intel-ucode - dracut default is to include
 # early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf seems redundant
 # intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
-# added '+' >> pkg_list="$pkg_list+ efibootmgr" need to check it worked
+# verify efibootmgr and intel-ucode did install if not install manually
 #################################################################
 ##################  Siren Music Player ##########################
 #################################################################
@@ -257,10 +257,10 @@ alias poweroff='doas /sbin/poweroff'
 EOF
 )"
   # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
-  ipstaticeth0="192.168.1.4"
+  ipstaticeth0="192.168.1.XX"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
-  ipstaticwlan0="192.168.1.19"
-  routername="dray"
+  ipstaticwlan0="192.168.1.XX"
+  routername="XXXX"
   gateway="192.168.1.1"
   wifipassword=""
   # nameserver0 is for unbound & dnscrypt-proxy
@@ -269,8 +269,7 @@ EOF
   #nameserver2="1.1.1.1"
   labelroot="VOID_LINUX"
   labelfat="EFI"
-  # actual repository is /var/cache/xbps
-  # repopath is optional 
+  # repopath is local and is optional  - actual repository is /var/cache/xbps 
   repopath="/opt/void-linux-xbps-repository"
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
@@ -284,6 +283,8 @@ EOF
   TTYS="2"
   # Download various scripts/whatever to /home/$username/scripts
   urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
+  # Run script manually or add to fcron - make executable - chmod +x
+  urlup="https://github.com/leafhy/unbound-dns-resolver-blocklist-updater/blob/master/unbound-update-blocklist.sh"
   # Add font to /usr/share/kbd/consolefonts
   urlfont=""
 ###########################################
@@ -760,9 +761,17 @@ if [ $urlscripts ]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
      aria2c "$file" -d /mnt/home/$username/scripts
-     chown $username:users /mnt/home/$username/scripts/*
+     chroot /mnt  chown $username:users home/$username/scripts/*
      done
-     echo "**** Scripts have been installed to /home/$username/scripts ****" 
+     echo "**** Scripts have been installed to /home/$username/scripts ****"
+     echo "**** Correct permissions if needed ****"
+     echo "**** chown $username:users /home/$username/scripts/* ****"
+fi
+
+if [ urlup ]; then
+echo '**** Downloading unbound updater ****'
+mkdir /mnt/etc/unbound/unbound-updater
+aria2c $urlup -d /mnt/etc/unbound/unbound-updater
 fi
 
 echo
@@ -809,8 +818,8 @@ EOF
 sleep 3s
 
 # Herbstluftwm
-mkdir -p /mnt/home/$username/.config/herbstluftwm
-cp /mnt/etc/xdg/herbstluftwm/autostart /mnt/home/$username/.config/herbstluftwm
+chroot -u $username -g users /mnt mkdir -p home/$username/.config/herbstluftwm
+chroot -u $username -g users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 
 # Unbound Configuration
 tee /mnt/etc/unbound/unbound.conf <<EOF
@@ -846,6 +855,11 @@ forward-zone:
 remote-control:
     control-enable: yes
 control-interface: 0.0.0.0
+# Test unbound
+# $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
+#  (secure)
+#  $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
+#  (servfail)
 EOF
 
 clear
@@ -890,11 +904,7 @@ esac
 ######################################################################
 # Network - WIFI
 # iwctl --passphrase="password-goes-here" station wlan0 connect "routername"
-# password file >> /var/lib/iwd/routername.psk
-# 
-# Herbstluftwm
-# mkdir -p ~/.config/herbstluftwm
-# cp /etc/xdg/herbstluftwm/autostart ~/.config/herbstluftwm/
+# password file >> /var/lib/iwd/routername
 #
 # Xwallpaper
 # Add to >> ~/.config/herbstluftwm/autostart
@@ -914,20 +924,12 @@ esac
 #
 # List fonts /usr/share/fonts
 # fc-list 
-##########################################################################################
-#### /etc/dnscrypt-proxy.toml 127.0.0.1:5353
-#### /etc/dns/root.key
-#### 
-##########################################################################################
-#### 1. unbound-control-setup
-#### 2. wget https://www.internic.net/domain/named.cache -o /etc/unbound/root.hints
-#### 3. $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
-####     (secure)
-####    $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
-####     (servfail)
-####
-#### Notes:
-####      chroot: "" # is needed - fatal error: trust-anchor-file: /etc/dns/root.key does not exist in chrootdir /etc/unbound
-####      auto-trust-anchor-file: /etc/dns/root.key # 'dig' results intermittent failure
-####      trust-anchor-file: /etc/dns/root.key # works
-####      'dig' 'ping' will cause unbound to restart if unbound.conf is wrong
+#
+# DNSCrypt-Proxy
+# /etc/dnscrypt-proxy.toml >> 127.0.0.1:5353
+#
+# Unbound
+# $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
+#  (secure)
+# $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
+# (servfail)
