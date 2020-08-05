@@ -237,6 +237,7 @@ echo '*********************************************'
 ' sox'\
 ' unzip'\
 ' polybar'\
+' ranger'\
 ' font-tamsyn'
 
   username="vade"
