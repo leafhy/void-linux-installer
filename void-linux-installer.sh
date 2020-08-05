@@ -51,8 +51,8 @@
 ##########################################################################################
 ####                      Preparatory Instructions                                    ####
 ##########################################################################################
-# 8GB usb or larger required for repository (void repository = ~1TB)                                                 #
-# Install void-live-x86_64-musl-20191109.iso to usb drive - ie. with PassMark imgUSB                             #
+# 8GB usb or larger required for repository (void repository = ~1TB)              #
+# Install void-live-x86_64-musl-20191109.iso to usb drive - ie. with PassMark imgUSB   #
 # usb will have /dev/sdc1 and /dev/sdc2                                                  #
 # format unallocated space - mkfs.f2fs /dev/sdc3                                         #
 # use sdc3 for repository, *this* script et. al                                          #
