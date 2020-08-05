@@ -18,7 +18,7 @@
 # https://www.kernel.org/doc/Documentation/filesystems/xfs.txt
 # https://www.kernel.org/doc/Documentation/filesystems/nilfs2.txt
 # https://www.kernel.org/doc/Documentation/filesystems/ext4.txt
-# aggressive nilfs config http://ix.io/1wIS
+#  http://ix.io/1wIS # aggressive nilfs config
 # https://www.shellcheck.net
 # https://wiki.archlinux.org/index.php/unbound
 # https://nlnetlabs.nl/documentation/unbound/ # some inaccurate options - version differences?
