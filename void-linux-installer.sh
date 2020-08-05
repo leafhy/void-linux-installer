@@ -820,6 +820,7 @@ sleep 3s
 # Herbstluftwm
 chroot -u $username -g users /mnt mkdir -p home/$username/.config/herbstluftwm
 chroot -u $username -g users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
+echo "exec herbstluftwm" >> /mnt/home/$username/.xinitrc
 
 # Unbound Configuration
 tee /mnt/etc/unbound/unbound.conf <<EOF
