@@ -1,4 +1,4 @@
-# Void-Linux-Installer
+# Void Linux Installer
 This partially interarctive bash script is setup to install void linux musl with herbstluftwm.
 
 Currenty script lacks polybar, herbstluftwm config
