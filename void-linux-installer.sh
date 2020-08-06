@@ -30,6 +30,7 @@
 # IMPORTANT : Windows switches to Nvidia Optimus mode if enabled
 #           :  
 # grub works
+# void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
 # Not checked if label can be set in efibootmgr-kernel-hook
 # Not tested bluetooth
