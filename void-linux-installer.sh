@@ -818,8 +818,8 @@ EOF
 sleep 3s
 
 # Herbstluftwm
- chroot  --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
- chroot  --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
+ chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
+ chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 echo "exec herbstluftwm" >> /mnt/home/$username/.xinitrc
 
 # Unbound Configuration
