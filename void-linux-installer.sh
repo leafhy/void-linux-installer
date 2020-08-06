@@ -785,7 +785,7 @@ if [ $urlfont ]; then
 fi 
 
 # Audio Configuration
-tee /mnt/home/$username/.asoundrc <<EOF
+chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
 pcm.sndio {
 type asym
 playback.pcm "sndio-play"
