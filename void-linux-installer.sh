@@ -762,7 +762,7 @@ if [ $urlscripts ]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
      aria2c "$file" -d /mnt/home/$username/scripts
-     chroot -u $username -g users /mnt  chown $username:users home/$username/scripts/*
+     chroot -u $username -g users /mnt  chown -R $username:users home/$username/scripts/
      done
      echo "**** Scripts have been installed to /home/$username/scripts ****"
      echo "**** Correct permissions if needed ****"
