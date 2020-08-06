@@ -761,8 +761,7 @@ fi
 if [ $urlscripts ]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
-     aria2c "$file" -d /mnt/home/$username/scripts
-     chroot -u $username -g users /mnt  chown -R $username:users home/$username/scripts/
+     chroot  --userspec=$username:users /mnt aria2c "$file" -d home/$username/scripts
      done
      echo "**** Scripts have been installed to /home/$username/scripts ****"
      echo "**** Correct permissions if needed ****"
@@ -818,8 +817,8 @@ EOF
 sleep 3s
 
 # Herbstluftwm
-chroot -u $username -g users /mnt mkdir -p home/$username/.config/herbstluftwm
-chroot -u $username -g users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
+ chroot  --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
+ chroot  --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 echo "exec herbstluftwm" >> /mnt/home/$username/.xinitrc
 
 # Unbound Configuration
