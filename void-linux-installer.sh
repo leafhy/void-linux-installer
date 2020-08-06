@@ -261,7 +261,7 @@ EOF
   ipstaticeth0="192.168.1.XX"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
   ipstaticwlan0="192.168.1.XX"
-  routername="XXXX"
+  routerssid="XXXX"
   gateway="192.168.1.1"
   wifipassword=""
   # nameserver0 is for unbound & dnscrypt-proxy
@@ -672,7 +672,7 @@ fi
 
 # Set static ip address for wifi
 if [ "$ipstaticwlan0" ]; then 
-tee /mnt/var/lib/iwd/${routername}.psk <<EOF
+tee /mnt/var/lib/iwd/${routerssid}.psk <<EOF
 [IPv4]
 Address="${ipstaticwlan0}"
 #Netmask=255.255.255.0
@@ -771,7 +771,6 @@ fi
 
 if [ urlup ]; then
 echo '**** Downloading unbound updater ****'
-mkdir /mnt/etc/unbound/unbound-updater
 aria2c $urlup -d /mnt/etc/unbound/unbound-updater
 fi
 
@@ -906,8 +905,8 @@ esac
 # POST INSTALL SETUP
 ######################################################################
 # Network - WIFI
-# iwctl --passphrase="password-goes-here" station wlan0 connect "routername"
-# password file >> /var/lib/iwd/routername
+# iwctl --passphrase="password-goes-here" station wlan0 connect "routerssid"
+# password file >> /var/lib/iwd/routerssid
 #
 # Xwallpaper
 # Add to >> ~/.config/herbstluftwm/autostart
