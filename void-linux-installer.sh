@@ -769,7 +769,7 @@ if [ $urlscripts ]; then
      echo "**** chown $username:users /home/$username/scripts/* ****"
 fi
 
-if [ urlup ]; then
+if [ $urlup ]; then
 echo '**** Downloading unbound updater ****'
 aria2c $urlup -d /mnt/etc/unbound/unbound-updater
 fi
