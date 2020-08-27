@@ -27,8 +27,11 @@
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
 # void-live-x86_64-musl-20191109.iso burnt to CD
 # efi(bootmgr) is a little flaky as it can fail to change bootorder or wipe it completely
-# IMPORTANT : Windows switches to Nvidia Optimus mode if enabled
-#           :  
+# IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
+#           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
+#           : Firefox is slow to start if /etc/hosts $HOSTNAME is missing
+#           : Need to disable bitmap fonts "ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf" or create ~/.config/fonts.conf so Firefox can use other fonts
+#           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 # grub works
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
@@ -239,16 +242,20 @@ echo '*********************************************'
 ' unzip'\
 ' polybar'\
 ' ranger'\
-' font-tamsyn'
+' font-tamsyn'\
+' vlc'\
+' w_scan'\
+' xset'
 
   username="vade"
-  groups="wheel,storage,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
+  groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
 doasconf="$(cat <<'EOF'
 permit persist :wheel
 permit nopass :wheel as root cmd /sbin/poweroff
 permit nopass :wheel as root cmd /sbin/reboot
 EOF
 )"
+# bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
 export PS1="\[\e[35;0m\]\u@\h[\t] \W #>\n\[\e[0m\]"
@@ -739,7 +746,7 @@ while true; do
 done
 
 # Setup bash_profile
-echo "$bashprofile" >> /mnt/home/$username/.bash_profile
+echo "$bashprofile" >> /mnt/home/$username/.bashrc
 
 # Check $pkg_list installed
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
