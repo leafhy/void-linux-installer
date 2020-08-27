@@ -54,7 +54,7 @@
 # Need to 'exit' twice to continue booting and 'enter' to display login prompt
 # fat 32 failed to unmount properly
 # Bash script buffquote initially only showed the first quote in bash (RANDOM couldn't be found)
-# due to /bin/sh -> dash (works in dash) - needed to remove sh
+# due to /bin/sh -> dash (works in dash) - need to run buffquote without sh
 ##########################################################################################
 ##########################################################################################
 ####                      Preparatory Instructions                                    ####
