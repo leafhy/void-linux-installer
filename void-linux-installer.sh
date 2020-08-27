@@ -2,9 +2,12 @@
 ########################################################################
 ############################## WARNING #################################
 ########################################################################
-## Do Not install Grub if theres another operating system installed   ##
-## even if it's on a separate hard drive as it will overwrite the mbr ##
-## necessitating a re-install at least with Windows 10                ##
+## Do Not install Grub if theres another operating system installed   
+## even if it's on a separate hard drive as it will overwrite the mbr 
+## necessitating a re-install at least with Windows 10
+##
+## Windows 10 will install efi and recovery data onto secondary hardrive 
+##
 ########################################################################
 ########################################################################
 # References
@@ -18,10 +21,11 @@
 # https://www.kernel.org/doc/Documentation/filesystems/xfs.txt
 # https://www.kernel.org/doc/Documentation/filesystems/nilfs2.txt
 # https://www.kernel.org/doc/Documentation/filesystems/ext4.txt
-#  http://ix.io/1wIS # aggressive nilfs config
+# http://ix.io/1wIS # aggressive nilfs config
 # https://www.shellcheck.net
 # https://wiki.archlinux.org/index.php/unbound
 # https://nlnetlabs.nl/documentation/unbound/ # some inaccurate options - version differences?
+# https://www.gnu.org/software/stow/ # symlink manager
 #
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
@@ -153,6 +157,10 @@ echo '*********************************************'
 ##################################################################
 # IMPORTANT: /etc/hosts
 # 127.0.0.1 $HOSTNAME.localdomain $HOSTNAME
+# /etc/dnscrypt-proxy.toml
+# listen_addresses = ['127.0.0.1:5335']
+# ## Enable a DNS cache to reduce latency and outgoing traffic
+# cache = false
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
@@ -880,6 +888,47 @@ control-interface: 0.0.0.0
 #  (secure)
 #  $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
 #  (servfail)
+EOF
+
+# Font Configuration needed for firefox
+chroot --userspec=$username:users /mnt tee home/$username/.config/fontconfig/fonts.conf <<EOF
+<?xml version='1.0'?>
+<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+<fontconfig>
+    <match target="font">
+        <edit mode="assign" name="antialias">
+            <bool>true</bool>
+        </edit>
+        <edit mode="assign" name="embeddedbitmap">
+            <bool>false</bool>
+        </edit>
+        <edit mode="assign" name="hinting">
+            <bool>true</bool>
+        </edit>
+        <edit mode="assign" name="hintstyle">
+            <const>hintslight</const>
+        </edit>
+        <edit mode="assign" name="lcdfilter">
+            <const>lcddefault</const>
+        </edit>
+        <edit mode="assign" name="rgba">
+            <const>rgb</const>
+        </edit>
+    </match>
+        <!-- Prevent Gnome from using embedded bitmaps in fonts like Calibri -->
+        <match target="font">
+            <edit name="embeddedbitmap" mode="assign"><bool>false</bool></edit>
+        </match>
+        <!-- Reject bitmap fonts in favour of Truetype, Postscript, etc. -->
+        <selectfont><rejectfont><pattern>
+                <patelt name="scalable"><bool>false</bool></patelt>
+        </pattern></rejectfont></selectfont>
+
+    <!-- Substitute truetype fonts for bitmap ones -->
+    <match target="font">
+               <edit name="prefer_outline"><bool>true</bool></edit>
+       </match>
+</fontconfig>
 EOF
 
 clear
