@@ -297,7 +297,7 @@ EOF
   urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
   # Run script manually or add to fcron - make executable - chmod +x
   urlup="https://github.com/leafhy/unbound-dns-resolver-blocklist-updater/blob/master/unbound-update-blocklist.sh"
-  # Add font to /usr/share/kbd/consolefonts
+  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
