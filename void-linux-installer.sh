@@ -150,6 +150,9 @@ echo '*********************************************'
 # https://overpassfont.org
 # https://mplus-fonts.osdn.jp/about-en.html
 # http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz
+##################################################################
+# IMPORTANT: /etc/hosts
+# 127.0.0.1 $HOSTNAME.localdomain $HOSTNAME
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
@@ -258,7 +261,7 @@ EOF
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
-export PS1="\[\e[35;0m\]\u@\h[\t] \W #>\n\[\e[0m\]"
+export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \W \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
@@ -851,7 +854,16 @@ server:
     root-hints: root.hints
 # auto-trust-anchor-file: unbound restarts on using dig/ping
     trust-anchor-file: /etc/dns/root.key
+# transparent is default
 #local-zone: "192.in-addr.arpa." transparent
+local-data: "machine-1 A 192.168.1.XX"
+local-data: "machine-2 A 192.168.1.XX"
+local-data: "machine-3 A 192.168.1.XX"
+
+local-data-ptr: "192.168.1.XX machine-1"
+local-data-ptr: "192.168.1.XX machine-2"
+local-data-ptr: "192.168.1.XX machine-3"
+
     do-not-query-localhost: no
 # Removal of forward zone uses ISP
 forward-zone:
