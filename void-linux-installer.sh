@@ -274,6 +274,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
 alias poweroff='doas /sbin/poweroff'
+alias reboot='doas /sbin/reboot'
 EOF
 )"
   # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
