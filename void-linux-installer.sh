@@ -169,6 +169,7 @@ echo '*********************************************'
 # cache = false
 # ----------------------------------------
 # Borg Backup
+# Note: borg mount is slow
 # borg create intit --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
@@ -294,6 +295,8 @@ export MANPATH="/usr/local/man:$MANPATH"
 alias w="curl wttr.in/~Adelaide"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
+alias bmount='doas /sbin/mount /mnt/backup'
+alias bumount='doas /sbin/umount /mnt/backup'
 EOF
 )"
   # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
@@ -665,6 +668,9 @@ else
 echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab 
 fi
 # echo "tmpfs           /tmp    tmpfs   size=1G,noexec,nodev,nosuid     0 0" >> /mnt/etc/fstab
+
+# Add borg backup to /etc/fstab
+echo "/mnt/void-backup/borg /mnt/backup fuse.borgfs defaults,noauto,user,uid=1000,allow_other 0 0" >> /mnt/etc/fstab
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
 xbps-reconfigure -fa -r /mnt ${kernel}
