@@ -159,12 +159,26 @@ echo '*********************************************'
 ##################################################################
 # [!] IMPORTANT [!] 
 # [!] POST INSTALLATION [!]
+# -------------------------
 # /etc/hosts
 # 127.0.0.1 $HOSTNAME.localdomain $HOSTNAME
+# ------------------------------------------
 # /etc/dnscrypt-proxy.toml
 # listen_addresses = ['127.0.0.1:5335']
 # ## Enable a DNS cache to reduce latency and outgoing traffic
 # cache = false
+# ----------------------------------------
+# Borg Backup
+# borg create intit --encryption=none /mnt/borg-backup::borg
+# ----------------------------------------
+# doas fcrontab -e
+# run borg hourly 
+# 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
+# run unbound-update monthly
+# @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
+#
+# /etc/fcron/fcron.conf
+# editor = /usr/bin/mle
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
@@ -935,6 +949,39 @@ chroot --userspec=$username:users /mnt tee home/$username/.config/fontconfig/fon
                <edit name="prefer_outline"><bool>true</bool></edit>
        </match>
 </fontconfig>
+EOF
+
+# Borg Backup
+# exclusions directory will NOT be backed up by borg
+chroot --userspec=$username:users /mnt mkdir home/$username/exclusions
+# create mount point for borg repo
+chroot --userspec=$username:users /mnt mkdir mnt/borg-backup
+# create mount point to access borg repo
+chroot --userspec=$username:users /mnt mkdir mnt/backup
+
+chroot --userspec=$username:users /mnt tee home/$username/scripts/borg-backup.sh <<EOF
+#!/bin/sh
+# https://superuser.com/questions/1361971/how-do-i-automate-borg-backup
+
+DATE=$(date)
+echo "Starting backup for $DATE\n"
+
+# setup script variables
+# export BORG_PASSPHRASE="secret-passphrase-here!"
+export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
+export BORG_REPO="/mnt/void-backup/borg"
+export BACKUP_TARGETS="/"
+# export BACKUP_NAME="voidlinux"
+BORG_OPTS="--stats --one-file-system"
+
+# create borg backup archive
+borg create -e "/dev" -e "/tmp" -e "/proc" -e "/sys" -e "/run" -e "/home/$username/exclusions" $BORG_OPTS ::{now:%Y-%m-%d_T%H-%M-%S}_{hostname} $BACKUP_TARGETS
+
+# prune old archives to keep disk space in check
+borg prune -v --list --keep-daily=7 --keep-weekly=4 --keep-monthly=6
+
+# all done!
+echo "Backup complete at $DATE\n";
 EOF
 
 clear
