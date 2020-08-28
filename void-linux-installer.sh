@@ -6,7 +6,7 @@
 ## even if it's on a separate hard drive as it will overwrite the mbr 
 ## necessitating a re-install at least with Windows 10
 ##
-## Windows 10 will install efi and recovery data onto secondary hardrive 
+## Windows 10 will install efi and recovery data onto secondary hardrive (including mSata) 
 ##
 ########################################################################
 ########################################################################
