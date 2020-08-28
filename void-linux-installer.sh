@@ -169,7 +169,7 @@ echo '*********************************************'
 # cache = false
 # ----------------------------------------
 # Borg Backup
-# Note: borg mount is slow
+# Note: mount /mnt/backup is slow
 # borg create intit --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
