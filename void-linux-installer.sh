@@ -276,7 +276,8 @@ echo '*********************************************'
 ' font-tamsyn'\
 ' vlc'\
 ' w_scan'\
-' xset'
+' xset'\
+' font-manager'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
