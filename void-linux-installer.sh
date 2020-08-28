@@ -30,13 +30,14 @@
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
 # void-live-x86_64-musl-20191109.iso burnt to CD
-# efi(bootmgr) is a little flaky as it can fail to change bootorder or wipe it completely
+# efi(bootmgr) is a little flaky as it can fail to change bootorder or wipe it completely (user error?)
 # IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
 #           : Firefox is slow to start if /etc/hosts $HOSTNAME is missing
 #           : Need to disable bitmap fonts "ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 # grub works
+# Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf 
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
 # Not checked if label can be set in efibootmgr-kernel-hook
