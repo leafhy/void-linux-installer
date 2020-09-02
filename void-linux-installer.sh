@@ -6,7 +6,7 @@
 ## even if it's on a separate hard drive as it will overwrite the mbr 
 ## necessitating a re-install at least with Windows 10
 ##
-## Windows 10 will install efi and recovery data onto secondary hardrive (includes mSata) 
+## Windows 10 will install efi and recovery data onto secondary (efi) hardrive (includes mSata) 
 ##
 ########################################################################
 ########################################################################
@@ -31,11 +31,12 @@
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
 # void-live-x86_64-musl-20191109.iso burnt to CD
 # efi(bootmgr) is a little flaky as it can fail to change bootorder or wipe it completely (user error?)
+#
 # IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
-#           : Firefox is slow to start if /etc/hosts $HOSTNAME is missing
+#           : Firefox is slow (10s) to start if /etc/hosts $HOSTNAME is missing
 #           : Need to disable bitmap fonts "ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf" or create ~/.config/fonts.conf so Firefox can use other fonts
-#           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
+#           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent/mitigate TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 # grub works
 # Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf 
 # void ncurses installer is problematic - it may work or fail trying to format
@@ -169,7 +170,8 @@ echo '*********************************************'
 # cache = false
 # ----------------------------------------
 # Borg Backup
-# Note: mount /mnt/backup is slow
+# Note: see /etc/fstab for borg mounts  
+# mount /mnt/backup is slow
 # borg create intit --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
@@ -177,7 +179,7 @@ echo '*********************************************'
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
 # run unbound-update monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
-#
+# ---------------------
 # /etc/fcron/fcron.conf
 # editor = /usr/bin/mle
 ################################################################## 
@@ -318,7 +320,7 @@ EOF
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
-  services="sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus"
+  services="sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind udevd"
   HOSTNAME="voidlinux"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
