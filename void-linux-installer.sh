@@ -139,6 +139,8 @@ echo '*********************************************'
 #################################################################
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
+# $ ./configure aac=yes mad=no sndio=yes ffmpeg=no mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
+# $ make && make install
 #
 # wav,aiff = sndfile | mp3 = mad,mpg123 | ogg = ogg | wv = wavpack
 # opus = opusfile aac = faad | mp4 = mp4v2 | flac = flac
@@ -152,6 +154,24 @@ echo '*********************************************'
 # .siren/config
 # set active-fg colour-name # foreground
 ##################################################################
+############ Vuurmuur Firewall ###################################
+##################################################################
+# https://www.vuurmuur.org
+# https://github.com/inliniac/vuurmuur/releases/download/0.8/vuurmuur-0.8.tar.gz
+# $ ./configure && make && make install 
+#
+# libmnl-devel dialog
+#
+# Note: unable to get git clone/install.sh version working
+#
+# vuurmuur_conf --wizard # create config
+# vuurmuur_conf
+#             >>> Rules >>> INS(ert) >>> [OUTGOING] Action [Accept] Log [x] Service [any] From [firewall] To [world.inet]
+#                                    >>> [INCOMING] Action [Accept] Log [x] Service [any] From [lan] To [firewall]
+#             >>> Iterfaces >>> inet-nic enp0s25 192.168.1.XX
+#                           >>> lan-nic enp0s25 192.168.1.XX
+#             >>> Vuurmuur Config >>> Interfaces >>> uncheck dynamic interfaces for changes
+###########################################################################################
 # Fonts
 # https://github.com/be5invis/Iosevka/releases
 # https://overpassfont.org
@@ -279,7 +299,9 @@ echo '*********************************************'
 ' vlc'\
 ' w_scan'\
 ' xset'\
-' font-manager'
+' font-manager'\
+' libmnl-devel'\
+' dialog'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
