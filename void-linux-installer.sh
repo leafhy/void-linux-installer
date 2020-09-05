@@ -139,8 +139,8 @@ echo '*********************************************'
 #################################################################
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
-# $ ./configure aac=yes mad=no sndio=yes ffmpeg=no mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
-# $ make && make install
+# ./configure aac=yes mad=no sndio=yes ffmpeg=no mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
+# make && make install
 #
 # wav,aiff = sndfile | mp3 = mad,mpg123 | ogg = ogg | wv = wavpack
 # opus = opusfile aac = faad | mp4 = mp4v2 | flac = flac
@@ -172,6 +172,21 @@ echo '*********************************************'
 #                           >>> lan-nic enp0s25 192.168.1.XX
 #             >>> Vuurmuur Config >>> Interfaces >>> uncheck dynamic interfaces for changes
 ###########################################################################################
+############################# Bitwarden - Bitwarden_rs ####################################
+###########################################################################################
+# https://bitwarden.com
+# curl https://sh.rustup.rs -sSf | sh # installs to $HOME
+# git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
+# cargo clean && cargo build --features sqlite --release
+# mkdir ~/src/bitwarden_rs/target/release/data # needed for creation of rsa key
+# source .cargo/env # or .bash-profile
+# aria2c https://github.com/dani-garcia/bw_web_builds/releases/download/v2.15.1/bw_web_v2.15.1.tar.gz
+# tar xf bw_web_v2.15.1.tar.gz
+# mv web-vault bitwarden_rs/target/release
+# ./bitwarden_rs
+# Note: xbps-install cargo rust - errors [feature] may not be used on stable release
+#       rustup & cargo install size >1GB
+##############################################################################
 # Fonts
 # https://github.com/be5invis/Iosevka/releases
 # https://overpassfont.org
@@ -314,7 +329,7 @@ EOF
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
-export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \W \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \'$PWD' \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
