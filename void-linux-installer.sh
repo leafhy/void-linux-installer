@@ -184,6 +184,8 @@ echo '*********************************************'
 # tar xf bw_web_v2.15.1.tar.gz
 # mv web-vault bitwarden_rs/target/release
 # ./bitwarden_rs
+# rustup self uninstall
+#
 # Note: xbps-install cargo rust - errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
 ##############################################################################
