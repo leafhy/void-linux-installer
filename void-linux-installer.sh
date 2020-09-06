@@ -190,6 +190,8 @@ echo '*********************************************'
 #
 # Note: xbps-install cargo rust - errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
+#        0.0.0.0:8000 # connection is not secure
+#        127.0.0.1:8000 # this page is stored on your computer
 ##############################################################################
 # Fonts
 # fc-list # /usr/share/fonts
