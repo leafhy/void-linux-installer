@@ -222,9 +222,11 @@ echo '*********************************************'
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
-# Bitwarden
-# @runatreboot,runonce(true) $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
+# Bitwarden_rs - 1m after boot
+# &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
 #
+# Note: fcron 3.3.0 @reboot unknown option
+#       fcron 3.2.1 @reboot works # SalixOs(Slackware)
 # ---------------------
 # /etc/fcron/fcron.conf
 # editor = /usr/bin/mle
@@ -953,13 +955,13 @@ server:
     trust-anchor-file: /etc/dns/root.key
 # transparent is default
 #local-zone: "192.in-addr.arpa." transparent
-local-data: "machine-1 A 192.168.1.XX"
-local-data: "machine-2 A 192.168.1.XX"
-local-data: "machine-3 A 192.168.1.XX"
+local-data: "hostname-1 A 192.168.1.XX"
+local-data: "hostname-2 A 192.168.1.XX"
+local-data: "hostname-3 A 192.168.1.XX"
 
-local-data-ptr: "192.168.1.XX machine-1"
-local-data-ptr: "192.168.1.XX machine-2"
-local-data-ptr: "192.168.1.XX machine-3"
+local-data-ptr: "192.168.1.XX hostname-1"
+local-data-ptr: "192.168.1.XX hostname-2"
+local-data-ptr: "192.168.1.XX hostname-3"
 
     do-not-query-localhost: no
 # Removal of forward zone uses ISP
@@ -1094,7 +1096,6 @@ esac
 ######################################################################
 # POST INSTALL SETUP
 ######################################################################
-
 # Xwallpaper
 # Add to >> ~/.config/herbstluftwm/autostart
 # xwallpaper --output LVDS1 --stretch "Snow Leopard Prowl.jpg" --output VGA1 --stretch "Snow Leopard Prowl.jpg"
