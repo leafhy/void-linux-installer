@@ -217,13 +217,16 @@ echo '*********************************************'
 # mount /mnt/backup is slow
 # borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
-# fcrontab -e
+# doas fcrontab -e
 # Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
 # Bitwarden_rs - 1m after boot
 # &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
+# Vuurmuur - start as daemon
+# &bootrun,first(1) * * * * * vuurmuur -D
+# &bootrun,first(1) * * * * * vuurmuur_log
 #
 # Note: fcron 3.3.0 @reboot unknown option
 #       fcron 3.2.1 @reboot works # SalixOs(Slackware)
