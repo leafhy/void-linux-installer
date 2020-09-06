@@ -181,7 +181,7 @@ echo '*********************************************'
 # git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
 # cargo clean && cargo build --features sqlite --release
 # mkdir ~/src/bitwarden_rs/target/release/data # needed for creation of rsa key
-# source .cargo/env # or .bash-profile
+# source .cargo/env # or .bash_profile
 # aria2c https://github.com/dani-garcia/bw_web_builds/releases/download/v2.15.1/bw_web_v2.15.1.tar.gz
 # tar xf bw_web_v2.15.1.tar.gz
 # mv web-vault bitwarden_rs/target/release
@@ -190,8 +190,8 @@ echo '*********************************************'
 #
 # Note: xbps-install cargo rust - errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
-#        0.0.0.0:8000 # connection is not secure
-#        127.0.0.1:8000 # this page is stored on your computer
+#       0.0.0.0:8000 # connection is not secure
+#       127.0.0.1:8000 # this page is stored on your computer
 ##############################################################################
 # Fonts
 # fc-list # /usr/share/fonts
@@ -216,11 +216,14 @@ echo '*********************************************'
 # mount /mnt/backup is slow
 # borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
-# doas fcrontab -e
-# run borg hourly 
+# fcrontab -e
+# Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
-# run unbound-update monthly
+# Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
+# Bitwarden
+# @runatreboot,runonce(true) $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
+#
 # ---------------------
 # /etc/fcron/fcron.conf
 # editor = /usr/bin/mle
