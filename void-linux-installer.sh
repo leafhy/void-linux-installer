@@ -354,7 +354,7 @@ EOF
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
-export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \'$PWD' \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] '\$PWD' \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
