@@ -123,7 +123,6 @@ echo '*********************************************'
 # zathura - mupdf,poppler,djvu,epub (mupdf stand alone is faster)
 # aucatctl - changes volume in sndiod
 # bind-utils - dig (dns lookup), nslookup, host
-# mle - displays polybar config icons correctly
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
