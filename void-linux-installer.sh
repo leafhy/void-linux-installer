@@ -192,6 +192,7 @@ echo '*********************************************'
 #       rustup & cargo install size >1GB
 ##############################################################################
 # Fonts
+# fc-list # /usr/share/fonts
 # https://github.com/be5invis/Iosevka/releases
 # https://overpassfont.org
 # https://mplus-fonts.osdn.jp/about-en.html
@@ -224,11 +225,12 @@ echo '*********************************************'
 # ---------------------
 # Network - WIFI
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
-# password file >> /var/lib/iwd/routerssid
+# password file >>> /var/lib/iwd/routerssid
 # ---------------------
 # NFS Mount
 # /etc/exports
 # /path/here 'ip of OSX mount location'(insecure,rw,sync,no_root_squash)
+# --------------------
 # exportfs -a
 # mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
 # Note: make sure permissions are correct or 'finder' will not not write
@@ -1102,12 +1104,6 @@ esac
 # Automatically reload
 # autorandr --change
 # autorandr 'profile'
-#
-# List fonts /usr/share/fonts
-# fc-list 
-#
-# DNSCrypt-Proxy
-# /etc/dnscrypt-proxy.toml >> 127.0.0.1:5353
 #
 # Unbound
 # $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
