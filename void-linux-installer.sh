@@ -188,10 +188,11 @@ echo '*********************************************'
 # ./bitwarden_rs
 # rustup self uninstall
 #
-# Note: xbps-install cargo rust - errors [feature] may not be used on stable release
+# Note: xbps-install cargo rust # errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
+#       192.168.1.4:8000 # Lan access
 ##############################################################################
 # Fonts
 # fc-list # /usr/share/fonts
@@ -234,7 +235,7 @@ echo '*********************************************'
 # ---------------------
 # NFS Mount
 # /etc/exports
-# /path/here 'ip of OSX mount location'(insecure,rw,sync,no_root_squash)
+# /path/here 'ip of OSX'(insecure,rw,sync,no_root_squash)
 # --------------------
 # exportfs -a
 # mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
