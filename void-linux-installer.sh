@@ -113,7 +113,7 @@ echo '*********************************************'
 # runit-void
 #################################################################
 # Notes:
-# Cron options >> fcron,dcron,bcron,scron,tinycron,cronie
+# Cron options >> fcron,hcron,dcron,bcron,scron,tinycron,cronie
 # thinkfan - set fan temp thresholds
 # mdocml=mandoc outputs man pages
 # autox - caused login to loop switching monitor off & on (herbstluftwm)
