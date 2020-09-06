@@ -38,7 +38,8 @@
 #           : Need to disable bitmap fonts "ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent/mitigate TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 # grub works
-# Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf 
+# Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf
+# Terminal needs to be maximized otherwise Firefox goes fullscreen
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
 # Not checked if label can be set in efibootmgr-kernel-hook
@@ -176,6 +177,7 @@ echo '*********************************************'
 ###########################################################################################
 # https://bitwarden.com
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
+# select (1)
 # git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
 # cargo clean && cargo build --features sqlite --release
 # mkdir ~/src/bitwarden_rs/target/release/data # needed for creation of rsa key
@@ -209,7 +211,7 @@ echo '*********************************************'
 # Borg Backup
 # Note: see /etc/fstab for borg mounts  
 # mount /mnt/backup is slow
-# borg create intit --encryption=none /mnt/borg-backup::borg
+# borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
 # run borg hourly 
@@ -219,6 +221,17 @@ echo '*********************************************'
 # ---------------------
 # /etc/fcron/fcron.conf
 # editor = /usr/bin/mle
+# ---------------------
+# Network - WIFI
+# iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
+# password file >> /var/lib/iwd/routerssid
+# ---------------------
+# NFS Mount
+# /etc/exports
+# /path/here 'ip of OSX mount location'(insecure,rw,sync,no_root_squash)
+# exportfs -a
+# mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
+# Note: make sure permissions are correct or 'finder' will not not write
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
@@ -1073,10 +1086,7 @@ esac
 ######################################################################
 # POST INSTALL SETUP
 ######################################################################
-# Network - WIFI
-# iwctl --passphrase="password-goes-here" station wlan0 connect "routerssid"
-# password file >> /var/lib/iwd/routerssid
-#
+
 # Xwallpaper
 # Add to >> ~/.config/herbstluftwm/autostart
 # xwallpaper --output LVDS1 --stretch "Snow Leopard Prowl.jpg" --output VGA1 --stretch "Snow Leopard Prowl.jpg"
