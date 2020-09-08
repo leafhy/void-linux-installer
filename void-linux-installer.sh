@@ -227,6 +227,12 @@ echo '*********************************************'
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
+# Java
+# https://www.java.com/en/download/linux_manual.jsp
+# ~/.bashrc
+# JAVA_HOME=/home/user/src/jre1.8.0_261
+# export PATH=$JAVA_HOME/bin:$PATH
+##################################################################
 # Fonts
 # fc-list # /usr/share/fonts
 # https://github.com/be5invis/Iosevka/releases
