@@ -187,25 +187,28 @@ echo '*********************************************'
 # ./bitwarden_rs
 # rustup self uninstall
 # ------------------------
-# Caddy Reverse Proxy https
+# Caddy V2 Reverse Proxy https
 # https://github.com/caddyserver/caddy
 # https://github.com/caddyserver/caddy/releases/download/v2.2.0-rc.1/caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # chown root:root caddy
 # mv caddy /usr/bin/caddy2
-# xbps-install caddy # caddy v2 not available
-# mle /etc/sv/caddy/run # change caddy to caddy2
-# ln -s /etc/sv/caddy /etc/runit/runsvdir/default/
 #
 # create certificates
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
 #
-# create /etc/caddy/Caddyfile
+# create /home/user/Caddyfile
 # ---------------------------
 # :2016
 # tls /home/$username//cert.crt /home/$username//cert.key
 #
 # reverse_proxy 127.0.0.1:8000
+#
+# #'logs' = access
+# #'log' = default INFO             
+# log {                              
+#     output file /var/log/caddy2.log                                                                                                                                                                                                         
+# }   
 # ----------------------------
 #
 # Note: xbps-install cargo rust # errors [feature] may not be used on stable release
@@ -214,16 +217,14 @@ echo '*********************************************'
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016 # Lan access
 #       caddy created certificate failed to work (user error?)
-#       remote error: tls: bad certificate # bitwarden_rs SSL works (some fields left blank) - selfsigned causes error
+#       remote error: tls: bad certificate # selfsigned - bitwarden_rs tls works (some fields left blank)
+#       xbps-install caddy # caddy v2 not available                                                                                                                                                                                              
 #
 # Caddy 2 Log  
 # ---------------------------------------
 # WARN pki.ca.local installing root certificate (you might be prompted for password) {“path”: “storage:pki/authorities/local/root.crt”}
 # 2020/09/08 not NSS security databases found
-# 
 # 2020/09/08 define JAVA_HOME environment variable to use the Java trust
-# setting JAVA_HOME in ~/.bashrc worked once
-#
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
@@ -261,6 +262,8 @@ echo '*********************************************'
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
+# Caddy2
+# &bootrun,first(1) * * * * * cd /home/user && /sbin/caddy2 start --config /home/user/.config/caddy/Caddyfile
 # Bitwarden_rs - 1m after boot
 # &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
