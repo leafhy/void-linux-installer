@@ -35,7 +35,7 @@
 # IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
 #           : Firefox is slow (10s) to start if /etc/hosts $HOSTNAME is missing
-#           : Need to disable bitmap fonts "ln -s /etc/fonts/conf.avail/70-no-bitmaps.conf" or create ~/.config/fonts.conf so Firefox can use other fonts
+#           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent/mitigate TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 # grub works
 # Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf
@@ -151,14 +151,14 @@ echo '*********************************************'
 # pulseaudio-devel libpulseaudio-devel libao-devel portaudio-devel ffmpeg-devel
 # opusfile-devel pkg-config
 #
-# .siren/config
+# ~/.siren/config
 # set active-fg colour-name # foreground
 ##################################################################
 ############ Vuurmuur Firewall ###################################
 ##################################################################
 # https://www.vuurmuur.org
 # https://github.com/inliniac/vuurmuur/releases/download/0.8/vuurmuur-0.8.tar.gz
-# $ ./configure && make && make install 
+# ./configure && make && make install 
 #
 # libmnl-devel dialog
 #
@@ -197,20 +197,31 @@ echo '*********************************************'
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
 #
 # create /path/to/Caddyfile
-# ----------------
+# ----------------sof
 # :2016
 # tls /home/$username//cert.crt /home/$username//cert.key
 #
 # reverse_proxy 127.0.0.1:8000
-# ----------------------------
+# ----------------------------eof
 #
 # Note: xbps-install cargo rust # errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016 # Lan access
-#       caddy created certificate failed to work (user error?) & java_home erred
-#       remote error: tls: bad certificate # working (some fields left blank)
+#       caddy created certificate failed to work (user error?)
+#       remote error: tls: bad certificate # bitwarden_rs SSL works (some fields left blank)
+#
+# Caddy 2 Log  
+# ---------------------------------------
+# WARN pki.ca.local installing root certificate (you might be prompted for password) {“path”: “storage:pki/authorities/local/root.crt”}
+# 2020/09/08 not NSS security databases found
+# 
+# 2020/09/08 define JAVA_HOME environment variable to use the Java trust
+# setting JAVA_HOME in ~/.bashrc worked once
+#
+# 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
+# certificates did install to ~/.local/share/~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
 # Fonts
 # fc-list # /usr/share/fonts
