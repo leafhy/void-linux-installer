@@ -201,12 +201,12 @@ echo '*********************************************'
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
 #
 # create /etc/caddy/Caddyfile
-# ----------------sof
+# ---------------------------
 # :2016
 # tls /home/$username//cert.crt /home/$username//cert.key
 #
 # reverse_proxy 127.0.0.1:8000
-# ----------------------------eof
+# ----------------------------
 #
 # Note: xbps-install cargo rust # errors [feature] may not be used on stable release
 #       rustup & cargo install size >1GB
@@ -240,9 +240,9 @@ echo '*********************************************'
 # https://mplus-fonts.osdn.jp/about-en.html
 # http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz
 ##################################################################
-# [!] IMPORTANT [!] 
-# [!] POST INSTALLATION [!]
-# -------------------------
+# =====================================
+# [!] IMPORTANT - POST INSTALLATION [!]
+# =====================================
 # /etc/hosts
 # 127.0.0.1 $HOSTNAME.localdomain $HOSTNAME
 # ------------------------------------------
@@ -384,7 +384,8 @@ echo '*********************************************'
 ' font-manager'\
 ' libmnl-devel'\
 ' dialog'\
-' caddy'
+' caddy'\
+' ghostwriter'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
