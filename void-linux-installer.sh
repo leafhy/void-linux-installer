@@ -260,7 +260,7 @@ echo '*********************************************'
 # ----------------------------------------
 # doas fcrontab -e
 # Borg Backup - Hourly 
-# 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
+# 0 * * * * /home/$username/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh 2>&1
 # Caddy2
@@ -401,7 +401,7 @@ EOF
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
-export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] '\$PWD' \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
