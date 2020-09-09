@@ -199,7 +199,8 @@ echo '*********************************************'
 #
 # create /home/user/Caddyfile
 # ---------------------------
-# :2016
+# $HOSTNAME
+# #:2016
 # tls /home/$username//cert.crt /home/$username//cert.key
 #
 # reverse_proxy 127.0.0.1:8000
@@ -215,7 +216,7 @@ echo '*********************************************'
 #       rustup & cargo install size >1GB
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
-#       http://192.168.1.4:8000, https://$HOSTNAME:2016 # Lan access
+#       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
 #       caddy created certificate failed to work (user error?)
 #       remote error: tls: bad certificate # selfsigned - bitwarden_rs tls works (some fields left blank)
 #       xbps-install caddy # caddy v2 not available                                                                                                                                                                                              
@@ -261,14 +262,13 @@ echo '*********************************************'
 # Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /home/$username/scripts/borg-backup.log 2>&1
 # Unbound - Monthly
-# @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh
+# @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh 2>&1
 # Caddy2
-# &bootrun,first(1) * * * * * cd /home/user && /sbin/caddy2 start --config /home/user/.config/caddy/Caddyfile
+# &bootrun,first(1) * * * * * cd /home/user && /sbin/caddy2 start --config /home/user/.config/caddy/Caddyfile 2>&1
 # Bitwarden_rs - 1m after boot
 # &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
-# &bootrun,first(1) * * * * * vuurmuur -D
-# &bootrun,first(1) * * * * * vuurmuur_log
+# &bootrun,first(1) * * * * * vuurmuur -D && vuurmuur_log 2>&1
 #
 # Note: fcron 3.3.0 @reboot unknown option
 #       fcron 3.2.1 @reboot works # SalixOs(Slackware)
