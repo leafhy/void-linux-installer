@@ -234,6 +234,12 @@ echo '*********************************************'
 # ~/.bashrc
 # JAVA_HOME=/home/user/src/jre1.8.0_261
 # export PATH=$JAVA_HOME/bin:$PATH
+#
+# DirSync Pro - requires java lib
+# https://www.dirsyncpro.org
+# xbps-install openjdk8-jre
+# ~.bashrc
+# export LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 ##################################################################
 # Fonts
 # fc-list # /usr/share/fonts
