@@ -241,6 +241,9 @@ echo '*********************************************'
 # ~.bashrc
 # export LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
 ##################################################################
+# Osync
+# https://github.com/deajan/osync
+##################################################################
 # Fonts
 # fc-list # /usr/share/fonts
 # https://github.com/be5invis/Iosevka/releases
@@ -265,6 +268,8 @@ echo '*********************************************'
 # borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
+# Udiskie - Automounter
+# &bootrun,first(1) * * * * * /sbin/udiskie
 # Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
@@ -275,6 +280,8 @@ echo '*********************************************'
 # &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
 # &bootrun,first(1) * * * * * vuurmuur -D && vuurmuur_log 2>&1
+# Osync 2m after boot
+# &bootrun,first(2) * * * * * /usr/local/bin/osync.sh /etc/osyncsync.conf --on-changes --silent
 #
 # Note: fcron 3.3.0 @reboot unknown option
 #       fcron 3.2.1 @reboot works # SalixOs(Slackware)
@@ -394,7 +401,9 @@ echo '*********************************************'
 ' libmnl-devel'\
 ' dialog'\
 ' caddy'\
-' ghostwriter'
+' ghostwriter'\
+' inotify-tools'\
+' udiskie'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
