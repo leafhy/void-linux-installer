@@ -123,6 +123,8 @@ echo '*********************************************'
 # zathura - mupdf,poppler,djvu,epub (mupdf stand alone is faster)
 # aucatctl - changes volume in sndiod
 # bind-utils - dig (dns lookup), nslookup, host
+# lsyncd - service failed to start # erred with listed option as unknown
+# udevil - block mount only
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
