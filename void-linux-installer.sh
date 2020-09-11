@@ -186,6 +186,15 @@ echo '*********************************************'
 # mv web-vault bitwarden_rs/target/release
 # ./bitwarden_rs
 # rustup self uninstall
+# ---------------------
+# Bitwarden CLI
+# https://github.com/bitwarden/cli/releases/download/v1.11.0/bw-linux-1.11.0.zip
+# chmod +x bw
+# mv bw /usr/local/bin
+# bw config server https://$HOSTNAME
+# Required for selfsigned certificate
+# NODE_TLS_REJECT_UNAUTHORIZED=0 bw login # disable certifcate check
+# NODE_EXTRA_CA_CERTS=<path to my ca> bw login
 # ------------------------
 # Caddy V2 Reverse Proxy https
 # https://github.com/caddyserver/caddy
@@ -193,6 +202,7 @@ echo '*********************************************'
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # chown root:root caddy
 # mv caddy /usr/bin/caddy2
+# 
 #
 # create certificates
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
