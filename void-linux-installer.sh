@@ -26,6 +26,7 @@
 # https://wiki.archlinux.org/index.php/unbound
 # https://nlnetlabs.nl/documentation/unbound/ # some inaccurate options - version differences?
 # https://www.gnu.org/software/stow/ # symlink manager
+# https://www.funtoo.org/Keychain
 #
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
@@ -125,6 +126,8 @@ echo '*********************************************'
 # bind-utils - dig (dns lookup), nslookup, host
 # lsyncd - service failed to start # erred with listed option as unknown
 # udevil - block mount only
+# zeroconf/bonjour >> mDNSResponder,python3-zeroconf,python-zeroconf,avahi
+# gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
@@ -414,7 +417,9 @@ echo '*********************************************'
 ' caddy'\
 ' ghostwriter'\
 ' inotify-tools'\
-' udiskie'
+' udiskie'\
+' keychain'\
+' nemo'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
