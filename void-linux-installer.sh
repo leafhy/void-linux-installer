@@ -282,8 +282,6 @@ echo '*********************************************'
 # borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
-# Udiskie - Automounter
-# &bootrun,first(1) * * * * * /sbin/udiskie
 # Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
