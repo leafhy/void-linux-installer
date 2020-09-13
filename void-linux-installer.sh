@@ -314,6 +314,9 @@ echo '*********************************************'
 # exportfs -a
 # mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
 # Note: make sure permissions are correct or 'finder' will not not write
+# ---------------------
+# ~/.xinitrc
+# exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
