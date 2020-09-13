@@ -127,7 +127,7 @@ echo '*********************************************'
 # lsyncd - service failed to start # erred with listed option as unknown
 # udevil - block mount only
 # zeroconf/bonjour >> mDNSResponder,python3-zeroconf,python-zeroconf,avahi
-# gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
+# nemo >> gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
@@ -419,7 +419,15 @@ echo '*********************************************'
 ' inotify-tools'\
 ' udiskie'\
 ' keychain'\
-' nemo'
+' nemo'\
+' gvfs'\
+' gvfs-afp'\
+' gvfs-cdda'\
+' gvfs-smb'\
+' gvfs-afc'\
+' gvfs-mtp'\
+' gvfs-gphoto2'\
+' gconf-editor'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
