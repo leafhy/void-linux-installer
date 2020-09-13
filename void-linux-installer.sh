@@ -1144,6 +1144,27 @@ borg prune -v --list --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 echo "Backup complete at $DATE\n";
 EOF
 
+# Polkit rules
+chroot --userspec=$username:users /mnt tee etc/polkit-1/rules.d/10-udisks2.rules <<EOF
+polkit.addRule(function(action, subject) {
+  var YES = polkit.Result.YES;
+  var permission = {
+   // "org.freedesktop.udisks2.filesystem-mount-system-internal": YES,
+    "org.freedesktop.udisks2.filesystem-mount": YES,
+    "org.freedesktop.udisks2.filesystem-mount-system": YES,
+   // "org.freedesktop.udisks2.encrypted-unlock": YES,
+   // "org.freedesktop.udisks2.encrypted-unlock-system": YES,
+    "org.freedesktop.udisks2.eject-media": YES,
+    "org.freedesktop.udisks2.eject-media-system": YES,
+    "org.freedesktop.udisks2.power-off-drive": YES,
+    "org.freedesktop.udisks2.power-off-drive-system": YES,
+  };
+  if (subject.isInGroup("storage")) {
+    return permission[action.id];
+  }
+});
+EOF
+
 clear
  
 echo '**********************************************************'
