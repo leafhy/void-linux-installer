@@ -265,6 +265,55 @@ echo '*********************************************'
 # https://mplus-fonts.osdn.jp/about-en.html
 # http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz
 ##################################################################
+##################### Encrypt $USERS $HOME #######################
+##################################################################
+# xbps-install gocryptfs pam-mount
+# Stop $USER processess & logout then login as root
+# mv /home/$USER /home/$USER.old
+# mkdir /home/$USER.cipher # encrypted
+# mkdir /home/$USER # empty mount
+# correct $user,$user.cipher permissions # mount will fail if incorrect
+#
+# gocryptfs -init $USER.CIPHER
+# mount $user.cipher onto $user
+# gocryptfs $USER.CIPHER $USER
+# cp -r $USER.OLD $USER
+# 
+# The following (3) files allow $HOME to auto mount
+# ------------------------------------
+# mle /etc/security/pam_mount.conf.xml
+# < volume user="$USER" fstype="fuse" options="nodev,nosuid,quiet,nonempty,allow_other"
+# path="/usr/local/bin/gocryptfs#/home/%(USER).cipher" mountpoint="/home/%(USER)" />
+# ------------------------------------
+# mle /etc/pam.d/system-login
+# #%PAM-1.0
+#
+# auth       required   pam_tally.so         onerr=succeed file=/var/log/faillog
+# auth       required   pam_shells.so
+# auth       requisite  pam_nologin.so
+# auth       optional   pam_mount.so <<<< add this <<<<
+# auth       include    system-auth
+#
+# account    required   pam_access.so
+# account    required   pam_nologin.so
+# account    include    system-auth
+# password   optional   pam_mount.so <<<< add this <<<<
+# password   include    system-auth
+#
+# session    optional   pam_loginuid.so
+# session    optional   pam_mount.so <<<< add this <<<<<
+# session    include    system-auth
+# session    optional   pam_motd.so          motd=/etc/motd
+# session    optional   pam_mail.so          dir=/var/mail standard quiet
+# -session   optional   pam_elogind.so
+# -session   optional   pam_ck_connector.so  nox11
+# session    required   pam_env.so
+# session    required   pam_lastlog.so       silent
+# ------------------------------------
+# mle /etc/fuse.conf
+# user_allow_other # uncomment
+#######################################
+#######################################
 # =====================================
 # [!] IMPORTANT - POST INSTALLATION [!]
 # =====================================
@@ -428,7 +477,9 @@ echo '*********************************************'
 ' gvfs-afc'\
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
-' gconf-editor'
+' gconf-editor'\
+' pam-mount'\
+' gocryptfs'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
