@@ -370,15 +370,23 @@ echo '*********************************************'
 # ---------------------------
 # Printer
 # Notes:
-# test page doesn't print correctly - zathura prints pdf ok 
-# system-config-printer # gui glitchy fails to render
+#       test page doesn't print correctly - zathura prints pdf ok 
+#       system-config-printer # gui glitchy fails to render # only tested with herbstluftwm
 # 
 # xbps-install cups cups-filters gutenprint
 # ln -s /etc/sv/cupsd /etc/runit/runsvdir/default
 # ln -s /etc/sv/cups-browsed /etc/runit/runsvdir/default
 # Cups Administration 127.0.0.1:631 # login as root
-# >>> Advanced >> Advertise web interface
-#              >> Allow remote admin 
+#                               >>> Advanced >> Advertise web interface
+#                                            >> Allow remote admin
+# -----------------------------------------------------------------
+# Scanner
+# xbps-install simple-scan skanlite
+#
+# Notes: imagescan(EPSON Image Scan v3) fails to detect scanner(epson v700)
+#        12800dpi >> Empty filename passed to function, sane_start= Invalid argument
+#        simple-scan >> 2400dpi
+#        skanlite >> 9600dpi
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
