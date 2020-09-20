@@ -387,6 +387,10 @@ echo '*********************************************'
 #        12800dpi >> Empty filename passed to function, sane_start= Invalid argument
 #        simple-scan >> 2400dpi
 #        skanlite >> 9600dpi
+# --------------------------
+# Email
+# xbps-install isync
+# Notes: isync(mbsync) is faster then offlineimap
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
