@@ -505,7 +505,7 @@ echo '*********************************************'
 ' gocryptfs'
 
   username="vade"
-  groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,xbuilder,socklog"
+  groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
 doasconf="$(cat <<'EOF'
 permit persist :wheel
 permit nopass :wheel as root cmd /sbin/poweroff
