@@ -364,6 +364,9 @@ echo '*********************************************'
 # ---------------------
 # ~/.xinitrc
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
+# ---------------------
+# mpv(smplayer) will have video/audio desynchronization errors if Audio output driver is not set to sndio
+# mpv --audio-device=sndio video.mkv
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
