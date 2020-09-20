@@ -389,8 +389,44 @@ echo '*********************************************'
 #        skanlite >> 9600dpi
 # --------------------------
 # Email
+# mbsync
 # xbps-install isync
 # Notes: isync(mbsync) is faster then offlineimap
+# .mbsyncrc
+# -----------
+# IMAPAccount email
+# Host mail.server
+# User
+# Pass *********
+# SSLType IMAPS
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
+#
+# IMAPStore email-remote
+# Account email
+#
+# MaildirStore email-local
+# Path ~/.mail/email/
+# Inbox ~/.mail/email/Inbox
+# Subfolders Verbatim
+#
+# Channel email
+# Master :email-remote:
+# Slave :email-local:
+# Patterns *
+# Create Both
+# Sync Pull
+# SyncState *
+# -----------------
+# aerc
+# .config/aerc/accounts.conf
+# -----------------
+# [title]
+# source = imaps://email%40address:password@mail.server
+# outgoing = smtps+plain://email%40address:password@mail.server
+# default = Inbox
+# from = name <email@address>
+# copy-to =
+# -------------------
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
