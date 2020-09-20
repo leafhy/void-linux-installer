@@ -367,6 +367,18 @@ echo '*********************************************'
 # ---------------------
 # mpv(smplayer) will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # mpv --audio-device=sndio video.mkv
+# ---------------------------
+# Printer
+# Notes:
+# test page doesn't print correctly - zathura prints pdf ok 
+# system-config-printer # gui glitchy fails to render
+# 
+# xbps-install cups cups-filters gutenprint
+# ln -s /etc/sv/cupsd /etc/runit/runsvdir/default
+# ln -s /etc/sv/cups-browsed /etc/runit/runsvdir/default
+# Cups Administration 127.0.0.1:631 # login as root
+# >>> Advanced >> Advertise web interface
+#              >> Allow remote admin 
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
