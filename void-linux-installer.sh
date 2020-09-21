@@ -382,6 +382,8 @@ echo '*********************************************'
 # -----------------------------------------------------------------
 # Scanner
 # xbps-install simple-scan skanlite
+# sane-find-scanner
+# scanimage -L
 #
 # Notes: imagescan(EPSON Image Scan v3) fails to detect scanner(epson v700)
 #        12800dpi >> Empty filename passed to function, sane_start= Invalid argument
