@@ -22,12 +22,7 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
-[module/workspaces]
-type = custom/script
-
-exec-if = ps -C herbstluftwm > /dev/null 2>&1
-exec = MONITOR=DP-1 ~/.config/herbstluftwm/herbstluftwm.sh
-tail = true
+include-file = ~/.config/herbstluftwm/herbstluftwm-workspaces
 
 
 [module/ewmh]
