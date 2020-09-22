@@ -27,6 +27,7 @@
 # https://nlnetlabs.nl/documentation/unbound/ # some inaccurate options - version differences?
 # https://www.gnu.org/software/stow/ # symlink manager
 # https://www.funtoo.org/Keychain
+# https://github.com/denysdovhan/bash-handbook
 #
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
@@ -545,7 +546,8 @@ echo '*********************************************'
 ' gvfs-gphoto2'\
 ' gconf-editor'\
 ' pam-mount'\
-' gocryptfs'
+' gocryptfs'\
+' starship'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
@@ -558,7 +560,8 @@ EOF
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
 scripts/buffquote
-export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+eval "$(starship init bash)"
+# export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias w="curl wttr.in/~Adelaide"
