@@ -162,7 +162,7 @@ font-0 = Iosevka SS10 Fixed :style=regular:regular:size=10;1
 ;font-4 = "JetBrainsMono Nerd Font:size=19;4"
 ;font-5 = "FontAwesome:size=9;3"
 
-modules-left = workspaces
+modules-left = herbstluftwm-workspaces
 modules-center =
 modules-right = filesystem alsa wireless-network battery date
 
