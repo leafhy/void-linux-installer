@@ -431,6 +431,25 @@ echo '*********************************************'
 # from = name <email@address>
 # copy-to =
 # -------------------
+# Nvidia
+# https://nouveau.freedesktop.org/wiki/VideoAcceleration/
+# $ mkdir /tmp/nouveau
+# $ cd /tmp/nouveau
+# $ wget https://raw.github.com/envytools/firmware/master/extract_firmware.py
+# $ wget http://us.download.nvidia.com/XFree86/Linux-x86/325.15/NVIDIA-Linux-x86-325.15.run
+# $ sh NVIDIA-Linux-x86-325.15.run --extract-only
+# $ python2 extract_firmware.py  # this script is for python 2 only
+# mkdir /lib/firmware/nouveau
+# cp -d nv* vuc-* /lib/firmware/nouveau/
+#
+# Note: NVIDIA-Linux-x86-390.138 Latest
+#       Nvidia driver not compatible with Musl
+#       vuc-* files don't exist
+#       chromium browser errors without /lib/firmware/nouveau
+# -------------------
+# Chromium
+# Error: /etc/machine-id contains 0 characters (32 were expected).
+# doas ln -s /var/lib/dbus/machine-id /etc/
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
