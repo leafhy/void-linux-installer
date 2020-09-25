@@ -369,6 +369,8 @@ echo '*********************************************'
 # ---------------------
 # mpv(smplayer) will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # mpv --audio-device=sndio video.mkv
+# .config/mpv/mpv.conf
+# audio-device=sndio
 # ---------------------------
 # Printer
 # Notes:
