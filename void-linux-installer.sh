@@ -365,6 +365,8 @@ echo '*********************************************'
 # Note: make sure permissions are correct or 'finder' will not not write
 # ---------------------
 # ~/.xinitrc
+# udiskie needs to start before window manager for icon to appear in polybar
+# udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 # ---------------------
 # mpv(smplayer) will have video/audio desynchronization errors if Audio output driver is not set to sndio
