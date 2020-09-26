@@ -587,6 +587,7 @@ eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
+alias weather='curl wttr.in/?0'
 alias w="curl wttr.in/~Adelaide"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
