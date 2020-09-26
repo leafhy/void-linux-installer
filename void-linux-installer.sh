@@ -29,6 +29,11 @@
 # https://www.funtoo.org/Keychain
 # https://github.com/denysdovhan/bash-handbook
 #
+# **************************
+# * Unhide Terminal Cursor *
+# * echo -en "\e[?25h"     *
+# **************************
+#
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
 # void-live-x86_64-musl-20191109.iso burnt to CD & USB
