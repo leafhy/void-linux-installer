@@ -447,6 +447,10 @@ echo '*********************************************'
 # mkdir /lib/firmware/nouveau
 # cp -d nv* vuc-* /lib/firmware/nouveau/
 #
+# List gpu driver in use
+# lshw -class video | grep driver=
+# configuration: driver=nouveau latency=0
+#
 # Note: NVIDIA-Linux-x86-390.138 Latest
 #       Nvidia driver not compatible with Musl
 #       vuc-* files don't exist
