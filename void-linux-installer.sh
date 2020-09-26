@@ -259,6 +259,7 @@ echo '*********************************************'
 ##################################################################
 # Osync
 # https://github.com/deajan/osync
+# Note: Usb may need to removed/reinserted for osync --on-changes to work 
 ##################################################################
 # Fonts
 # fc-list # /usr/share/fonts
