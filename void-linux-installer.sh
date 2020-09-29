@@ -662,6 +662,8 @@ echo '**** Script is preconfigured for UEFI & GPT ****'
 echo '****                                        ****'
 echo '**** Partition Layout : Fat-32 EFI of 100MB ****'
 echo '****                  : / 100%              ****'
+echo '****                                        ****'
+echo 'Note: Use 'fdisk' to format iso9660/hybrid usb stick'
 echo '************************************************'
 echo ''
 echo '******************************************'
@@ -718,9 +720,8 @@ echo
 ############################
 # Install Prerequisite/s
 xbps-install -S
-# possible bug? pkg does not install - however it does update base files
-xbps-install -Sy gptfdisk 
-xbps-install -Sy gptfdisk 
+xbps-install -uy 
+xbps-install -y gptfdisk 
 
 # xbps-install -y -S -f parted
 
