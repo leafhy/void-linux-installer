@@ -600,7 +600,8 @@ echo '*********************************************'
 ' starship'\
 ' xz'\
 ' lshw'\
-' mpv'
+' mpv'\
+' alsa-utils'
 
 
   username="vade"
