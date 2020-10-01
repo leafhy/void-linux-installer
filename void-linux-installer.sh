@@ -397,6 +397,11 @@ echo '*********************************************'
 # .config/mpv/mpv.conf
 # audio-device=sndio
 # ---------------------------
+# OpenAL
+# cp /usr/share/examples/libopenal/alsoftrc.sample ~/.alsoftrc
+# [ general ]
+# drivers = sndio
+# ---------------------------
 # Printer
 # Notes:
 #       test page doesn't print correctly - zathura prints pdf ok 
@@ -541,7 +546,11 @@ echo '*********************************************'
 ' mesa'\
 ' mesa-demos'\
 ' mesa-vulkan-intel'\
+' mesa-nouveau-dri'\
+' mesa-intel-dri'\
+' mesa-dri'\
 ' mesa-vaapi'\
+' mesa-vdpau'\
 ' xterm'\
 ' autorandr'\
 ' gcc'\
@@ -601,7 +610,8 @@ echo '*********************************************'
 ' xz'\
 ' lshw'\
 ' mpv'\
-' alsa-utils'
+' alsa-utils'\
+' libopenal'
 
 
   username="vade"
