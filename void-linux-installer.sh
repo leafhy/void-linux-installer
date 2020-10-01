@@ -79,6 +79,15 @@
 # login as root                                                                          #
 # mount /dev/sdc3 /opt                                                                   #
 # run *this* script                                                                      #
+#                                                                                         #
+# Note: Use fdisk to format iso9660/HYBRID USB                                            #
+#     : use rufus to install iso - creates one partition -> /run/initramfs/live/data-is-here #
+#     : using imgUSB and formating free space is not reliable (blkid sometimes fails to detect partition) #
+#                                                                                        #
+#                                                                                        #
+# Use ram to store repo (xbps errors directory not writable)                                                                  #
+# create ramfs # mount -t ramfs ramfs /opt                                               #
+# cp -R /run/initramfs/live/data-is-here /opt                                            #
 ##########################################################################################
 ##########################################################################################
 # exit on error 
@@ -187,6 +196,10 @@ echo '*********************************************'
 ############################# Bitwarden - Bitwarden_rs ####################################
 ###########################################################################################
 # https://bitwarden.com
+# Add CARGO_HOME & RUSTUP_HOME to .bashrc
+# export RUSTUP_HOME=".local/share/rustup"
+# export CARGO_HOME=".local/share/cargo"
+#
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 # select (1)
 # git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
@@ -212,13 +225,17 @@ echo '*********************************************'
 # https://github.com/caddyserver/caddy
 # https://github.com/caddyserver/caddy/releases/download/v2.2.0-rc.1/caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
-# chown root:root caddy
-# mv caddy /usr/bin/caddy2
+# mv caddy /usr/bin/
+# doas groupadd --system caddy
+# doas useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy
 # 
 # create certificates
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
+# mkdir ~/.~/.local/share/certificates
+# mv cert.crt ~/.local/share/certificates
+# mv cert.key ~/.local/share/certificates
 #
-# create /home/user/Caddyfile
+# /home/user/.config/caddy/Caddyfile
 # ---------------------------
 # $HOSTNAME
 # #:2016
@@ -393,7 +410,7 @@ echo '*********************************************'
 #                                            >> Allow remote admin
 # -----------------------------------------------------------------
 # Scanner
-# xbps-install simple-scan skanlite
+# xbps-install simple-scan skanlite sane
 # sane-find-scanner
 # scanimage -L
 #
@@ -580,7 +597,11 @@ echo '*********************************************'
 ' gconf-editor'\
 ' pam-mount'\
 ' gocryptfs'\
-' starship'
+' starship'\
+' xz'\
+' lshw'\
+' mpv'
+
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
@@ -917,7 +938,7 @@ mkdir -p /mnt/var/db/xbps/keys/
 cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 if [[ $repopath != "" ]]; then
-xbps-install --download-only $pkg_list -c $repopath
+xbps-install --download-only -y $pkg_list -c $repopath
 cd $repopath
 # unsure if xbps-rindex is actually needed (did resolve package not found)
 xbps-rindex -a *xbps
@@ -927,7 +948,7 @@ else
 # xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
- xbps-install -S -R $repo1 -r /mnt || xbps-install -S -R $repo2 -r /mnt || xbps-install -S -R $repo0 -r /mnt
+ xbps-install -y -S -R $repo1 -r /mnt || xbps-install -y -S -R $repo2 -r /mnt || xbps-install -y -S -R $repo0 -r /mnt
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
  # Make sure everything was installed
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
@@ -1269,9 +1290,9 @@ EOF
 # exclusions directory will NOT be backed up by borg
 chroot --userspec=$username:users /mnt mkdir home/$username/exclusions
 # create mount point for borg repo
-chroot --userspec=$username:users /mnt mkdir mnt/borg-backup
+chroot /mnt mkdir mnt/borg-backup
 # create mount point to access borg repo
-chroot --userspec=$username:users /mnt mkdir mnt/backup
+chroot /mnt mkdir mnt/backup
 
 chroot --userspec=$username:users /mnt tee home/$username/scripts/borg-backup.sh <<EOF
 #!/bin/sh
@@ -1457,10 +1478,10 @@ efibootmgr -v
 echo ''
 echo '**********************************************************' 
 echo '**********************************************************'
-echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************'
+echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
-echo '**********************************************************
-echo '**** After logging in startx will start herbstluftwm ****
+echo '**********************************************************'
+echo '**** After logging in startx will start herbstluftwm ****'
 echo ''
 echo "(U)mount $device and exit"
 echo ''
