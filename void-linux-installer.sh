@@ -655,7 +655,7 @@ EOF
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
-  services="sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind udevd cgmanager polkitd"
+  services="cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind udevd cgmanager polkitd"
   HOSTNAME="voidlinux"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
