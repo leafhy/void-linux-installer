@@ -144,6 +144,7 @@ echo '*********************************************'
 # udevil - block mount only
 # zeroconf/bonjour >> mDNSResponder,python3-zeroconf,python-zeroconf,avahi
 # nemo >> gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
+# cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
