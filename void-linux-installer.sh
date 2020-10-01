@@ -351,6 +351,11 @@ echo '*********************************************'
 # ## Enable a DNS cache to reduce latency and outgoing traffic
 # cache = false
 # ----------------------------------------
+# Unbound
+# unbound-checkconf
+# unbound-anchor # /etc/dns/root.key
+# unbound-control-setup # certificates
+# ----------------------------------------
 # Borg Backup
 # Note: see /etc/fstab for borg mounts  
 # mount /mnt/backup is slow
