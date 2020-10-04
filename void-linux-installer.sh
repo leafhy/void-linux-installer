@@ -37,33 +37,28 @@
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
 # void-live-x86_64-musl-20191109.iso burnt to CD & USB
-# efi(bootmgr) is a little flaky as it can fail to change bootorder or wipe it completely (user error?)
 #
 # IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
 #           : Firefox is slow (10s) to start if /etc/hosts $HOSTNAME is missing
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
-#           : elgato eyetv diversity requires vlc(disable "Trust in-stream PCR",enable "Seek based on percent not time" to prevent/mitigate TS discontinuity errors,xset(prevents screensaver error),w_scan "w_scan -c AU -L > channels.xspf"
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
-# grub works
+#
 # Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf
 # Terminal needs to be maximized otherwise Firefox goes fullscreen
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
 # Not checked if label can be set in efibootmgr-kernel-hook
-# Not tested bluetooth
 # /home/$user/.asoundrc - increases volume
 # efibootmgr default label "Void Linux With Kernel 5.7"
 # ATAPI CD0 = HL-DT-STDVDRAM GT33N
 # efifb: mode is 640x480x32
 # Not Required : kernel .efi extension
 #              : efivarfs  /sys/firmware/efi/efivars efivarfs  0 0 >> /mnt/etc/fstab
-#
-# /boot/efi - appears to be optional
 # 
-# Bug? Appears / (nilfs) is trying to be mounted twice - drops to emergency shell
+# Nilfs bug - tries to mount / partition twice >> drops to emergency shell
 # Need to 'exit' twice to continue booting and 'enter' to display login prompt
-# fat 32 failed to unmount properly
+#
 # Bash script buffquote initially only showed the first quote in bash (RANDOM couldn't be found)
 # due to /bin/sh -> dash (works in dash) - need to run buffquote without sh
 ##########################################################################################
@@ -483,6 +478,13 @@ echo '*********************************************'
 # Chromium
 # Error: /etc/machine-id contains 0 characters (32 were expected).
 # doas ln -s /var/lib/dbus/machine-id /etc/
+# --------------------
+# VLC
+# settings to prevent/mitigate TS discontinuity errors
+#      | disable "Trust in-stream PCR"
+#      | enable "Seek based on percent not time"
+# w_scan -c AU -L >> channels.xspf
+# Note: install xset(prevents screensaver error)
 ################################################################## 
   pkg_list='base-minimal'\
 ' aria2'\
