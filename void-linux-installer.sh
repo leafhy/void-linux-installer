@@ -227,27 +227,20 @@ echo '*********************************************'
 # https://github.com/caddyserver/caddy/releases/download/v2.2.0-rc.1/caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # mv caddy /usr/bin/
-# doas groupadd --system caddy
-# doas useradd --system --gid caddy --create-home --home-dir /var/lib/caddy --shell /usr/sbin/nologin --comment "Caddy web server" caddy
 # 
 # create certificates
-# openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout cert.key -out cert.crt
-# mkdir ~/.~/.local/share/certificates
-# mv cert.crt ~/.local/share/certificates
-# mv cert.key ~/.local/share/certificates
+# openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /path/to/cert.key -out /path/to/cert.crt
 #
 # /home/user/.config/caddy/Caddyfile
 # ---------------------------
-# $HOSTNAME
-# #:2016
+# #$HOSTNAME
+# :2016
 # tls /home/$username//cert.crt /home/$username//cert.key
 #
 # reverse_proxy 127.0.0.1:8000
-#
-# #'logs' = access
-# #'log' = default INFO             
+#             
 # log {                              
-#     output file /var/log/caddy2.log                                                                                                                                                                                                         
+#     output file /var/log/caddy.log                                                                                                                                                                                                         
 # }   
 # ----------------------------
 #
@@ -256,11 +249,9 @@ echo '*********************************************'
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
-#       caddy created certificate failed to work (user error?)
-#       remote error: tls: bad certificate # selfsigned - bitwarden_rs tls works (some fields left blank)
 #       xbps-install caddy # caddy v2 not available                                                                                                                                                                                              
 #
-# Caddy 2 Log  
+# Caddy Log (Errors only occur when using $HOSTNAME in Caddyfile)
 # ---------------------------------------
 # WARN pki.ca.local installing root certificate (you might be prompted for password) {“path”: “storage:pki/authorities/local/root.crt”}
 # 2020/09/08 not NSS security databases found
@@ -347,6 +338,7 @@ echo '*********************************************'
 # 127.0.0.1 $HOSTNAME.localdomain $HOSTNAME
 # ------------------------------------------
 # /etc/dnscrypt-proxy.toml
+# server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
 # listen_addresses = ['127.0.0.1:5335']
 # ## Enable a DNS cache to reduce latency and outgoing traffic
 # cache = false
@@ -358,7 +350,6 @@ echo '*********************************************'
 # ----------------------------------------
 # Borg Backup
 # Note: see /etc/fstab for borg mounts  
-# mount /mnt/backup is slow
 # borg create init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
@@ -367,7 +358,7 @@ echo '*********************************************'
 # Unbound - Monthly
 # @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh 2>&1
 # Caddy2
-# &bootrun,first(1) * * * * * cd /home/user && /sbin/caddy2 start --config /home/user/.config/caddy/Caddyfile 2>&1
+# &bootrun,first(1) * * * * * /sbin/caddy start --config /home/user/.config/caddy/Caddyfile 2>&1
 # Bitwarden_rs - 1m after boot
 # &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
@@ -398,7 +389,7 @@ echo '*********************************************'
 # udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 # ---------------------
-# mpv(smplayer) will have video/audio desynchronization errors if Audio output driver is not set to sndio
+# mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # mpv --audio-device=sndio video.mkv
 # .config/mpv/mpv.conf
 # audio-device=sndio
@@ -617,7 +608,8 @@ echo '*********************************************'
 ' lshw'\
 ' mpv'\
 ' alsa-utils'\
-' libopenal'
+' libopenal'\
+' upower'
 
 
   username="vade"
@@ -701,7 +693,6 @@ echo '****                                        ****'
 echo '**** Partition Layout : Fat-32 EFI of 100MB ****'
 echo '****                  : / 100%              ****'
 echo '****                                        ****'
-echo 'Note: Use 'fdisk' to format iso9660/hybrid usb stick'
 echo '************************************************'
 echo ''
 echo '******************************************'
@@ -1154,8 +1145,7 @@ if [ $urlscripts ]; then
      chroot  --userspec=$username:users /mnt aria2c "$file" -d home/$username/scripts
      done
      echo "**** Scripts have been installed to /home/$username/scripts ****"
-     echo "**** Correct permissions if needed ****"
-     echo "**** chown $username:users /home/$username/scripts/* ****"
+     sleep 3s
 fi
 
 if [ $urlup ]; then
@@ -1170,7 +1160,8 @@ if [ $urlfont ]; then
      aria2c "$urlfont" -d /mnt/usr/local/src
      cd /mnt/usr/local/src && tar zxf $(echo $urlfont | cut -d d -f 3 | tr -d /)
      cp $(echo $urlfont | cut -d d -f 3 | tr -d / | sed 's/.tar.gz$//')/*gz /mnt/usr/share/kbd/consolefonts
-     echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"  
+     echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"
+     sleep 3s
 fi 
 
 # Audio Configuration
@@ -1203,8 +1194,6 @@ hint {
 }
 pcm.default sndio
 EOF
-
-sleep 3s
 
 # Herbstluftwm
  chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
@@ -1498,9 +1487,9 @@ echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
-echo '**** After logging in startx will start herbstluftwm ****'
+echo '**** After logging in 'startx' will start herbstluftwm ****'
 echo ''
-echo "(U)mount $device and exit"
+echo "(U)nmount $device and exit"
 echo ''
 echo '(E)xit'
 echo '' 
@@ -1539,9 +1528,3 @@ esac
 # Automatically reload
 # autorandr --change
 # autorandr 'profile'
-#
-# Unbound
-# $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
-#  (secure)
-# $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
-# (servfail)
