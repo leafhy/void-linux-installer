@@ -1125,6 +1125,7 @@ echo "$bashprofile" >> /mnt/home/$username/.bashrc
 
 # Check $pkg_list installed
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
+
 echo '********************************************'
 echo -e "**** \x1B[1;32m See /home/$username/void-pkgs.log \x1B[0m ****"
 echo -e "**** \x1B[1;32m for a list of installed packages \x1B[0m  ****"
