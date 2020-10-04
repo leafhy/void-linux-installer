@@ -656,7 +656,7 @@ EOF
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
   services="cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind udevd cgmanager polkitd"
-  HOSTNAME="voidlinux"
+  HOSTNAME="voidlinux.local"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
   HARDWARECLOCK="UTC"
