@@ -182,7 +182,7 @@ echo '*********************************************'
 # https://github.com/inliniac/vuurmuur/releases/download/0.8/vuurmuur-0.8.tar.gz
 # ./configure && make && make install 
 #
-# libmnl-devel dialog
+# xbps-install libmnl-devel dialog libnetfilter_conntrack-devel libnetfilter_log-devel
 #
 # Note: unable to get git clone/install.sh version working
 #
