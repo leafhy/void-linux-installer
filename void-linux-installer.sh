@@ -156,12 +156,12 @@ echo '*********************************************'
 #################################################################
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
-# ./configure aac=yes mad=no sndio=yes ffmpeg=no mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
+# ./configure aac=yes mad=no sndio=yes ffmpeg=yes mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
 # make && make install
 #
 # wav,aiff = sndfile | mp3 = mad,mpg123 | ogg = ogg | wv = wavpack
 # opus = opusfile aac = faad | mp4 = mp4v2 | flac = flac
-# ffmpeg = flac,ogg,mp3,mp4
+# ffmpeg = flac,ogg,mp3,mp4,m4a
 #
 # libid3tag-devel wavpack-devel libmad-devel libmp4v2-devel flac-devel
 # libsndfile-devel libogg-devel mpg123-devel faad2-devel sndio-devel
