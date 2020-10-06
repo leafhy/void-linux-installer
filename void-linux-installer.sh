@@ -374,6 +374,7 @@
 # Note: make sure permissions are correct or 'finder' will not not write
 # ---------------------
 # ~/.xinitrc
+# xss-lock -- ~/.config/i3/lock.sh -l &
 # udiskie needs to start before window manager for icon to appear in polybar
 # udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
@@ -629,7 +630,8 @@ setfont Lat2-Terminus16
 ' libopenal'\
 ' upower'\
 ' xfce4-session'\
-' gtk+3'
+' gtk+3'\
+' qalc'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
