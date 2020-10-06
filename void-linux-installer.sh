@@ -631,7 +631,8 @@ setfont Lat2-Terminus16
 ' upower'\
 ' xfce4-session'\
 ' gtk+3'\
-' qalc'
+' qalc'\
+' xclip'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
