@@ -1539,10 +1539,6 @@ esac
 ######################################################################
 # POST INSTALL SETUP
 ######################################################################
-# Xwallpaper
-# Add to >> ~/.config/herbstluftwm/autostart
-# xwallpaper --output LVDS1 --stretch "Snow Leopard Prowl.jpg" --output VGA1 --stretch "Snow Leopard Prowl.jpg"
-#
 # Turn off screen
 # xrandr --output LVDS-1 --off
 # Turn on screen
