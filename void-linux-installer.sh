@@ -130,7 +130,6 @@
 # intel-ucode - dracut default is to include
 # early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf seems redundant
 # intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
-# verify efibootmgr and intel-ucode did install if not install manually
 #################################################################
 ##################  Siren Music Player ##########################
 #################################################################
@@ -1510,6 +1509,7 @@ echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
+echo '**** Verify 'intel-ucode' did install if not install manually ****'
 echo '**** After logging in 'startx' will start herbstluftwm ****'
 echo ''
 echo "(U)nmount $device and exit"
