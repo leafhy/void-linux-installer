@@ -83,25 +83,6 @@
 # cp -R /run/initramfs/live/data-is-here /opt                                            #
 ##########################################################################################
 ##########################################################################################
-# exit on error 
-set -e
-
-# Make terminal clean
-clear
-
-# Change font to be more legible
-setfont Lat2-Terminus16
-
-echo '*********************************************'
-echo '*********************************************'
-echo '**** VOID LINUX MUSL x86_64 INSTALLATION ****'
-echo '****            EFI Stub Boot            ****'
-echo '*********************************************'
-echo '*********************************************'
-
-#############################################
-#### [!] START OF USER CONFIGURATION [!] ####
-#############################################
 # base-voidstrap
 # base-files ncurses coreutils findutils diffutils
 # dash bash grep gzip file sed gawk less util-linux which tar man-pages
@@ -440,6 +421,7 @@ echo '*********************************************'
 # Host mail.server
 # User
 # Pass *********
+# PassCmd "bw get password xxxxxx" # bitwarden cli
 # SSLType IMAPS
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 #
@@ -499,7 +481,28 @@ echo '*********************************************'
 #      | enable "Seek based on percent not time"
 # w_scan -c AU -L >> channels.xspf
 # Note: install xset(prevents screensaver error)
-################################################################## 
+##################################################################
+# exit on error 
+set -e
+
+# Make terminal clean
+clear
+
+echo '*********************************************'
+echo '*********************************************'
+echo '**** VOID LINUX MUSL x86_64 INSTALLATION ****'
+echo '****            EFI Stub Boot            ****'
+echo '*********************************************'
+echo '*********************************************'
+
+#############################################
+#############################################
+#### [!] START OF USER CONFIGURATION [!] ####
+#############################################
+#############################################
+# Change font to be more legible
+setfont Lat2-Terminus16
+
   pkg_list='base-minimal'\
 ' aria2'\
 ' atool'\
@@ -684,7 +687,9 @@ EOF
   # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
 ###########################################
+###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
+###########################################
 ###########################################
 
 # Detect if we're in UEFI or legacy mode
