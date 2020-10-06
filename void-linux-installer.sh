@@ -48,7 +48,6 @@
 # Terminal needs to be maximized otherwise Firefox goes fullscreen
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
-# Not checked if label can be set in efibootmgr-kernel-hook
 # /home/$user/.asoundrc - increases volume
 # efibootmgr default label "Void Linux With Kernel 5.7"
 # ATAPI CD0 = HL-DT-STDVDRAM GT33N
@@ -78,9 +77,8 @@
 # Note: Use fdisk to format iso9660/HYBRID USB                                            #
 #     : use rufus to install iso - creates one partition -> /run/initramfs/live/data-is-here #
 #     : using imgUSB and formating free space is not reliable (blkid sometimes fails to detect partition) #
-#                                                                                        #
-#                                                                                        #
-# Use ram to store repo (xbps errors directory not writable)                                                                  #
+#                                                                                        #                                                                                      #
+# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  #                                               #
 # create ramfs # mount -t ramfs ramfs /opt                                               #
 # cp -R /run/initramfs/live/data-is-here /opt                                            #
 ##########################################################################################
@@ -325,6 +323,21 @@ echo '*********************************************'
 # ------------------------------------
 # mle /etc/fuse.conf
 # user_allow_other # uncomment
+######################################
+# Mopidy Music Server
+# xbps-install mopidy snapserver snapclient snapcast python3-pip
+# ln -s /etc/sv/mopidy /etc/runit/runsvdir/default
+# ln -s /etc/sv/snapserver /etc/runit/runsvdir/default
+# python3 -m pip install Mopidy-Iris
+# /etc/mopidy.conf
+# -----------------
+# [audio]
+# mixer = software
+# mixer_volume = 100
+# output = audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! wavenc ! filesink location=/tmp/snapfifo
+# ---------------
+# Note: mopidy needs output server mpd,snapcast 
+#     : scan notification appears to never end
 #######################################
 #######################################
 # =====================================
@@ -612,8 +625,9 @@ echo '*********************************************'
 ' mpv'\
 ' alsa-utils'\
 ' libopenal'\
-' upower'
-
+' upower'\
+' xfce4-session'\
+' gtk+3'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
