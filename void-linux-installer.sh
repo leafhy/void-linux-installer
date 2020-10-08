@@ -233,6 +233,16 @@
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
+# Alock
+# Pauses dunst notifications
+# https://github.com/Arkq/alock/
+# xbps-install autoreconf
+# $ autoreconf --install
+# $ mkdir build && cd build
+# $ ../configure --enable-pam --enable-hash --enable-xrender --enable-imlib2 \
+#    --with-dunst --with-xbacklight
+# $ make && make install
+###################################################
 # Java
 # https://www.java.com/en/download/linux_manual.jsp
 # ~/.bashrc
