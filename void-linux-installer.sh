@@ -244,6 +244,16 @@
 #    --with-dunst --with-xbacklight
 # $ make && make install
 ###################################################
+# Dmenu-Extended
+# git clone https://github.com/MarkHedleyJones/dmenu-extended.git
+# python setup.py install
+# .config/dmenu-extended/config/dmenuExtended_preferences.txt
+# "menu": "rofi",
+# "menu_arguments": [
+# "-dmenu",
+#  "-i"
+# ],
+#####################################################
 # Java
 # https://www.java.com/en/download/linux_manual.jsp
 # ~/.bashrc
@@ -386,6 +396,7 @@
 # ---------------------
 # ~/.xinitrc
 # xss-lock -- ~/.config/i3/lock.sh -l &
+# xss-lock -- sakura -s -x asciiquarium & alock -bg none ; xdotool key q
 # udiskie needs to start before window manager for icon to appear in polybar
 # udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
