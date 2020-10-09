@@ -188,6 +188,7 @@
 # rustup self uninstall
 # ---------------------
 # Bitwarden CLI
+# xbps-install gcompat
 # https://github.com/bitwarden/cli/releases/download/v1.11.0/bw-linux-1.11.0.zip
 # chmod +x bw
 # mv bw /usr/local/bin
