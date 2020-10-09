@@ -640,7 +640,6 @@ setfont Lat2-Terminus16
 ' alsa-utils'\
 ' libopenal'\
 ' upower'\
-' xfce4-session'\
 ' gtk+3'\
 ' qalc'\
 ' xclip'
