@@ -254,16 +254,27 @@
 # ],
 #####################################################
 # Java
+# xbps-install openjdk8-jre
 # https://www.java.com/en/download/linux_manual.jsp
 # ~/.bashrc
 # JAVA_HOME=/home/user/src/jre1.8.0_261
 # export PATH=$JAVA_HOME/bin:$PATH
-#
-# DirSync Pro - requires java lib
-# https://www.dirsyncpro.org
-# xbps-install openjdk8-jre
-# ~.bashrc
 # export LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
+#####################################################
+# DirSync Pro - requires LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8-openjdk/jre/lib/amd64/server
+# https://www.dirsyncpro.org
+# https://downloads.sourceforge.net/project/directorysync/DirSync%20Pro%20%28stable%29/1.53/DirSyncPro-1.53-Linux.tar.gz
+#####################################################
+# Clipboard Manaqers
+# https://sourceforge.net/projects/copyq
+# https://hluk.github.io/CopyQ
+# xbps-install CopyQ
+#
+# Keepboard (MacOs,Win,Linux) - Java
+# https://sourceforge.net/projects/keepboard
+# https://downloads.sourceforge.net/project/keepboard/Keepboard_Linux_5.5.zip
+# atool -x Keepboard_Linux_5.5.zip
+# Keepboard_Linux_5.5/start.sh
 ##################################################################
 # Osync
 # https://github.com/deajan/osync
