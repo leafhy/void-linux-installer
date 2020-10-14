@@ -940,6 +940,7 @@ PS3='Select f2fs options to use: '
   
 esac
 done
+fi
 
 # ${fsys3} -f -l
 # f2fs  
