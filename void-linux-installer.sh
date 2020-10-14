@@ -24,10 +24,14 @@
 # http://ix.io/1wIS # aggressive nilfs config
 # https://www.shellcheck.net
 # https://wiki.archlinux.org/index.php/unbound
-# https://nlnetlabs.nl/documentation/unbound/ # some inaccurate options - version differences?
-# https://www.gnu.org/software/stow/ # symlink manager
+# https://nlnetlabs.nl/documentation/unbound/ # docs have some errors 
 # https://www.funtoo.org/Keychain
 # https://github.com/denysdovhan/bash-handbook
+#
+# ### symlink managers ###
+# https://github.com/anishathalye/dotbot
+# https://www.gnu.org/software/stow/
+# https://github.com/andsens/homeshick
 #
 # **************************
 # * Unhide Terminal Cursor *
@@ -64,20 +68,13 @@
 ####                      Preparatory Instructions                                    ####
 ##########################################################################################
 # 8GB usb or larger required for repository (void repository = ~1TB)                     #
-# Install void-live-x86_64-musl-20191109.iso to usb drive - ie. with PassMark imgUSB     #
-# usb will have /dev/sdc1 and /dev/sdc2                                                  #
-# format unallocated space - mkfs.f2fs /dev/sdc3                                         #
-# use sdc3 for repository, *this* script et. al                                          #
-# boot usb                                                                               #
-# login as root                                                                          #
-# mount /dev/sdc3 /opt                                                                   #
-# run *this* script                                                                      #
-#                                                                                         #
-# Note: Use fdisk to format iso9660/HYBRID USB                                            #
-#     : use rufus to install iso - creates one partition -> /run/initramfs/live/data-is-here #
-#     : using imgUSB and formating free space is not reliable (blkid sometimes fails to detect partition) #
+# Install void-live-x86_64-musl-20191109.iso to usb drive                                #
+#                                                                                        #                                                                                       #
+# Note: fdisk can format iso9660/HYBRID USB                                              #
+#     : rufus - creates one partition -> /run/initramfs/live/data-is-here                #
+#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition) #
 #                                                                                        #                                                                                      #
-# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  #                                               #
+# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  #
 # create ramfs # mount -t ramfs ramfs /opt                                               #
 # cp -R /run/initramfs/live/data-is-here /opt                                            #
 ##########################################################################################
@@ -933,9 +930,9 @@ PS3='Select f2fs options to use: '
       break
       ;;
     'No Checksums')
-     fsys3="$fsys3 -O lost_found,casefold -C utf8"
-     break
-     ;;
+      fsys3="$fsys3 -O lost_found,casefold -C utf8"
+      break
+      ;;
 *) echo Try again
   
 esac
