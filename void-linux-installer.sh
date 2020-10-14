@@ -916,10 +916,10 @@ if [[ "$fsys2" ]] && [[ $device = /dev/mmcblk0 ]]; then
 fi
 
 if [[ $fsys3 ]] ; then
-echo "Encrypt = -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
+echo "Encrypt = -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,compression"
 echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
 echo "No Checksums = -O lost_found,casefold -C utf8"
-echo
+echo "encrypt does not work with 'casefold/utf8'"
 
 PS3='Select f2fs options to use: '
  select opts in "Encrypt" "No Encryption" "No Checksums"; do
