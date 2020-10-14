@@ -1027,7 +1027,7 @@ cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 if [[ $repopath != "" ]]; then
 xbps-install --download-only -y $pkg_list -c $repopath
 cd $repopath
-# unsure if xbps-rindex is actually needed (did resolve package not found)
+# xbps-rindex resolved package not found
 xbps-rindex -a *xbps
 xbps-install -R $repopath -r /mnt void-repo-nonfree -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
