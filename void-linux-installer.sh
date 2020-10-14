@@ -915,13 +915,39 @@ if [[ "$fsys2" ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
+if [[ $fsys3 ]] ; then
+echo "Encrypt = -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
+echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
+echo "No Checksums = -O lost_found,casefold -C utf8"
+echo
+
+PS3='Select f2fs options to use: '
+ select opts in "Encrypt" "No Encryption" "No Checksums"; do
+    case $opts in
+    'Encrypt')
+      fsys3="$fsys3 -force -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8 -label"
+      break
+      ;;
+    'No Encryption')
+      fsys3="$fsys3 -force -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8 -label"
+      break
+      ;;
+    'No Checksums')
+     fsys3="$fsys3 -force -O lost_found,casefold -C utf8 -label"
+     break
+     ;;
+*) echo Try again
+  
+esac
+done
+
 # ${fsys3} -f -l
 # f2fs  
 if [[ "$fsys3" ]] && [[ $device = /dev/mmcblk0 ]]; then
-     mkfs.$fsys3 -f -l $labelroot ${device}p2
+     mkfs.$fsys3 $labelroot ${device}p2
    
    elif [[ "$fsys3" ]] && [[ $device != /dev/mmcblk0 ]]; then
-     mkfs.$fsys3 -f -l $labelroot ${device}2
+     mkfs.$fsys3 $labelroot ${device}2
 fi
 
 # Mount them
