@@ -16,7 +16,7 @@
 ;
 ;==========================================================
 # https://gitlab.com/dwt1/dotfiles/blob/master/.config/polybar/config
-# https://github.com/be5invis/Iosevk
+# https://github.com/be5invis/Iosevka
 # https://icomoon.io
 # https://github.com/adi1090x/polybar-themes/blob/master/polybar-10/fonts/icomoon-feather.ttf
 
@@ -97,9 +97,6 @@ tray-padding =
 ###############
 #### FONTS ####
 ###############
-# https://github.com/be5invis/Iosevk
-# https://icomoon.io
-# https://github.com/adi1090x/polybar-themes/blob/master/polybar-10/fonts/icomoon-feather.ttf
 ;font-0 = fixed:pixelsize=10;1
 ;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
 ;font-2  = siji:pixelsize=10;1
