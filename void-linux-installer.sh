@@ -24,19 +24,23 @@
 # http://ix.io/1wIS # aggressive nilfs config
 # https://www.shellcheck.net
 # https://wiki.archlinux.org/index.php/unbound
-# https://nlnetlabs.nl/documentation/unbound/ # docs have some errors 
+# https://nlnetlabs.nl/documentation/unbound
 # https://www.funtoo.org/Keychain
 # https://github.com/denysdovhan/bash-handbook
 #
 # ### symlink managers ###
 # https://github.com/anishathalye/dotbot
-# https://www.gnu.org/software/stow/
+# https://www.gnu.org/software/stow
 # https://github.com/andsens/homeshick
+# https://gitlab.com/grm-grm/ck
 #
-# **************************
-# * Unhide Terminal Cursor *
-# * echo -en "\e[?25h"     *
-# **************************
+# ***************************
+# Hide/Unhide Terminal Cursor 
+# echo -en "\e[?25h" # unhide
+# tput civis # hide
+# tput cnorm # unhide
+# ***************************
+#
 #
 # Notes:
 # Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
