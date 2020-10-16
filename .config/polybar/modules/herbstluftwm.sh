@@ -1,5 +1,5 @@
 #!/bin/sh
-# https://gist.github.com/olmokramer/b28ff8ed5fd366e3ebb23b79915ec850
+# https://gist.githubusercontent.com/olmokramer/b28ff8ed5fd366e3ebb23b79915ec850/raw/6d9c25b51528cdf7af098d039fa5693675100f1f/herbstluftwm.sh
 hash herbstclient xrandr
 
 print_tags() {
