@@ -27,6 +27,8 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
+include = ~/.config/polybar/modules/herbstluftwm
+
 #################
 #### COLOURS ####
 ################# 
@@ -153,12 +155,6 @@ label-padding = 2
 label-empty = 
 label-empty-minlen = 20
 label-empty-maxlen = 20
-
-[module/workspaces]
-type = custom/script
-exec-if = ps -C herbstluftwm > /dev/null 2>&1
-exec = MONITOR=DP-1 ~/.config/polybar/scripts/herbstluftwm.sh
-tail = true
 
 [module/ewmh]
 type = internal/xworkspaces
