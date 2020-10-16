@@ -1,4 +1,4 @@
-[module/workspaces]
+[module/herbstluftwm]
 ;; https://gist.githubusercontent.com/olmokramer/b28ff8ed5fd366e3ebb23b79915ec850/raw/6d9c25b51528cdf7af098d039fa5693675100f1f/config
 type = custom/script
 exec-if = ps -C herbstluftwm > /dev/null 2>&1
