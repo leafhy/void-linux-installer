@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# https://gist.github.com/olmokramer/b28ff8ed5fd366e3ebb23b79915ec850
 hash herbstclient xrandr
 
 print_tags() {
