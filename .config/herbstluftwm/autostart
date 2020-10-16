@@ -32,7 +32,6 @@ hc keybind $Mod-Shift-c close
 
 hc keybind $Mod-Return spawn sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh -l
-hc keybind $Mod-Shift-z spawn asciiquarium & alock -bg none &
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
 hc keybind $Mod-q spawn ~/.config/herbstluftwm/scripts/q3terminal.sh
 hc keybind $Mod-y spawn ~/.config/herbstluftwm/scripts/windowmenu.sh
