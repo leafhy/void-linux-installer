@@ -15,6 +15,11 @@
 ;   The README contains a lot of information
 ;
 ;==========================================================
+# https://gitlab.com/dwt1/dotfiles/blob/master/.config/polybar/config
+# https://github.com/be5invis/Iosevk
+# https://icomoon.io
+# https://github.com/adi1090x/polybar-themes/blob/master/polybar-10/fonts/icomoon-feather.ttf
+
 [settings]
 screenchange-reload = true
 
@@ -22,12 +27,141 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
-include-file = ~/.config/herbstluftwm/herbstluftwm-workspaces
+#################
+#### COLOURS ####
+################# 
+[colors]
+;background = ${xrdb:color0:#222}
+background = #ffffff
+background-alt = #444
+background1 = #8d62ad
+background2 = #f00
+background3 = #0063ff
+background4 = #a657ad
 
+;foreground = ${xrdb:color7:#222}
+foreground = #19293b
+foreground-alt = #555
+foreground1 = #a3c725
+foreground2 = #fefefe
+
+fg-alt = #f00
+fg-alt1 = #cccccc
+
+alert = #ffb300
+border = #000000
+
+underline1 = #6790eb
+underline2 = #7e52c6
+underline3 = #a3c725
+underline4 = #c7ae25
+underline5 = #0a6cf5
+underline6 = #55aa55
+##################
+#### MAIN BAR ####
+##################
+[bar/herbstluftwm]
+;monitor = ${env:MONITOR:VGA-1}
+monitor = ${env:MONITOR:DP-1}
+monitor-fallback = ${env:MONITOR:LVDS-1}
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+;radius = 6.0
+;fixed-center = true
+dpi = 96
+background = ${colors.background}
+foreground = ${colors.foreground}
+enable-ipc = true
+line-size = 3
+;line-color = #f00
+label-mounted-margin = 1
+border-size = 1
+border-color = ${colors.border}
+
+padding-left =
+padding-right =
+
+module-margin-left =1
+module-margin-right = 1
+
+tray-position = right
+tray-padding =
+;tray-background = ${colors.background3}
+;tray-scale = 6.0
+;tray-maximise = 1000
+
+###############
+#### FONTS ####
+###############
+# https://github.com/be5invis/Iosevk
+# https://icomoon.io
+# https://github.com/adi1090x/polybar-themes/blob/master/polybar-10/fonts/icomoon-feather.ttf
+;font-0 = fixed:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
+;font-2  = siji:pixelsize=10;1
+font-0  = "Iosevka Term SS10:style=Regular:size=10;3"
+font-1 = icomoon\-feather:style=Regular:size=10;3
+font-2 = IcoMoon\-Free:size=10;3
+font-3 = "NotoEmoji Nerd Font Mono:size=10;3"
+
+#################
+#### Modules ####
+#################
+modules-left = ewmh xwindow
+modules-center =
+modules-right = alsa wireless-network battery date
+
+[module/subscriber]
+type = custom/ipc
+
+;; Define the command to be executed when the hook is triggered
+;; Available tokens:
+;;   %pid% (id of the parent polybar process)
+hook-0 = date
+hook-1 = whoami
+hook-2 = echo "Files in ${HOME}: $(ls -1a ~ | wc -l)"
+
+;; Hook to execute on launch. The index is 1-based and using
+;; the example below (2) `whoami` would be executed on launch.
+;; If 0 is specified, no hook is run on launch
+;; Default: 0
+initial = 1
+
+[module/demo]
+type = custom/ipc
+hook-0 = pwd
+hook-1 = date +%s
+hook-2 = whoami
+initial = 2
+click-left = polybar-msg -p %pid% hook demo 1
+click-right = polybar-msg -p %pid% hook demo 2
+double-click-left = polybar-msg -p %pid% hook demo
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+format = <label>
+format-background = ${colors.background1}
+format-foreground = ${colors.foreground}
+format-padding = 2
+label-minlen = 20
+label-maxlen = 20
+label-alignment = center
+label-padding = 2
+label-empty = 
+label-empty-minlen = 20
+label-empty-maxlen = 20
+
+[module/workspaces]
+type = custom/script
+exec-if = ps -C herbstluftwm > /dev/null 2>&1
+exec = MONITOR=DP-1 ~/.config/polybar/scripts/herbstluftwm.sh
+tail = true
 
 [module/ewmh]
 type = internal/xworkspaces
-
 pin-workspaces = false
 enable-click = true
 enable-scroll = true
@@ -49,174 +183,87 @@ icon-7 = 8;
 #icon-9 = 10;
 #icon-default = " "
 format = <label-state>
-label-monitor = %name%
+;label-monitor = %name%%
 
-label-active = %name%
+;label-active = %name%
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
-label-active-underline= #6790eb
+label-active-overline =
+label-active-underline = ${colors.underline1}
 label-active-padding = 1
+label-active-margin = 1 
 
-label-occupied = %name%
+;label-occupied = %name%
+label-occupied-foreground = ${colors.foreground}
 label-occupied-background = ${colors.background}
 label-occupied-padding = 1
+label-occupied-margin = 1 
 
-label-urgent = %name%
+;label-urgent = %name%
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 1
+label-urgent-margin = 1
 
-label-empty = %name%
-label-empty-foreground = ${colors.foreground}
+;label-empty = %name%
+label-empty-foreground = ${colors.fg-alt1}
 label-empty-padding = 1
+label-empty-margin = 1
+
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-
-[colors]
-;background = ${xrdb:color0:#222}
-background = #ffffff
-;#222
-;background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #191e21
-;#dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #F3382E
-;#e60053
-alert = #cccccc
-
-polar-1 = #2E3440
-polar-2 = #3B4252
-polar-3 = #434C5E
-polar-4 = #4C566A
-
-snow-1 = #D8DEE9
-snow-2 = #E5E9F0
-snow-3 = #ECEFF4
-
-frost-1 = #8FBCBB
-frost-2 = #88C0D0
-frost-3 = #81A1C1
-frost-4 = #5E81AC
-
-aurora-1 = #BF616A
-aurora-2 = #D08770
-aurora-3 = #EBCB8B
-aurora-4 = #A3BE8C
-aurora-5 = #B48EAD
-
-black = #000
-white = #FFF
-
-trans = #00000000
-semi-trans-black = #aa000000
-semi-trans = #aa2E3440
-
-[bar/herbstluftwm]
-;monitor = ${env:MONITOR:VGA-1}
-monitor = ${env:MONITOR:DP-1}
-monitor-fallback = ${env:MONITOR:LVDS-1}
-width = 100%
-height = 23
-;offset-x = 1%
-;offset-y = 1%
-;radius = 6.0
-fixed-center = false
-dpi = 130
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-line-size = 1
-line-color = #f00
-
-border-size = 2
-border-color = #000000
-
-padding-left = 0
-padding-right = 1
-
-module-margin-left = 1
-module-margin-right = 1
-
-tray-position = right
-tray-padding = 1
-;tray-background = #0063ff
-;tray-scale = 6.0
-;tray-maximise = 1000
-
-;font-0 = fixed:pixelsize=10;1
-font-0 = Iosevka SS10 Fixed :style=regular:regular:size=10;1
-;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
-;font-1  = siji:pixelsize=20;1
-;font-0 = icomoon\-feather:style=Regular:size=10
-;font-1 Roboto:size=11:weight=bold;2
-;font-1 Noto Sans:size=11;1
-;font-1 = Font Awesome 5 Free:style=regular:size=10;1
-
-;font-0 = "JetBrainsMono Nerd Font:style=Medium:size=8;2"
-;font-1 = "JetBrainsMono Nerd Font:style=Bold:size=8;2"
-;font-2 = "JetBrainsMono Nerd Font:size=10;3"
-;font-3 = "JetBrainsMono Nerd Font:size=12;3"
-;font-4 = "JetBrainsMono Nerd Font:size=19;4"
-;font-5 = "FontAwesome:size=9;3"
-
-modules-left = herbstluftwm-workspaces
-modules-center =
-modules-right = filesystem alsa wireless-network battery date
-
 
 [module/alsa]
 type = internal/alsa
 
-; You can find the different card numbers in `/proc/asound/cards`
-;;master-soundcard = default
-;;speaker-soundcard = default
-;;headphone-soundcard = default
+;; You can find the different card numbers in `/proc/asound/cards`
+;; master-soundcard = default
+;; speaker-soundcard = default
+;; headphone-soundcard = default
 
-; Default: Master
-;;master-mixer = Master
+;; Default: Master
+master-mixer = Master
 
-; Optionally define speaker and headphone mixers
-; Default: none
-;;speaker-mixer = Speaker
-; Default: none
-;;headphone-mixer = Headphone
+;; Optionally define speaker and headphone mixers
+;; Default: none
+;speaker-mixer = Speaker
+;; Default: none
+;headphone-mixer = Headphone
 
 ; Default: 5
-;;interval = 5
+interval = 5
 
-; Available tags:
+;; Available tags:
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume = <ramp-volume>
-format-volume-background = ${color.bg-alt}
-format-volume-padding = 2
+format-volume = <ramp-volume> <label-volume>
+format-volume-background = ${colors.background} 
+format-volume-padding = 1 
 
-; Available tags:
+;; Available tags:
 ;   <label-muted> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
 format-muted = <label-muted>
-format-muted-background = ${color.bg-alt}
-format-muted-padding = 2
+format-muted-background = ${colors.background}
+format-muted-padding = 5
 
-; Available tokens:
+;; Available tokens:
 ;   %percentage% (default)
-label-volume = %percentage%%
+label-volume = %percentage:3%
+;%{F#f00}%percentage%%{F-}%
 
-; Available tokens:
-;   %percentage% (default
-label-muted = ﱝ
-label-muted-foreground = ${color.fg-alt}
+;; Available tokens:
+;   %percentage% (default)
+label-muted =   
+label-muted-foreground = ${colors.fg-alt}
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
-
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
 
 [module/battery]
 ;https://github.com/jaagr/polybar/wiki/Module:-battery
@@ -229,18 +276,17 @@ format-charging = <animation-charging>
 label-charging = %percentage%%
 format-charging-foreground = ${colors.foreground}
 format-charging-background = ${colors.background}
-format-charging-underline = #a3c725
+format-charging-underline = ${colors.underline3}
 
 format-discharging = <ramp-capacity>
-label-discharging = %percentage%%
-;format-discharging-underline = #c7ae25
+;label-discharging = %percentage%%
+;format-discharging-underline = ${colors.underline4}
 format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background}
 
 format-full-prefix = " "
-format-full-prefix-foreground = #ffffff
-;#a3c725
-format-full-underline = #a3c725
+format-full-prefix-foreground = ${colors.foreground}
+;format-full-underline = ${colors.foreground1}
 format-full-foreground = ${colors.foreground}
 format-full-background = ${colors.background}
 
@@ -249,18 +295,16 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-ramp-capacity-foreground = #000000
-;#c7ae25
+ramp-capacity-foreground = ${colors.foreground}
 
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-foreground = #a3c725
+animation-charging-4 =    
+animation-charging-foreground = ${colors.foreground1}
 animation-charging-framerate = 750
-
-
+label-padding = 1
 
 [module/date]
 type = internal/date
@@ -271,48 +315,41 @@ date = "%b %d"
 
 time = %H:%M
 ;time-alt = %H:%M:%S
-format-prefix = 
+format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
-;format-underline = #0a6cf5
-label-font = 3
+;format-underline = ${colors.underline5}
+label-font = 0
 label = %date% %time%
-
+label-padding = 1
 
 [module/networkspeedup]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 ;interface = wlp3s0
-;interface = enp14s0
-;interface = enp0s31f6
 interface = enp0s25
 label-connected = "%upspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = " "
-format-connected-prefix-foreground = #000000
-format-connected-foreground = #000000
-;format-connected-background = #000000
-
+format-connected-prefix-foreground = ${colors.foreground}
+format-connected-foreground = ${colors.foreground}
+;format-connected-background = ${colors.foreground}
 
 [module/networkspeeddown]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 ;interface = wlp3s0
-;interface = enp14s0
-;interface = enp0s31f6
 interface = enp0s25
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = "  "
-format-connected-prefix-foreground = #fefefe
-format-connected-foreground = #fefefe
-format-connected-background = #8d62ad
-
+format-connected-prefix-foreground = ${colors.foreground2}
+format-connected-foreground = ${colors.foreground2}
+format-connected-background = ${colors.background2}
 
 [module/wired-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 interface = enp0s25
-;interface = enp14s0
 interval = 3.0
 
 ; Available tokens:
@@ -324,20 +361,19 @@ interval = 3.0
 ;   %downspeed% [wireless+wired]
 ;   %linkspeed% [wired]
 ; Default: %ifname% %local_ip%
-label-connected =  %ifname%
+label-connected = " "
 label-disconnected = %ifname% disconnected
 
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = #55aa55
+format-connected-underline = ${colors.underline6}
+;format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.underline6}
 format-connected-prefix-background = ${colors.background}
 
 format-disconnected = <label-disconnected>
 format-disconnected-underline = ${colors.alert}
 label-disconnected-foreground = ${colors.foreground}
-
 
 [module/wireless-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
@@ -345,24 +381,25 @@ type = internal/network
 interface = wlan0
 interval = 3.0
 label-connected = %essid%
+label-padding = 1
 
 format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-prefix = "  "
-format-connected-prefix-foreground = #ffffff
+format-connected-prefix = "" 
+format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
-format-connected-underline = #7e52c6
+format-connected-underline = ${colors.underline2}
 
-label-disconnected = "睊 " 
-label-disconnected-foreground = ${colors.alert}
+label-disconnected = " " 
+;""
+label-disconnected-foreground = ${colors.fg-alt1}
 label-disconnected-background = ${colors.background}
-
 format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.alert}
 format-disconnected-background = ${colors.background}
-;format-disconnected-prefix = "睊 "
+;format-disconnected-prefix = " "
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-prefix-background = ${colors.background}
 ;format-disconnected-underline =${colors.alert}
@@ -375,38 +412,4 @@ ramp-signal-4 = ▅
 ramp-signal-5 = ▆
 ramp-signal-6 = ▇
 ramp-signal-7 = █
-ramp-signal-foreground = #000000
-
-[module/wlan00]
-type = internal/network
-interface = wlan0
-interval = 1.0
-
-format-connected = <label-connected>
-format-connected-background = ${colors.polar-2}
-format-connected-padding = 1
-label-connected = %{T6}  %{T-} %{T2}%downspeed%%{T-}
-label-connected-foreground = ${colors.aurora-4}
-
-format-disconnected = <label-disconnected>
-format-disconnected-background = ${colors.polar-2}
-format-disconnected-padding = 1
-label-disconnected = %{T6}睊%{T-}
-label-disconnected-foreground = ${colors.aurora-1}
-
-[module/wired]
-type = internal/network
-interface = enp0s25
-interval = 1.0
-
-format-connected = <label-connected>
-format-connected-background = ${colors.polar-2}
-format-connected-padding = 1
-label-connected = %{T6}W  %{T-} %{T2}%downspeed%%{T-}
-label-connected-foreground = ${colors.aurora-4}
-
-format-disconnected = <label-disconnected>
-format-disconnected-background = ${colors.polar-2}
-format-disconnected-padding = 1
-label-disconnected = %{T6}W%{T-}
-label-disconnected-foreground = ${colors.aurora-1}
+ramp-signal-foreground = ${colors.foreground}
