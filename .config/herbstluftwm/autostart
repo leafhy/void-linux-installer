@@ -37,6 +37,8 @@ hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh
 hc keybind $Mod-q spawn ~/.config/herbstluftwm/scripts/q3terminal.sh
 hc keybind $Mod-y spawn ~/.config/herbstluftwm/scripts/windowmenu.sh
 hc keybind $Mod-t spawn ~/.config/herbstluftwm/scripts/toggledualhead.sh
+hc keybind $Mod-n spawn nemo
+hc keybind $Mod-Control-r spawn dmenu_extended_run
 
 # basic movement in tiling and floating mode# focusing clients
 hc keybind $Mod-Left  focus left
