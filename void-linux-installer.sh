@@ -17,6 +17,8 @@
 # https://github.com/olivier-mauras/void-luks-lvm-installer/blob/master/install.sh
 # https://github.com/NAGA1337/void/blob/master/void.sh
 # https://github.com/alejandroliu/0ink.net/blob/master/snippets/void-installation/install.sh
+# https://github.com/addy-dclxvi/almighty-dotfiles
+# https://github.com/adi1090x/polybar-themes
 # https://www.kernel.org/doc/Documentation/filesystems/f2fs.txt
 # https://www.kernel.org/doc/Documentation/filesystems/xfs.txt
 # https://www.kernel.org/doc/Documentation/filesystems/nilfs2.txt
