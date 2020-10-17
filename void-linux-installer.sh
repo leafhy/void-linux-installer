@@ -666,7 +666,9 @@ setfont Lat2-Terminus16
 ' upower'\
 ' gtk+3'\
 ' qalc'\
-' xclip'
+' xclip'\
+' rofi'\
+' rofi-calc'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
