@@ -8,6 +8,10 @@ hc() {
 
 hc emit_hook reload
 
+# Wallpaper
+xsetroot -solid '#5A8E3A'
+xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard Prowl.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard Prowl.jpg" &
+
 # Terminate already running bar instances
 killall -q polybar
 
@@ -15,9 +19,6 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
-xsetroot -solid '#5A8E3A'
-
-xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard Prowl.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard Prowl.jpg" &
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -32,11 +33,15 @@ hc keybind $Mod-Shift-c close
 
 hc keybind $Mod-Return spawn sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh -l
+hc keybind $Mod-n spawn nemo
+
+# herbstluftwm extras
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
 hc keybind $Mod-q spawn ~/.config/herbstluftwm/scripts/q3terminal.sh
 hc keybind $Mod-y spawn ~/.config/herbstluftwm/scripts/windowmenu.sh
 hc keybind $Mod-t spawn ~/.config/herbstluftwm/scripts/toggledualhead.sh
-hc keybind $Mod-n spawn nemo
+
+# dmenu - rofi
 hc keybind $Mod-Control-r spawn dmenu_extended_run
 
 # basic movement in tiling and floating mode# focusing clients
