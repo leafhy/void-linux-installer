@@ -668,7 +668,8 @@ setfont Lat2-Terminus16
 ' qalc'\
 ' xclip'\
 ' rofi'\
-' rofi-calc'
+' rofi-calc'\
+' fzy'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
