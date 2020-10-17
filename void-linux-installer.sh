@@ -407,7 +407,7 @@
 # ---------------------
 # ~/.xinitrc
 # xss-lock -- ~/.config/i3/lock.sh -l &
-# xss-lock -- sakura -s -x asciiquarium & alock -bg none ; xdotool key q
+# xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # udiskie needs to start before window manager for icon to appear in polybar
 # udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
