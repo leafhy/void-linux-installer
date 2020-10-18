@@ -927,10 +927,11 @@ if [[ $fsys3 ]] ; then
 echo "Encrypt = -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,compression"
 echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
 echo "No Checksums = -O lost_found,casefold -C utf8"
-echo "encrypt does not work with 'casefold/utf8'"
+echo "None = No Options"
+echo "*encrypt does not work with 'casefold/utf8'"
 
 PS3='Select f2fs options to use: '
- select opts in "Encrypt" "No Encryption" "No Checksums"; do
+ select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
     case $opts in
     'Encrypt')
       fsys3="$fsys3 -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
@@ -942,6 +943,10 @@ PS3='Select f2fs options to use: '
       ;;
     'No Checksums')
       fsys3="$fsys3 -O lost_found,casefold -C utf8"
+      break
+      ;;
+    'None')
+      fsys3="$fsys3"
       break
       ;;
 *) echo Try again
