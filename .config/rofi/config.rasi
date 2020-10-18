@@ -10,3 +10,4 @@ configuration {
   sidebar:            true;
   columns:            3;
 }
+@import "/usr/share/rofi/themes/Arc-Dark.rasi"
