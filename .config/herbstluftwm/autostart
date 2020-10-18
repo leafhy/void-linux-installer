@@ -44,7 +44,8 @@ hc keybind $Mod-t spawn ~/.config/herbstluftwm/scripts/toggledualhead.sh
 hc keybind $Mod-Shift-f spawn ~/.config/herbstluftwm/scripts/floatmon.sh
 
 # dmenu - rofi
-hc keybind $Mod-Control-r spawn dmenu_extended_run
+hc keybind $Mod-Control-r spawn rofi -show
+# hc keybind $Mod-Control-r spawn dmenu_extended_run
 hc keybind $Mod-Control-c spawn rofi -show calc -modi calc -no-show-match -no-sort > /dev/null
 
 # basic movement in tiling and floating mode# focusing clients
