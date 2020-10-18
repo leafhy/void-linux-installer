@@ -671,7 +671,8 @@ setfont Lat2-Terminus16
 ' xclip'\
 ' rofi'\
 ' rofi-calc'\
-' fzy'
+' fzy'\
+' xwininfo'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
