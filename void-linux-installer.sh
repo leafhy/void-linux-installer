@@ -308,11 +308,11 @@
 # 
 # The following (3) files allow $HOME to auto mount
 # ------------------------------------
-# mle /etc/security/pam_mount.conf.xml
+# /etc/security/pam_mount.conf.xml
 # < volume user="$USER" fstype="fuse" options="nodev,nosuid,quiet,nonempty,allow_other"
 # path="/usr/local/bin/gocryptfs#/home/%(USER).cipher" mountpoint="/home/%(USER)" />
 # ------------------------------------
-# mle /etc/pam.d/system-login
+# /etc/pam.d/system-login
 # #%PAM-1.0
 #
 # auth       required   pam_tally.so         onerr=succeed file=/var/log/faillog
@@ -337,7 +337,7 @@
 # session    required   pam_env.so
 # session    required   pam_lastlog.so       silent
 # ------------------------------------
-# mle /etc/fuse.conf
+# /etc/fuse.conf
 # user_allow_other # uncomment
 ######################################
 # Mopidy Music Server
