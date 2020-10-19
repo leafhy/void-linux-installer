@@ -672,7 +672,8 @@ setfont Lat2-Terminus16
 ' rofi'\
 ' rofi-calc'\
 ' fzy'\
-' xwininfo'
+' xwininfo'\
+' redshift-gtk'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
