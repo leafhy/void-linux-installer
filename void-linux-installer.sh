@@ -415,6 +415,7 @@
 # udiskie needs to start before window manager for icon to appear in polybar
 # udiskie --tray &
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
+# xbanish -a # hide mouse cursor
 # ---------------------
 # mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # mpv --audio-device=sndio video.mkv
@@ -673,7 +674,8 @@ setfont Lat2-Terminus16
 ' rofi-calc'\
 ' fzy'\
 ' xwininfo'\
-' redshift-gtk'
+' redshift-gtk'\
+' xbanish'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
