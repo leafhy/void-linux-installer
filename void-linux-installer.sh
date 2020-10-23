@@ -649,7 +649,6 @@ setfont Lat2-Terminus16
 ' font-manager'\
 ' libmnl-devel'\
 ' dialog'\
-' caddy'\
 ' ghostwriter'\
 ' inotify-tools'\
 ' udiskie'\
