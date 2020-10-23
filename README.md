@@ -4,7 +4,7 @@ I know next to nothing about bash so there could be dragons and possibly a few t
 ## Void Linux Installer
 This partially interarctive bash script is setup to install void linux x86_64-musl, herbstluftwm & polybar.
 
-## Install dotfiles
+### Install dotfiles
 ```
 git clone https://gitlab.com/semente/summon.git
 ```
