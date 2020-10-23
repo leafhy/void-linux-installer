@@ -257,6 +257,7 @@
 # "-dmenu",
 #  "-i"
 # ],
+# Note: '-b' # moves window to bottom of screen
 #####################################################
 # Java
 # xbps-install openjdk8-jre
@@ -414,6 +415,7 @@
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # udiskie needs to start before window manager for icon to appear in polybar
 # udiskie --tray &
+# exec --no-startup-id clipster -d
 # exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 # xbanish -a # hide mouse cursor
 # ---------------------
@@ -673,6 +675,7 @@ setfont Lat2-Terminus16
 ' rofi'\
 ' rofi-calc'\
 ' fzy'\
+' fzf'\
 ' xwininfo'\
 ' redshift-gtk'\
 ' xbanish'
@@ -726,7 +729,7 @@ EOF
   FONT="Tamsyn8x16r"
   TTYS="2"
   # Download various scripts/whatever to /home/$username/scripts
-  urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
+  urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
   # Run script manually or add to fcron - make executable - chmod +x
   urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
   # Add font(.tar.gz) to /usr/share/kbd/consolefonts
