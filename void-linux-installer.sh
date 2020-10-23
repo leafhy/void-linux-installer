@@ -1315,8 +1315,6 @@ EOF
 # Herbstluftwm
  chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
  chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
-echo "udiskie --tray &" >> /mnt/home/$username/.xinitrc
-echo "exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked" >> /mnt/home/$username/.xinitrc
 
 # Unbound Configuration
 tee /mnt/etc/unbound/unbound.conf <<EOF
