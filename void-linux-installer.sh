@@ -703,7 +703,18 @@ alias bmount='doas /sbin/mount /mnt/backup'
 alias bumount='doas /sbin/umount /mnt/backup'
 EOF
 )"
-  # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
+# .xinitrc
+xinitrc="$(cat <<'EOF'
+# xss-lock -- ~/.config/i3/lock.sh -l &
+# xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
+# udiskie needs to start before window manager for icon to appear in polybar
+udiskie --tray &
+exec --no-startup-id clipster -d
+exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
+xbanish -a
+EOF
+)"
+# For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
   ipstaticeth0="192.168.1.XX"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
   ipstaticwlan0="192.168.1.XX"
@@ -1220,9 +1231,6 @@ while true; do
   echo ''
 done
 
-# Setup bash_profile
-echo "$bashprofile" >> /mnt/home/$username/.bashrc
-
 # Check $pkg_list installed
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
@@ -1266,6 +1274,11 @@ if [ $urlfont ]; then
      echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"
      sleep 3s
 fi 
+
+# Setup bash_profile
+echo "$bashprofile" >> /mnt/home/$username/.bashrc
+
+echo "$xinitrc" >> /mnt/home/$username/.xinitrc
 
 # Audio Configuration
 chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
