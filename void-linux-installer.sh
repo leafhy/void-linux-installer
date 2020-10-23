@@ -695,6 +695,7 @@ bashprofile="$(cat <<'EOF'
 scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias weather='curl wttr.in/?0'
@@ -745,11 +746,13 @@ EOF
   FONT="Tamsyn8x16r"
   TTYS="2"
   # Download various scripts/whatever to /home/$username/scripts
-  urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
+  urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
   # Run script manually or add to fcron - make executable - chmod +x
   urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
   # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
+  # Install to ~/.local/bin
+  bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -1251,7 +1254,7 @@ chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
 # Install Extras
-if [ $urlscripts ] || [ $urlfont ]; then
+if [ $urlscripts ] || [ $urlfont ] || [ $bin ]; then
      xbps-install -S -y aria2
 fi
   
@@ -1279,6 +1282,13 @@ if [ $urlfont ]; then
      echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"
      sleep 3s
 fi 
+
+if [ $bin ]; then
+     echo '**** Installing Bin ****'
+     for file in "${bin[@]}"; do
+     chroot  --userspec=$username:users /mnt aria2c "$bin" -d home/$username/.local/bin
+     done
+fi
 
 # Setup bash_profile
 echo "$bashprofile" >> /mnt/home/$username/.bashrc
