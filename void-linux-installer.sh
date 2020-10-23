@@ -39,6 +39,8 @@
 # https://gitlab.com/grm-grm/ck
 # https://gitlab.com/semente/summon
 # https://github.com/lra/mackup
+# https://github.com/kairichard/lace
+# https://www.chezmoi.io
 # ***************************
 # Hide/Unhide Terminal Cursor 
 # echo -en "\e[?25h" # unhide
