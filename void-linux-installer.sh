@@ -37,7 +37,8 @@
 # https://www.gnu.org/software/stow
 # https://github.com/andsens/homeshick
 # https://gitlab.com/grm-grm/ck
-#
+# https://gitlab.com/semente/summon
+# https://github.com/lra/mackup
 # ***************************
 # Hide/Unhide Terminal Cursor 
 # echo -en "\e[?25h" # unhide
