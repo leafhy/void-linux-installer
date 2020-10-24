@@ -284,6 +284,9 @@
 # https://downloads.sourceforge.net/project/keepboard/Keepboard_Linux_5.5.zip
 # atool -x Keepboard_Linux_5.5.zip
 # Keepboard_Linux_5.5/start.sh
+#
+# https://github.com/erebe/greenclip
+# https://github.com/gilbertw1/roficlip
 ##################################################################
 # Osync
 # https://github.com/deajan/osync
