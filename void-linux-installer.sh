@@ -361,6 +361,12 @@
 # ---------------
 # Note: mopidy needs output server mpd,snapcast 
 #     : scan notification appears to never end
+#
+#######################################
+# nohang - prevent out of memory 
+# git clone https://github.com/hakavlad/nohang.git
+# nohang --monitor -c /usr/local/etc/nohang/nohang-desktop.conf
+#                     /usr/local/etc/nohang/nohang.conf
 #######################################
 #######################################
 # =====================================
