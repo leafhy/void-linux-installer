@@ -689,7 +689,8 @@ setfont Lat2-Terminus16
 ' fzf'\
 ' xwininfo'\
 ' redshift-gtk'\
-' xbanish'
+' xbanish'\
+' arc-theme'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
