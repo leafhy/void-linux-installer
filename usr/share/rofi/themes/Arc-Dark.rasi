@@ -36,6 +36,9 @@
     font:                        "Iosevka Term SS10 SemiBold 12";
 
 }
+element-icon {
+          size:  1.80ch;
+}
 window {
     background-color: @background;
     border:           1;
