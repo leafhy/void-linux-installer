@@ -690,7 +690,9 @@ setfont Lat2-Terminus16
 ' xwininfo'\
 ' redshift-gtk'\
 ' xbanish'\
-' arc-theme'
+' arc-theme'\
+' faience-icon-theme'\
+' faenza-icon-theme'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
