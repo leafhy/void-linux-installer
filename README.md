@@ -7,13 +7,12 @@ This partially interarctive bash script is setup to *install void linux x86_64-m
 ### Install dotfiles
 ```
 git clone https://gitlab.com/semente/summon.git
+chmod +x summon/summon.sh
 ```
 ```
 git clone https://github.com/leafhy/void-linux-installer.git
-```
-```
 cd void-linux-installer
-summon.sh dirname
+../summon/summon.sh dirname
 ```
 
 #### Requirement (glibc version not tested)
