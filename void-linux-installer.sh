@@ -759,7 +759,7 @@ EOF
   TTYS="2"
   # Download various scripts/whatever to /home/$username/scripts
   urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
-  # Run script manually or add to fcron - make executable - chmod +x
+  # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
   urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
   # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
