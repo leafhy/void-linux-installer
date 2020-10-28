@@ -691,6 +691,7 @@ setfont Lat2-Terminus16
 ' redshift-gtk'\
 ' xbanish'\
 ' arc-theme'\
+' arc-icon-theme'\
 ' faience-icon-theme'\
 ' faenza-icon-theme'
 
