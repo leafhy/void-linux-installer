@@ -7,7 +7,7 @@ configuration {
   cycle:              true;
   hide-scrollbar:     true;
   disable-history:    false;
-  modi:              "drun,run,window,ssh,clipboard:greenclip print,keys";
+  modi:              "drun,run,window,ssh,calc,clipboard:greenclip print,keys";
   sidebar-mode:       true;
   display-drun:      "apps";
   sidebar:            true;
