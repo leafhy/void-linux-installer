@@ -3,7 +3,8 @@ configuration {
   /*xoffset: 200;*/
   yoffset: -100;
   show-icons:         true;
-  icon-theme:        "Papirus-Dark";
+ /* icon-theme:        "Papirus-Dark"; */
+  icon-theme:         "Arc";
   cycle:              true;
   hide-scrollbar:     true;
   disable-history:    false;
