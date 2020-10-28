@@ -37,7 +37,7 @@
 
 }
 element-icon {
-          size:  1.80ch;
+          size:  2.0ch;
 }
 window {
     background-color: @background;
