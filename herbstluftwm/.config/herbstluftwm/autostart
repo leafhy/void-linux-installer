@@ -34,7 +34,7 @@ hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 
-hc keybind $Mod-Return spawn sakura -m "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
+hc keybind $Mod-Return spawn sakura -m --title sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
 hc keybind $Mod-n spawn nemo
 
