@@ -15,6 +15,8 @@
 ;   The README contains a lot of information
 ;
 ;==========================================================
+# https://www.reddit.com/r/Polybar/comments/a8j2v9/volume_bar_for_uber_slim_polybar/
+# https://gitlab.com/hexdsl/dots/-/blob/master/stow_home/polybar/.config/polybar/config
 # https://gitlab.com/dwt1/dotfiles/blob/master/.config/polybar/config
 # https://github.com/be5invis/Iosevka
 # https://icomoon.io
@@ -59,6 +61,7 @@ underline3 = #a3c725
 underline4 = #c7ae25
 underline5 = #0a6cf5
 underline6 = #55aa55
+
 ##################
 #### MAIN BAR ####
 ##################
@@ -110,7 +113,7 @@ font-3 = "NotoEmoji Nerd Font Mono:size=10;3"
 #################
 modules-left = ewmh xwindow
 modules-center =
-modules-right = alsa wireless-network battery date
+modules-right = alsa2 memory wireless-network battery date
 
 [module/subscriber]
 type = custom/ipc
@@ -406,3 +409,128 @@ ramp-signal-5 = ▆
 ramp-signal-6 = ▇
 ramp-signal-7 = █
 ramp-signal-foreground = ${colors.foreground}
+
+[module/memory1]
+type = internal/memory
+interval = 3
+format = <label> <bar-used>
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+;   %percentage_swap_used%
+;   %percentage_swap_free%
+;   %mb_swap_total%
+;   %mb_swap_free%
+;   %mb_swap_used%
+;   %gb_swap_total%
+;   %gb_swap_free%
+;   %gb_swap_used%
+label = %gb_used%%
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 50
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+ramp-used-0 = ▁
+ramp-used-1 = ▂
+ramp-used-2 = ▃
+ramp-used-3 = ▄
+ramp-used-4 = ▅
+ramp-used-5 = ▆
+ramp-used-6 = ▇
+ramp-used-7 = █
+ramp-free-0 = ▁
+ramp-free-1 = ▂
+ramp-free-2 = ▃
+ramp-free-3 = ▄
+ramp-free-4 = ▅
+ramp-free-5 = ▆
+ramp-free-6 = ▇
+ramp-free-7 = █
+
+format-padding = 2
+
+[module/cpu1]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+label = CPU %percentage:3%
+ramp-coreload-spacing = 1
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+label-padding = 1
+;ramp-coreload-padding = 1
+
+[module/alsa2]
+type = internal/alsa
+format-volume = <ramp-volume> <bar-volume>
+;label-volume = ""
+label-volume-foreground = ${colors.background}
+;label-volume-padding-right = ${paddings.inner}
+;label-volume-padding-left = ${paddings.outer}
+;label-volume-font = 2
+;format-muted-prefix = ""
+format-muted-foreground = ${colors.background2}
+;format-muted-background = ${colors.blue}
+
+label-muted =  
+;label-padding = 1
+
+ramp-volume-0 =                                                                             
+ramp-volume-1 =                                                                             
+ramp-volume-2 =                                                                             
+ramp-volume-3 =  
+
+format-volume-padding = 1
+ramp-volume-padding = 0
+format-muted-padding = 12
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.foreground}
+;bar-volume-foreground-1 = ${colors.green}
+;bar-volume-foreground-2 = ${colors.green}
+;bar-volume-foreground-3 = ${colors.green}
+;bar-volume-foreground-4 = ${colors.green}
+;bar-volume-foreground-5 = ${colors.green}
+;bar-volume-foreground-6 = ${colors.green}
+;bar-volume-foreground-7 = ${colors.green}
+;bar-volume-foreground-8 = ${colors.green}
+;bar-volume-foreground-9 = ${colors.green}
+;bar-volume-foreground-10 = ${colors.yellow}
+;bar-volume-foreground-11 = ${colors.yellow}
+;bar-volume-foreground-12 = ${colors.red}
+
+bar-volume-gradient = true
+bar-volume-indicator = ▓
+; █
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+;█
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+;█
+bar-volume-empty-font = 2
+;bar-volume-empty-foreground = ${colors.blue}
+
+format-padding = 1
