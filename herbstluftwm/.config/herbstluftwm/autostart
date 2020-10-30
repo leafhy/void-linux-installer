@@ -12,7 +12,7 @@ hc emit_hook reload
 
 # Wallpaper
 xsetroot -solid '#5A8E3A'
-xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard.jpg" &
+xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard.jpg"
 
 # Terminate already running bar instances
 killall -q polybar
