@@ -35,22 +35,17 @@ include = ~/.config/polybar/modules/herbstluftwm
 #### COLOURS ####
 ################# 
 [colors]
-;background = ${xrdb:color0:#222}
-background = #ffffff
-background-alt = #444
-background1 = #8d62ad
-background2 = #f00
-background3 = #0063ff
-background4 = #a657ad
-
 ;foreground = ${xrdb:color7:#222}
 foreground = #19293b
-foreground-alt = #555
-foreground1 = #a3c725
-foreground2 = #fefefe
+foreground-1 = #cccccc
+foreground-2 = #a3c725
+foreground-3 = #ff0000
 
-fg-alt = #f00
-fg-alt1 = #cccccc
+;background = ${xrdb:color0:#222}
+background = #ffffff
+background-1 = #8d62ad
+background-1a = #a657ad
+background-2 = #0063ff
 
 alert = #ffb300
 border = #000000
@@ -93,7 +88,7 @@ module-margin-right = 1
 
 tray-position = right
 tray-padding =
-;tray-background = ${colors.background3}
+;tray-background = ${colors.background}
 ;tray-scale = 6.0
 ;tray-maximise = 1000
 
@@ -145,7 +140,7 @@ double-click-left = polybar-msg -p %pid% hook demo
 type = internal/cpu
 interval = 2
 format-prefix = ""
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 ;format-underline = #f90000
 label = %percentage:3%%
 label-padding = 1
@@ -154,7 +149,7 @@ label-padding = 1
 type = internal/memory
 interval = 2
 format-prefix = ""
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 ;format-underline = #4bffdc
 label = %percentage_used:3%%
 label-padding = 1
@@ -163,7 +158,7 @@ label-padding = 1
 type = internal/xwindow
 label = %title%
 format = <label>
-format-background = ${colors.background1}
+format-background = ${colors.background-1}
 format-foreground = ${colors.foreground}
 format-padding = 2
 label-minlen = 20
@@ -272,7 +267,7 @@ label-volume = %percentage:3%
 ;; Available tokens:
 ;   %percentage% (default)
 label-muted =   
-label-muted-foreground = ${colors.fg-alt}
+label-muted-foreground = ${colors.foreground}
 
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -300,7 +295,7 @@ format-discharging-background = ${colors.background}
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground}
-;format-full-underline = ${colors.foreground1}
+;format-full-underline = ${colors.underline-3}
 format-full-foreground = ${colors.foreground}
 format-full-background = ${colors.background}
 
@@ -316,7 +311,7 @@ animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 =    
-animation-charging-foreground = ${colors.foreground1}
+animation-charging-foreground = ${colors.foreground-2}
 animation-charging-framerate = 750
 label-padding = 1
 
@@ -330,7 +325,7 @@ date = "%b %d"
 time = %H:%M
 ;time-alt = %H:%M:%S
 format-prefix =
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.foreground}
 ;format-underline = ${colors.underline5}
 label-font = 0
 label = %date% %time%
@@ -356,9 +351,9 @@ interface = enp0s25
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = "  "
-format-connected-prefix-foreground = ${colors.foreground2}
-format-connected-foreground = ${colors.foreground2}
-format-connected-background = ${colors.background2}
+format-connected-prefix-foreground = ${colors.foreground}
+format-connected-foreground = ${colors.foreground}
+format-connected-background = ${colors.background}
 
 [module/wired-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
@@ -408,7 +403,7 @@ format-connected-underline = ${colors.underline2}
 
 label-disconnected = " " 
 ;""
-label-disconnected-foreground = ${colors.fg-alt1}
+label-disconnected-foreground = ${colors.foreground-1}
 label-disconnected-background = ${colors.background}
 format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.alert}
@@ -510,7 +505,7 @@ label-volume-foreground = ${colors.background}
 ;label-volume-padding-left = ${paddings.outer}
 ;label-volume-font = 2
 ;format-muted-prefix = ""
-format-muted-foreground = ${colors.background2}
+format-muted-foreground = ${colors.foreground-3}
 ;format-muted-background = ${colors.blue}
 
 label-muted =  
