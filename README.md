@@ -16,6 +16,6 @@ cd void-linux-installer
 ```
 
 #### Requirement (glibc version not tested)
-https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso
+[void-live-x86_64-musl-20191109](https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso)
 
 \* Does not include rice
