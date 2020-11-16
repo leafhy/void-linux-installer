@@ -562,12 +562,12 @@ label-separator-foreground = ${colors.foreground}
 
 ;; reboot
 menu-0-1 = 
-menu-0-1-exec = doas /sbin/reboot
+menu-0-1-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
 menu-0-1-foreground = ${colors.foreground}
 
 ;; shutdown
 menu-0-0 = 
-menu-0-0-exec = doas /sbin/poweroff
+menu-0-0-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.PowerOff" boolean:true
 menu-0-0-foreground = ${colors.foreground}
 menu-0-0-font = 4
 
@@ -585,6 +585,7 @@ menu-0-3-foreground = ${colors.foreground}
 
 ;; suspend to ram
 menu-0-4 = "鈴 | "
-menu-0-4-exec = doas /sbin/zzz
+;; /sbin/zzz exposes desktop on resume
+menu-0-4-exec = ~/.config/i3/lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
 menu-0-4-foreground = ${colors.foreground}
 ;format-padding = 1
