@@ -576,7 +576,6 @@ menu-0-2 = ""
 ;; Using pkill on Void Linux results in blank sreen - Need to reboot
 ; pkill -KILL -u $USER
 menu-0-2-exec = /sbin/herbstclient quit
-
 menu-0-2-foreground = ${colors.foreground}
 
 ;; suspend to ram
