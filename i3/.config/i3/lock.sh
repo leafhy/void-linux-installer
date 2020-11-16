@@ -16,7 +16,7 @@ lock() {
 	foreground=ffffffff
 	i3lock \
 		-t -i "$OUTPUT_IMAGE" \
-		--timestr="%I:%M %p" \
+		--timestr="%H:%M" \
 		--clock --datestr "Type password..." \
 		--insidecolor=$background \
 		--ringcolor=$foreground \
