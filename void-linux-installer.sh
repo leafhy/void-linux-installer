@@ -86,8 +86,8 @@
 #     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition) #
 #                                                                                        #                                                                                      #
 # Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  #
-# create ramfs # mount -t ramfs ramfs /opt                                               #
-# cp -R /run/initramfs/live/data-is-here /opt                                            #
+# create ramfs: mount -t ramfs ramfs /opt                                                #
+#               cp -R /run/initramfs/live/data-is-here /opt                              #
 ##########################################################################################
 ##########################################################################################
 # base-voidstrap
@@ -155,7 +155,7 @@
 # opusfile-devel pkg-config
 #
 # ~/.siren/config
-# set active-fg colour-name # foreground
+# set active-fg blue # foreground
 ##################################################################
 ############ Vuurmuur Firewall ###################################
 ##################################################################
