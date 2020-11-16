@@ -578,8 +578,13 @@ menu-0-2 = ""
 menu-0-2-exec = /sbin/herbstclient quit
 menu-0-2-foreground = ${colors.foreground}
 
-;; suspend to ram
-menu-0-3 = "鈴 | "
-menu-0-3-exec = doas /sbin/zzz
+;; lock screen
+menu-0-3 = ""
+menu-0-3-exec = ~/.config/i3/lock.sh
 menu-0-3-foreground = ${colors.foreground}
+
+;; suspend to ram
+menu-0-4 = "鈴 | "
+menu-0-4-exec = doas /sbin/zzz
+menu-0-4-foreground = ${colors.foreground}
 ;format-padding = 1
