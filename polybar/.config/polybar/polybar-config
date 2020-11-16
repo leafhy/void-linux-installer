@@ -547,3 +547,40 @@ bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.underline5}
 
 format-padding = 1
+
+[module/powermenu]
+type = custom/menu
+;expand-left = true
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label-open = "襤 "
+label-close = "| " 
+label-close-foreground = ${colors.foreground}
+label-separator = " | "
+label-separator-foreground = ${colors.foreground}
+
+;; reboot
+menu-0-1 = 
+menu-0-1-exec = doas /sbin/reboot
+menu-0-1-foreground = ${colors.foreground}
+
+;; shutdown
+menu-0-0 = 
+menu-0-0-exec = doas /sbin/poweroff
+menu-0-0-foreground = ${colors.foreground}
+menu-0-0-font = 4
+
+;; logoff
+menu-0-2 = ""
+;; Using pkill on Void Linux results in blank sreen - Need to reboot
+; pkill -KILL -u $USER
+menu-0-2-exec = /sbin/herbstclient quit
+
+menu-0-2-foreground = ${colors.foreground}
+
+;; suspend to ram
+menu-0-3 = "鈴 | "
+menu-0-3-exec = doas /sbin/zzz
+menu-0-3-foreground = ${colors.foreground}
+;format-padding = 1
