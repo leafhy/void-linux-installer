@@ -555,7 +555,7 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
 label-open = "襤 "
-label-close = "| " 
+label-close = "| " 
 label-close-foreground = ${colors.foreground}
 label-separator = " | "
 label-separator-foreground = ${colors.foreground}
