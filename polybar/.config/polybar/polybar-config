@@ -15,11 +15,14 @@
 ;   The README contains a lot of information
 ;
 ;==========================================================
-# https://www.reddit.com/r/Polybar/comments/a8j2v9/volume_bar_for_uber_slim_polybar/
+# References
+# https://www.reddit.com/r/Polybar/comments/a8j2v9/volume_bar_for_uber_slim_polybar
 # https://gitlab.com/hexdsl/dots/-/blob/master/stow_home/polybar/.config/polybar/config
 # https://gitlab.com/dwt1/dotfiles/blob/master/.config/polybar/config
-# https://github.com/be5invis/Iosevka
-# https://icomoon.io
+#
+# Fonts
+# https://github.com/be5invis/Iosevka/releases/download/v4.0.0-beta.2/ttf-iosevka-term-ss10-4.0.0-beta.2.zip
+# https://github.com/Keyamoon/IcoMoon-Free/archive/master.zip
 # https://github.com/adi1090x/polybar-themes/blob/master/polybar-10/fonts/icomoon-feather.ttf
 
 [settings]
