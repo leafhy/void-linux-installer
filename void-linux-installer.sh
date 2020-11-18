@@ -693,7 +693,8 @@ setfont Lat2-Terminus16
 ' arc-theme'\
 ' arc-icon-theme'\
 ' faience-icon-theme'\
-' faenza-icon-theme'
+' faenza-icon-theme'\
+' noto-fonts-emoji'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
