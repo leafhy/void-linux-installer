@@ -80,8 +80,8 @@ label-mounted-margin = 1
 border-size = 1
 border-color = ${colors.border}
 
-padding-left =
-padding-right =
+;padding-left =
+;padding-right =
 
 module-margin-left = 1
 module-margin-right = 1
