@@ -83,7 +83,7 @@ border-color = ${colors.border}
 padding-left =
 padding-right =
 
-module-margin-left =1
+module-margin-left = 1
 module-margin-right = 1
 
 tray-position = right
@@ -327,9 +327,9 @@ time = %H:%M
 format-prefix =
 format-prefix-foreground = ${colors.foreground}
 ;format-underline = ${colors.underline5}
-label-font = 0
+;label-font = 0
 label = %date% %time%
-label-padding = 1
+;label-padding = 1
 
 [module/networkspeedup]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
