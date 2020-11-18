@@ -108,7 +108,7 @@ font-3 = "NotoEmoji Nerd Font Mono:size=10;3"
 #################
 modules-left = ewmh xwindow
 modules-center =
-modules-right = alsa2 memory wireless-network battery date
+modules-right = alsa2 memory wireless-network battery date powermenu
 
 [module/subscriber]
 type = custom/ipc
