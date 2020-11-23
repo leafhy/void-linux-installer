@@ -546,7 +546,9 @@ echo '**** VOID LINUX MUSL x86_64 INSTALLATION ****'
 echo '****            EFI Stub Boot            ****'
 echo '*********************************************'
 echo '*********************************************'
-
+#echo 'Creating ramfs for repo....'
+#mount -t ramfs ramfs /opt
+#cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
 #############################################
 #############################################
 #### [!] START OF USER CONFIGURATION [!] ####
@@ -655,11 +657,11 @@ setfont Lat2-Terminus16
 ' vlc'\
 ' w_scan'\
 ' xset'\
-' font-manager'\
+' fontmanager'\
 ' libmnl-devel'\
 ' dialog'\
 ' ghostwriter'\
-' inotify-tools'\
+' dunst'\
 ' udiskie'\
 ' keychain'\
 ' nemo'\
@@ -681,7 +683,7 @@ setfont Lat2-Terminus16
 ' libopenal'\
 ' upower'\
 ' gtk+3'\
-' qalc'\
+' qalculate'\
 ' xclip'\
 ' rofi'\
 ' rofi-calc'\
@@ -694,7 +696,10 @@ setfont Lat2-Terminus16
 ' arc-icon-theme'\
 ' faience-icon-theme'\
 ' faenza-icon-theme'\
-' nerd-fonts'
+' nerd-fonts'\
+' xsetroot'\
+' recoll'\
+' overpass-otf'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
@@ -706,7 +711,7 @@ EOF
 )"
 # bashprofile >> .bashrc
 bashprofile="$(cat <<'EOF'
-scripts/buffquote
+# scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export PATH=".local/bin:$PATH"
@@ -729,15 +734,15 @@ xinitrc="$(cat <<'EOF'
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # udiskie needs to start before window manager for icon to appear in polybar
 udiskie --tray &
-exec --no-startup-id clipster -d
+# exec --no-startup-id clipster -d
 exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 xbanish -a
 EOF
 )"
 # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
-  ipstaticeth0="192.168.1.XX"
+  ipstaticeth0="192.168.1.X"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
-  ipstaticwlan0="192.168.1.XX"
+  ipstaticwlan0="192.168.1.X"
   routerssid="XXXX"
   gateway="192.168.1.1"
   wifipassword=""
@@ -747,26 +752,27 @@ EOF
   #nameserver2="1.1.1.1"
   labelroot="VOID_LINUX"
   labelfat="EFI"
-  # repopath is local and is optional  - actual repository is /var/cache/xbps 
-  repopath="/opt/void-linux-xbps-repository"
+  # local repository - default repository /var/cache/xbps 
+  repopath="/opt"
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
-  services="cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind udevd cgmanager polkitd"
+  services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind cgmanager polkitd"
   HOSTNAME="voidlinux.local"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
   HARDWARECLOCK="UTC"
   FONT="Tamsyn8x16r"
   TTYS="2"
-  # Download various scripts/whatever to /home/$username/scripts
-  urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
+ dirs="exclusions scripts .config/fontconfig" 
+# Download various scripts/whatever to /home/$username/scripts
+#urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
   # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
-  urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
+# urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
   # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
   # Install to ~/.local/bin
-  bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
+ # bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -851,9 +857,11 @@ echo
 #### FORMAT & PARTITION ####
 ############################
 # Install Prerequisite/s
-xbps-install -S
-xbps-install -uy 
-xbps-install -y gptfdisk 
+xbps-install -S -R $repopath
+#xbps-install - -c $repopath
+
+
+xbps-install -R $repopath -y gptfdisk 
 
 # xbps-install -y -S -f parted
 
@@ -904,27 +912,31 @@ do
     'btrfs')
       fsys1='btrfs'
       pkg_list="$pkg_list btrfs-progs"
+      xbps-install -R $repopath -y btrfs-progs
       break
       ;;
     'xfs')
       fsys1='xfs'
       pkg_list="$pkg_list xfsprogs"
+      xbps-install -R $repopath -y xfsprogs
       break
       ;;
     'nilfs2')
       fsys1='nilfs2'
-      xbps-install -y nilfs-utils
       pkg_list="$pkg_list nilfs-utils"
+      xbps-install -R $repopath -y nilfs-utils
       break
       ;;
     'ext4')
       fsys2='ext4'
       pkg_list="$pkg_list e2fsprogs"
+      xbps-install -R $repopath -y e2fsprogs"
       break
       ;;
       'f2fs')
       fsys3='f2fs'
       pkg_list="$pkg_list f2fs-tools"
+      xbps-install -R $repopath -y f2fs-tools"
       break
       ;;
     *)
@@ -969,20 +981,21 @@ echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefo
 echo "No Checksums = -O lost_found,casefold -C utf8"
 echo "None = No Options"
 echo "*encrypt does not work with 'casefold/utf8'"
+echo "f2fs-tools v1.14 casefold doesn't work without utf8 -> keybinds don't work correctly - compression unknown option"
 
 PS3='Select f2fs options to use: '
  select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
     case $opts in
     'Encrypt')
-      fsys3="$fsys3 -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
+      fsys3="$fsys3 -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
       break
       ;;
     'No Encryption')
-      fsys3="$fsys3 -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
+      fsys3="$fsys3 -O extra_attr,sb_checksum,inode_checksum,lost_found"
       break
       ;;
     'No Checksums')
-      fsys3="$fsys3 -O lost_found,casefold -C utf8"
+      fsys3="$fsys3 -O lost_found,casefold"
       break
       ;;
     'None')
@@ -1062,7 +1075,7 @@ echo 'Choose a kernel to install'
 echo '**************************'
 echo '' 
 PS3="Select kernel: " 
-select kernel in $(xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1)
+select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1)
 do
 if [[ $kernel = "" ]]; then
 echo "$REPLY is not valid"
@@ -1071,24 +1084,25 @@ fi
 break
 done
 
-# Install latest kernel
-if [ $kernel ]; then
+#if [ $kernel ]; then
 pkg_list="$pkg_list $kernel"
-fi
+#fi
 
 # Import keys from live image to prevent prompt for key confirmation
 mkdir -p /mnt/var/db/xbps/keys/
 cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 if [[ $repopath != "" ]]; then
-xbps-install --download-only -y $pkg_list -c $repopath
-cd $repopath
+# xbps-install --download-only -y $pkg_list -c $repopath
+# cd $repopath
 # xbps-rindex resolved package not found
-xbps-rindex -a *xbps
+#xbps-rindex -a *xbps
 xbps-install -R $repopath -r /mnt void-repo-nonfree -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
+# make sure intel-ucode is installed
+xbps-install -R $repopath -r /mnt intel-ucode -y
 else 
-# xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
+ xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
  xbps-install -y -S -R $repo1 -r /mnt || xbps-install -y -S -R $repo2 -r /mnt || xbps-install -y -S -R $repo0 -r /mnt
@@ -1134,7 +1148,7 @@ fi
 
 if [[ $fsys3 ]]; then
 # disable fsck.f2fs otherwise boot fails
-echo "UUID=$rootuuid   /       $fsys3   defaults           0 0" >> /mnt/etc/fstab 
+echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
 else
 echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab 
 fi
@@ -1203,6 +1217,10 @@ fi
 # [!] Kernel Panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
 echo $HOSTNAME > /mnt/etc/hostname
 
+# hosts
+mv /mnt/etc/hosts /mnt/etc/hosts.bak
+echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
+
 echo "TIMEZONE=$TIMEZONE" >> /mnt/etc/rc.conf
 echo "HARDWARECLOCK=$HARDWARECLOCK" >> /mnt/etc/rc.conf
 echo "KEYMAP=$KEYMAP" >> /mnt/etc/rc.conf
@@ -1214,12 +1232,7 @@ echo "TTYS=$TTYS" >> /mnt/etc/rc.conf
 # $ doas -C /etc/doas.conf
 # check permission of command
 # $ doas -C /etc/doas.conf command
-# echo "permit persist :wheel" > /mnt/etc/doas.conf
 echo "$doasconf" > /mnt/etc/doas.conf
-# persist password
-# echo "permit persist :wheel" > /mnt/etc/doas.conf
-# no password
-# echo "permit nopass :wheel" > /mnt/etc/doas.conf
 
 # Configure user accounts
 echo ''
@@ -1269,7 +1282,7 @@ done
 
 # Install Extras
 if [ $urlscripts ] || [ $urlfont ] || [ $bin ]; then
-     xbps-install -S -y aria2
+     xbps-install -R $repopath -y aria2
 fi
   
 if [ $urlscripts ]; then
@@ -1341,8 +1354,8 @@ pcm.default sndio
 EOF
 
 # Herbstluftwm
- chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
- chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
+# chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
+# chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 
 # Unbound Configuration
 tee /mnt/etc/unbound/unbound.conf <<EOF
@@ -1394,6 +1407,11 @@ control-interface: 0.0.0.0
 #  (servfail)
 EOF
 
+# Create $HOME directories
+for dire in $dirs; do
+chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
+done
+
 # Font Configuration needed for firefox
 chroot --userspec=$username:users /mnt tee home/$username/.config/fontconfig/fonts.conf <<EOF
 <?xml version='1.0'?>
@@ -1437,7 +1455,7 @@ EOF
 
 # Borg Backup
 # exclusions directory will NOT be backed up by borg
-chroot --userspec=$username:users /mnt mkdir home/$username/exclusions
+
 # create mount point for borg repo
 chroot /mnt mkdir mnt/borg-backup
 # create mount point to access borg repo
@@ -1455,7 +1473,7 @@ echo "Starting backup for $DATE\n"
 export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
 export BORG_REPO="/mnt/void-backup/borg"
 export BACKUP_TARGETS="/"
-# export BACKUP_NAME="voidlinux"
+# export BACKUP_NAME="$HOSTNAME"
 BORG_OPTS="--stats --one-file-system"
 
 # create borg backup archive
@@ -1469,7 +1487,7 @@ echo "Backup complete at $DATE\n";
 EOF
 
 # Polkit rules
-chroot --userspec=$username:users /mnt tee etc/polkit-1/rules.d/10-udisks2.rules <<EOF
+chroot /mnt tee etc/polkit-1/rules.d/10-udisks2.rules <<EOF
 polkit.addRule(function(action, subject) {
   var YES = polkit.Result.YES;
   var permission = {
@@ -1630,7 +1648,8 @@ echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
-echo '**** Verify 'intel-ucode' did install if not install manually ****'
+echo '**** Verify 'intel-ucode' did install ****'
+echo ''
 echo '**** After logging in 'startx' will start herbstluftwm ****'
 echo ''
 echo "(U)nmount $device and exit"
