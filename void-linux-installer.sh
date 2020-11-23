@@ -700,7 +700,8 @@ setfont Lat2-Terminus16
 ' nerd-fonts'\
 ' xsetroot'\
 ' recoll'\
-' overpass-otf'
+' overpass-otf'\
+' i3lock-color'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
