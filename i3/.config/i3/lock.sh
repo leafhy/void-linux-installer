@@ -1,5 +1,6 @@
 #!/bin/bash
 # https://raw.githubusercontent.com/evelyndooley/dotfiles/master/linux_old/i3/lock.sh
+# requires i3lock-color
 OUTPUT_IMAGE=/tmp/i3lock.png
 
 RESOLUTION=$(xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
