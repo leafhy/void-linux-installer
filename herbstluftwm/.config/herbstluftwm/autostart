@@ -3,9 +3,9 @@
 # this is a simple config for herbstluftwm
 
 hc() {
-    # herbstclient "$@"
-    # Reduce startup time slightly > add 'herbstclient chain $cmds&' before '# find the panel'
-    cmds="$cmds , $@"
+    herbstclient "$@"
+    # Reduce startup time slightly replace 'herbstclient "$@"' with 'cmds="$cmds , $@"' add 'herbstclient chain $cmds&' before '# find the panel'
+    # Note: Do not use above command $Mod-space and mouse wheel no longer work
 }
 
 hc emit_hook reload
@@ -197,7 +197,6 @@ hc unlock
 # or simply:
 hc detect_monitors
 
-herbstclient chain $cmds &
 # find the panel
 panel=~/.config/herbstluftwm/panel.sh
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
