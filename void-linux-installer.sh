@@ -59,7 +59,7 @@
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
 #
-# Firefox autmatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf
+# Firefox automatically chooses fonts - changing fonts in "preferences" seems to have no effect if using fonts.conf
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
 # /home/$user/.asoundrc - increases volume
@@ -78,7 +78,8 @@
 ##########################################################################################
 ####                      Preparatory Instructions                                    ####
 ##########################################################################################
-# 8GB usb or larger required for repository (void repository = ~1TB)                     #
+# Void Linux repository = ~1TB                                                           #
+#                                                                                        #
 # Install void-live-x86_64-musl-20191109.iso to usb drive                                #
 #                                                                                        #                                                                                       #
 # Note: fdisk can format iso9660/HYBRID USB                                              #
@@ -981,7 +982,7 @@ echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefo
 echo "No Checksums = -O lost_found,casefold -C utf8"
 echo "None = No Options"
 echo "*encrypt does not work with 'casefold/utf8'"
-echo "f2fs-tools v1.14 casefold doesn't work without utf8 -> keybinds don't work correctly - compression unknown option"
+echo "f2fs-tools v1.14 casefold doesn't work without utf8 -> keyboard momentarily stopped working - compression unknown option"
 
 PS3='Select f2fs options to use: '
  select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
@@ -1084,9 +1085,7 @@ fi
 break
 done
 
-#if [ $kernel ]; then
 pkg_list="$pkg_list $kernel"
-#fi
 
 # Import keys from live image to prevent prompt for key confirmation
 mkdir -p /mnt/var/db/xbps/keys/
