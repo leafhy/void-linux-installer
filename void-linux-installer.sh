@@ -582,6 +582,7 @@ setfont Lat2-Terminus16
 ' dosfstools'\
 ' dracut'\
 ' exfat-utils'\
+' ntfs-3g'\
 ' fcron'\
 ' fd'\
 ' ffmpeg'\
@@ -784,6 +785,7 @@ EOF
   HARDWARECLOCK="UTC"
   FONT="Tamsyn8x16r"
   TTYS="2"
+  # Create $HOME directories
  dirs="exclusions scripts .config/{fontconfig,dunst}" 
 # Download various scripts/whatever to /home/$username/scripts
 #urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
