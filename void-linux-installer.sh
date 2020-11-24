@@ -82,6 +82,18 @@
 ##########################################################################################
 # Void Linux repository = ~1TB                                                           #
 #                                                                                        #
+# #### Verify image ####                                                                 #
+# https://alpha.de.repo.voidlinux.org/live/current                                       #
+# xbps-install void-release-keys signify                                                 #
+#                                                                                        #
+# sha256sum -c --ignore-missing sha256.txt                                               #
+# void-live-x86_64-musl-20191109.iso: OK                                                 #
+#                                                                                        #
+# signify -C -p /etc/signify/void-release-20191109.pub -x sha256.sig void-live-x86_64-musl-20191109.iso #
+# Signature Verified                                                                     #
+# void-live-x86_64-musl-20191109.iso: OK                                                 #                                      #
+#                                                                                        #
+#                                                                                        #
 # Install void-live-x86_64-musl-20191109.iso to usb drive                                #
 #                                                                                        #                                                                                       #
 # Note: fdisk can format iso9660/HYBRID USB                                              #
