@@ -784,7 +784,7 @@ EOF
   HARDWARECLOCK="UTC"
   FONT="Tamsyn8x16r"
   TTYS="2"
- dirs="exclusions scripts .config/fontconfig" 
+ dirs="exclusions scripts .config/{fontconfig,dunst}" 
 # Download various scripts/whatever to /home/$username/scripts
 #urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
   # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
