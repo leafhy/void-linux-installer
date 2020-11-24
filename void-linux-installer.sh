@@ -7,7 +7,9 @@
 ## necessitating a re-install at least with Windows 10
 ##
 ## Windows 10 will install efi and recovery data onto secondary (efi) hardrive (includes mSata) 
-##
+## 
+## OSX 'finder' can truncate filenames (fat-32) , renaming will error filename already exists
+## Need to rename with 'Terminal.app'
 ########################################################################
 ########################################################################
 # References
