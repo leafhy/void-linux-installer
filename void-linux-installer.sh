@@ -746,6 +746,8 @@ EOF
 )"
 # .xinitrc
 xinitrc="$(cat <<'EOF'
+# [!] 'startx' will exit immediately if program cannot be found
+#
 # xss-lock -- ~/.config/i3/lock.sh -l &
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # udiskie needs to start before window manager for icon to appear in polybar
