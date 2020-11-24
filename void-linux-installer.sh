@@ -715,7 +715,9 @@ setfont Lat2-Terminus16
 ' xsetroot'\
 ' recoll'\
 ' overpass-otf'\
-' i3lock-color'
+' i3lock-color'\
+' elogind'\
+' dbus-elogind-x11'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
