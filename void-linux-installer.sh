@@ -259,7 +259,7 @@
 # Alock
 # Pauses dunst notifications
 # https://github.com/Arkq/alock/
-# xbps-install autoreconf
+# xbps-install automake
 # $ autoreconf --install
 # $ mkdir build && cd build
 # $ ../configure --enable-pam --enable-hash --enable-xrender --enable-imlib2 \
