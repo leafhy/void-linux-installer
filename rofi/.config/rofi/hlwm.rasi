@@ -36,7 +36,7 @@ inputbar {
     border-radius:                  0% 0% 0% 1%;
     border:                         0.0% 0.0% 0.2% 0.3%;
     border-color:                   @bc;
-   margin:                         0% 50% 1.5% 0%;
+    margin:                         0% 50% 1.5% 0%;
     padding:                        1%;    
 }
 
@@ -48,9 +48,9 @@ element normal.normal {
 element selected.normal {
     background-color: 				@bg;
     text-color:       				@ac;
-     border:                        0% 0% 0% 0.3%;
-     border-radius:                  0px;
-     /*border-color:                   @ac;*/
+    border:                        0% 0% 0% 0.3%;
+    border-radius:                  0px;
+    /*border-color:                   @ac;*/
 
 }
 element alternate.normal {
