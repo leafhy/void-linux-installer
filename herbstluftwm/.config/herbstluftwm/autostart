@@ -5,7 +5,7 @@
 hc() {
     herbstclient "$@"
     # Reduce startup time slightly replace 'herbstclient "$@"' with 'cmds="$cmds , $@"' add 'herbstclient chain $cmds&' before '# find the panel'
-    # Note: Do not use above command $Mod-space and mouse wheel no longer work
+    # Note: Do not use above command $Mod-space no longer works
 }
 
 hc emit_hook reload
