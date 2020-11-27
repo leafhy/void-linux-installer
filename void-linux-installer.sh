@@ -722,14 +722,16 @@ setfont Lat2-Terminus16
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
+
 doasconf="$(cat <<'EOF'
 permit persist :wheel
 permit nopass :wheel as root cmd /sbin/poweroff
 permit nopass :wheel as root cmd /sbin/reboot
 EOF
 )"
-# bashprofile >> .bashrc
-bashprofile="$(cat <<'EOF'
+
+# .bashrc
+bashrc="$(cat <<'EOF'
 # scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
@@ -747,6 +749,17 @@ alias clipsr="clipster -r"
 alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -theme ~/.config/rofi/hlwm.rasi"
 EOF
 )"
+
+# .bash_profile
+bashprofile="$(cat <<'EOF'
+# .bash_profile
+
+# Get the aliases and functions
+[ -f $HOME/.bashrc ] && . $HOME/.bashrc
+exec startx
+EOF
+)"
+
 # .xinitrc
 xinitrc="$(cat <<'EOF'
 # [!] 'startx' will exit immediately if program cannot be found
@@ -760,6 +773,7 @@ exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 xbanish -a
 EOF
 )"
+
 # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
   ipstaticeth0="192.168.1.X"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
@@ -1337,10 +1351,10 @@ if [ $bin ]; then
      done
 fi
 
-# Setup bash_profile
-echo "$bashprofile" >> /mnt/home/$username/.bashrc
-
-echo "$xinitrc" >> /mnt/home/$username/.xinitrc
+# Setup $HOME
+echo "$bashrc" > /mnt/home/$username/.bashrc
+echo "$bashprofile" > /mnt/home/$username/.bash_profile
+echo "$xinitrc" > /mnt/home/$username/.xinitrc
 
 # Audio Configuration
 chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
