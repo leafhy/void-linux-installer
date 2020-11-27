@@ -20,4 +20,4 @@ cd void-linux-installer
 
 
 
-\* Does not include rice
+\*rice not included
