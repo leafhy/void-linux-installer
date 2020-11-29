@@ -718,7 +718,8 @@ setfont Lat2-Terminus16
 ' overpass-otf'\
 ' i3lock-color'\
 ' elogind'\
-' dbus-elogind-x11'
+' dbus-elogind-x11'\
+' asciiquarium'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
