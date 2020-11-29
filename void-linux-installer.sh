@@ -1166,7 +1166,6 @@ xbps-install -R $cachedir -r /mnt intel-ucode -y
 fi
 
 if [ $cachedir = "" ] && [ $repopath = "" ]; then
-# xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
