@@ -795,12 +795,11 @@ EOF
   repopath="/opt"
   
   ### Use this to save packages to somewhere other then live disk ###
-  # xbps-install --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
+  # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
   # xbps-install --repository $cachedir
   cachedir=""
   
-  ### Leave $repopath & $cachedir empty to use $repo0..2 ###
-  # default repository /var/cache/xbps
+  ### Leave $repopath & $cachedir empty to use default repository /var/cache/xbps
   # xbps-install --repository $repo0
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
@@ -912,7 +911,7 @@ xbps-install -R $repopath -y gptfdisk
 fi
 
 if [ $cachedir != "" ]; then
-xbps-install --download-only --cachedir $cachedir
+xbps-install -R $repo0 --download-only --cachedir $cachedir || xbps-install -R $repo1 --download-only --cachedir $cachedir || xbps-install -R $repo2 --download-only --cachedir $cachedir
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -R $cachedir -y gptfdisk
@@ -1343,8 +1342,8 @@ chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
 # Install Extras
-if [ $urlscripts ] || [ $urlfont ] || [ $bin ]; then
-     xbps-install -R $repopath -y aria2
+if [ $urlscripts ] || [ $urlfont ] || [ $bin ] && [ $repopath != "" ] || [ $cachedir != "" ] ; then
+     xbps-install -R $repopath $cachedir -y aria2
 fi
   
 if [ $urlscripts ]; then
