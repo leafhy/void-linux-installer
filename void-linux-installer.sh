@@ -561,14 +561,16 @@ echo '**** VOID LINUX MUSL x86_64 INSTALLATION ****'
 echo '****            EFI Stub Boot            ****'
 echo '*********************************************'
 echo '*********************************************'
-#echo 'Creating ramfs for repo....'
-#mount -t ramfs ramfs /opt
-#cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+
 #############################################
 #############################################
 #### [!] START OF USER CONFIGURATION [!] ####
 #############################################
 #############################################
+# echo 'Creating ramfs for repo....'
+# mount -t ramfs ramfs /opt
+# cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+
 # Change font to be more legible
 setfont Lat2-Terminus16
 
