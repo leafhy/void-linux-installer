@@ -572,7 +572,6 @@ menu-0-1-foreground = ${colors.foreground}
 menu-0-0 = 
 menu-0-0-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.PowerOff" boolean:true
 menu-0-0-foreground = ${colors.foreground}
-menu-0-0-font = 4
 
 ;; logoff
 menu-0-2 = ""
@@ -583,7 +582,7 @@ menu-0-2-foreground = ${colors.foreground}
 
 ;; lock screen
 menu-0-3 = ""
-menu-0-3-exec = ~/.config/i3/lock.sh
+menu-0-3-exec = amixer set Master mute && ~/.config/i3/lock.sh
 menu-0-3-foreground = ${colors.foreground}
 
 ;; suspend to ram
@@ -591,4 +590,5 @@ menu-0-4 = "鈴 | "
 ;; /sbin/zzz exposes desktop on resume
 menu-0-4-exec = ~/.config/i3/lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
 menu-0-4-foreground = ${colors.foreground}
+
 ;format-padding = 1
