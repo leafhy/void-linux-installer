@@ -788,11 +788,24 @@ EOF
   #nameserver2="1.1.1.1"
   labelroot="VOID_LINUX"
   labelfat="EFI"
-  # local repository - default repository /var/cache/xbps 
+  
+  ### use this if packages have already been downloaded ###
+  # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
+  # xbps-install --repository $repopath 
   repopath="/opt"
+  
+  ### use this to save packages to somewhere other then live disk ###
+  # xbps-install --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
+  # xbps-install --repository $cachedir
+  cachedir=""
+  
+  ### leave $repopath & $cachedir empty to use $repo0..2 ###
+  # default repository /var/cache/xbps
+  # xbps-install --repository $repo0
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
+  
   services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind cgmanager polkitd"
   HOSTNAME="voidlinux.local"
   KEYMAP="us"
@@ -828,7 +841,6 @@ if [ "$cpu_vendor" = "GenuineIntel" ]; then
   pkg_list="$pkg_list intel-ucode"
 fi
  
-# Option to select the device type/name
 # /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
 echo ''
 echo '************************************************'
@@ -893,12 +905,23 @@ echo
 ############################
 #### FORMAT & PARTITION ####
 ############################
-# Install Prerequisite/s
+# Install Prerequisites
+if [ $repopath != "" ]; then
 xbps-install -S -R $repopath
-#xbps-install - -c $repopath
+xbps-install -R $repopath -y gptfdisk
+fi
 
+if [ $cachedir != "" ]; then
+xbps-install --download-only --cachedir $cachedir
+cd $cachedir
+xbps-rindex *xbps
+xbps-install -R $cachedir -y gptfdisk
+fi
 
-xbps-install -R $repopath -y gptfdisk 
+if [ $cachedir = "" ] && [ $repopath = "" ]; then
+xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
+xbps-install -R $repo1 gptfdisk || xbps-install -S -R $repo2 gptfdisk || xbps-install -S -R $repo0 gptfdisk
+fi
 
 # xbps-install -y -S -f parted
 
@@ -1127,20 +1150,25 @@ pkg_list="$pkg_list $kernel"
 mkdir -p /mnt/var/db/xbps/keys/
 cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
+# Package Installation
 if [[ $repopath != "" ]]; then
-# xbps-install --download-only -y $pkg_list -c $repopath
-# cd $repopath
-# xbps-rindex resolved package not found
-#xbps-rindex -a *xbps
 xbps-install -R $repopath -r /mnt void-repo-nonfree -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
 xbps-install -R $repopath -r /mnt intel-ucode -y
-else 
- xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
+fi
+
+if [[ $cachedir != "" ]]; then
+xbps-install -R $cachedir -r /mnt void-repo-nonfree -y
+xbps-install -R $cachedir-r /mnt $pkg_list -y
+# make sure intel-ucode is installed
+xbps-install -R $cachedir -r /mnt intel-ucode -y
+fi
+
+if [ $cachedir = "" ] && [ $repopath = "" ]; then
+# xbps-install -y -S -R https://mirror.aarnet.edu.au/pub/voidlinux/current/musl -r /mnt $pkg_list
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
- xbps-install -y -S -R $repo1 -r /mnt || xbps-install -y -S -R $repo2 -r /mnt || xbps-install -y -S -R $repo0 -r /mnt
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
  # Make sure everything was installed
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
