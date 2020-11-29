@@ -1713,7 +1713,7 @@ echo '**********************************************************'
 echo '**********************************************************'
 echo '**** Verify 'intel-ucode' did install ****'
 echo ''
-echo '**** After logging in 'startx' will start herbstluftwm ****'
+echo '**** 'Herbstluftwm' will start after login ****'
 echo ''
 echo "(U)nmount $device and exit"
 echo ''
