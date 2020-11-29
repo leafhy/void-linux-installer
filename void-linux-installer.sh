@@ -789,17 +789,17 @@ EOF
   labelroot="VOID_LINUX"
   labelfat="EFI"
   
-  ### use this if packages have already been downloaded ###
+  ### Use this if packages have already been downloaded ###
   # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
   # xbps-install --repository $repopath 
   repopath="/opt"
   
-  ### use this to save packages to somewhere other then live disk ###
+  ### Use this to save packages to somewhere other then live disk ###
   # xbps-install --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
   # xbps-install --repository $cachedir
   cachedir=""
   
-  ### leave $repopath & $cachedir empty to use $repo0..2 ###
+  ### Leave $repopath & $cachedir empty to use $repo0..2 ###
   # default repository /var/cache/xbps
   # xbps-install --repository $repo0
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
