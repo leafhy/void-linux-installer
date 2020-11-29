@@ -588,7 +588,7 @@ menu-0-3-foreground = ${colors.foreground}
 ;; suspend to ram
 menu-0-4 = "鈴 | "
 ;; /sbin/zzz exposes desktop on resume
-menu-0-4-exec = ~/.config/i3/lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
+menu-0-4-exec = amixer set Master mute && ~/.config/i3/lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
 menu-0-4-foreground = ${colors.foreground}
 
 ;format-padding = 1
