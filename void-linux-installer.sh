@@ -907,19 +907,20 @@ echo
 #### FORMAT & PARTITION ####
 ############################
 # Install Prerequisites
-if [ $repopath != "" ]; then
+if [[ $repopath != "" ]]; then
+xbps-install -S -R $repopath
 xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk
 fi
 
-if [ $cachedir != "" ]; then
+if [[ $cachedir != "" ]]; then
 xbps-install -R $repo0 --download-only --cachedir $cachedir || xbps-install -R $repo1 --download-only --cachedir $cachedir || xbps-install -R $repo2 --download-only --cachedir $cachedir
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -R $cachedir -y gptfdisk
 fi
 
-if [ $cachedir = "" ] && [ $repopath = "" ]; then
+if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
 xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
 xbps-install -R $repo1 gptfdisk || xbps-install -S -R $repo2 gptfdisk || xbps-install -S -R $repo0 gptfdisk
 fi
@@ -991,13 +992,13 @@ do
     'ext4')
       fsys2='ext4'
       pkg_list="$pkg_list e2fsprogs"
-      xbps-install -R $repopath -y e2fsprogs"
+      xbps-install -R $repopath -y e2fsprogs
       break
       ;;
       'f2fs')
       fsys3='f2fs'
       pkg_list="$pkg_list f2fs-tools"
-      xbps-install -R $repopath -y f2fs-tools"
+      xbps-install -R $repopath -y f2fs-tools
       break
       ;;
     *)
@@ -1166,7 +1167,7 @@ xbps-install -R $cachedir-r /mnt $pkg_list -y
 xbps-install -R $cachedir -r /mnt intel-ucode -y
 fi
 
-if [ $cachedir = "" ] && [ $repopath = "" ]; then
+if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
@@ -1233,9 +1234,9 @@ echo "repository=$repo0" >> /mnt/etc/xbps.d/00-repository-main.conf
 # Networking
 cp /etc/resolv.conf /mnt/etc
 if [[ $nameserver0 ]]; then
-echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
+echo "#nameserver $nameserver0" >> /mnt/etc/resolv.conf
 # Options for dnscrypt-proxy
-echo "options edns0" >> /mnt/etc/resolv.conf
+echo "#options edns0" >> /mnt/etc/resolv.conf
 fi
 # Google
 # echo "nameserver 8.8.8.8" >> /etc/resolv.conf
@@ -1247,7 +1248,9 @@ fi
 if [[ $nameserver2 ]]; then
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
 fi
-
+if [[ $gateway ]]; then
+echo "nameserver $gateway" >> /mnt/etc/resolv.conf
+fi
 # Static IP configuration via iproute2
 cp /etc/rc.local /mnt/etc
 eth=$(ip link | grep enp | cut -d : -f 2)
