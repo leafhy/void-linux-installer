@@ -1038,9 +1038,9 @@ if [[ "$fsys2" ]] && [[ $device = /dev/mmcblk0 ]]; then
 fi
 
 if [[ $fsys3 ]] ; then
-echo "Encrypt = -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found,compression"
-echo "No Encryption = -O extra_attr,sb_checksum,inode_checksum,lost_found,casefold,compression -C utf8"
-echo "No Checksums = -O lost_found,casefold -C utf8"
+echo "Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
+echo "No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
+echo "No Checksums = lost_found"
 echo "None = No Options"
 echo "*encrypt does not work with 'casefold/utf8'"
 echo "f2fs-tools v1.14 casefold doesn't work without utf8 -> keyboard momentarily stopped working - compression unknown option"
@@ -1057,7 +1057,7 @@ PS3='Select f2fs options to use: '
       break
       ;;
     'No Checksums')
-      fsys3="$fsys3 -O lost_found,casefold"
+      fsys3="$fsys3 -O lost_found"
       break
       ;;
     'None')
