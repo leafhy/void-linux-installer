@@ -1445,7 +1445,7 @@ server:
 # Ports other then default (53) don't appear to work 
 # port 53
 
-# wget https://www.internic.net/domain/named.cache -o /etc/unbound/root.hints
+# wget https://www.internic.net/domain/named.cache -O /etc/unbound/root.hints
     root-hints: root.hints
 # auto-trust-anchor-file: unbound restarts on using dig/ping
     trust-anchor-file: /etc/dns/root.key
