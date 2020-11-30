@@ -914,15 +914,19 @@ xbps-install -R $repopath -y gptfdisk
 fi
 
 if [[ $cachedir != "" ]]; then
-xbps-install -R $repo0 --download-only --cachedir $cachedir || xbps-install -R $repo1 --download-only --cachedir $cachedir || xbps-install -R $repo2 --download-only --cachedir $cachedir
+xbps-install -S -R $repo0 --download-only --cachedir $cachedir || xbps-install -S -R $repo1 --download-only --cachedir $cachedir || xbps-install -S -R $repo2 --download-only --cachedir $cachedir
 cd $cachedir
 xbps-rindex *xbps
+xbps-install -S -R $cachedir
+xbps-install -uy -R $cachedir
+xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk
 xbps-install -R $cachedir -y gptfdisk
 fi
 
 if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
 xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
-xbps-install -R $repo1 gptfdisk || xbps-install -S -R $repo2 gptfdisk || xbps-install -S -R $repo0 gptfdisk
+xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
+xbps-install -R -y $repo1 gptfdisk || xbps-install -S -y -R $repo2 gptfdisk || xbps-install -S -y -R $repo0 gptfdisk
 fi
 
 # xbps-install -y -S -f parted
@@ -1162,7 +1166,7 @@ fi
 
 if [[ $cachedir != "" ]]; then
 xbps-install -R $cachedir -r /mnt void-repo-nonfree -y
-xbps-install -R $cachedir-r /mnt $pkg_list -y
+xbps-install -R $cachedir -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
 xbps-install -R $cachedir -r /mnt intel-ucode -y
 fi
