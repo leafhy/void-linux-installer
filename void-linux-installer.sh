@@ -909,7 +909,7 @@ echo
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
-xbps-install -S -R $repopath
+xbps-install -uy -R $repopath
 xbps-install -R $repopath -y gptfdisk
 fi
 
