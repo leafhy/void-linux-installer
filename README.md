@@ -7,7 +7,7 @@ This partially interarctive bash script is setup to *install Void Linux, Herbstl
 #### Requirement (glibc version not tested)
 [void-live-x86_64-musl-20191109](https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso)
 
-### Install dotfiles manually or use summon
+### Install dotfiles manually or use [summon](https://gitlab.com/semente/summon)
 ```
 git clone https://gitlab.com/semente/summon.git
 chmod +x summon/summon.sh
