@@ -1706,16 +1706,12 @@ echo -e "**** [!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!] ****"
 echo '**********************************************************'
 echo '**** Resetting BIOS will restore default boot order   ****'
 echo '**********************************************************'
-echo '**********************************************************'
 efibootmgr -v
-echo ''
-echo '**********************************************************' 
 echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
 echo '**** Verify 'intel-ucode' did install ****'
-echo ''
 echo '**** 'Herbstluftwm' will start after login ****'
 echo ''
 echo "(U)nmount $device and exit"
