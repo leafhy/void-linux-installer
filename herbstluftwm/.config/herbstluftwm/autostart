@@ -24,6 +24,7 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 
 redshift-gtk &
+nohang --monitor --config /usr/local/etc/nohang/nohang-desktop.conf &
 
 # remove all existing keybindings
 hc keyunbind --all
