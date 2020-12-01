@@ -123,7 +123,6 @@ hc keybind $Mod-g set_layout grid
 hc keybind $Mod-v set_layout vertical
 hc keybind $Mod-h set_layout horizontal
 
-
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
