@@ -23,6 +23,8 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 # Start polybar
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 
+redshift-gtk &
+
 # remove all existing keybindings
 hc keyunbind --all
 
@@ -40,7 +42,6 @@ hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
 hc keybind $Mod-n spawn nemo
 # /usr/share/applications/micro.desktop fails to work with herbstluftwm - does work with rofi
 hc keybind $Mod-Control-c spawn sakura --title micro -x micro
-
 
 # herbstluftwm extras > /usr/share/doc/herbstluftwm/examples/
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
