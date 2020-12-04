@@ -254,7 +254,7 @@
 # 2020/09/08 not NSS security databases found
 # 2020/09/08 define JAVA_HOME environment variable to use the Java trust
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
-# certificates did install to ~/.local/share/~/.local/share/caddy/pki/authorities/local/caddy
+# certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
 # Alock
 # Pauses dunst notifications
@@ -691,8 +691,6 @@ setfont Lat2-Terminus16
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
 ' gconf-editor'\
-' pam-mount'\
-' gocryptfs'\
 ' starship'\
 ' xz'\
 ' lshw'\
