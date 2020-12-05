@@ -403,7 +403,7 @@
 # ----------------------------------------
 # Borg Backup
 # Note: see /etc/fstab for borg mounts  
-# borg create init --encryption=none /mnt/borg-backup::borg
+# borg init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # doas fcrontab -e
 # Borg Backup - Hourly 
