@@ -1534,7 +1534,7 @@ chroot --userspec=$username:users /mnt tee home/$username/scripts/borg-backup.sh
 # https://superuser.com/questions/1361971/how-do-i-automate-borg-backup
 
 DATE=$(date)
-echo "Starting backup for $DATE\n"
+echo "Starting backup at $DATE\n"
 
 # setup script variables
 # export BORG_PASSPHRASE="secret-passphrase-here!"
