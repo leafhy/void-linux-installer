@@ -214,7 +214,7 @@
 # https://github.com/bitwarden/cli/releases/download/v1.11.0/bw-linux-1.11.0.zip
 # chmod +x bw
 # mv bw /usr/local/bin
-# bw config server https://$HOSTNAME
+# bw config server https://$HOSTNAME:2016
 # Required for selfsigned certificate
 # NODE_TLS_REJECT_UNAUTHORIZED=0 bw login # disable certifcate check
 # NODE_EXTRA_CA_CERTS=<path to my ca> bw login
@@ -232,7 +232,7 @@
 # ---------------------------
 # #$HOSTNAME
 # :2016
-# tls /home/$username//cert.crt /home/$username//cert.key
+# tls /home/$username/PATH/TO/cert.crt /home/$username/PATH/TO/cert.key
 #
 # reverse_proxy 127.0.0.1:8000
 #             
