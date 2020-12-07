@@ -207,7 +207,12 @@
 # tar xf bw_web_v2.15.1.tar.gz
 # mv web-vault bitwarden_rs/target/release
 # cp bitwarden_rs/.env.template bitwarden_rs/target/release/.env
+# ----------------- .env --------------------------------
 # DISABLE_ICON_DOWNLOAD=true # prevents Segmentaion Fault
+# WEBSOCKET_ENABLED=true
+# WEBSOCKET_ADDRESS=0.0.0.0
+# WEBSOCKET_PORT=3012
+# -------------------------------------------------------
 # ln -s  bitwarden_rs/target/release/bitwarden_rs /home/USER/.local/bin/
 # rustup self uninstall
 # ---------------------
