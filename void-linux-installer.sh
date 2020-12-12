@@ -515,7 +515,7 @@
 # Sync Pull
 # SyncState *
 # -----------------
-# aerc
+# Aerc
 # .config/aerc/accounts.conf
 # -----------------
 # [title]
@@ -525,6 +525,11 @@
 # from = name <email@address>
 # copy-to =
 # -------------------
+# Lieer
+# git clone https://github.com/gauteh/lieer.git
+# xbps-install python3-google-api-python-client notmuch python3-tqdm python3-yarl python3-oauth2client
+# cd lieer && pip install .
+# ------------------------
 # Nvidia
 # https://nouveau.freedesktop.org/wiki/VideoAcceleration/
 # $ mkdir /tmp/nouveau
