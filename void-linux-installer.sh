@@ -495,7 +495,7 @@
 # Host mail.server
 # User
 # Pass *********
-# PassCmd "bw get password xxxxxx" # bitwarden cli
+# PassCmd "bw get password 'xxx xxx'" # bitwarden cli
 # SSLType IMAPS
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 #
