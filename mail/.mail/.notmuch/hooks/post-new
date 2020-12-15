@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mbsync -a
+
+cd ~/.mail/email-1@gmail.com
+gmi pull
+
+cd ~/.mail/email-2@gmail.com
+gmi pull
