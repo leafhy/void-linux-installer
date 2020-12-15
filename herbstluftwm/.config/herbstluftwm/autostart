@@ -14,11 +14,15 @@ hc emit_hook reload
 xsetroot -solid '#5A8E3A'
 xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard.jpg"
 
-# Terminate already running bar instances
+# Terminate already running processes
 killall -q polybar
+killall -q nohang
+killall -q redshift-gtk
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+while pgrep -u $UID -x nohang >/dev/null; do sleep 1; done
+while pgrep -u $UID -x redshift-gtk >/dev/null; do sleep 1; done
 
 # Start polybar
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
