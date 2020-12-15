@@ -486,8 +486,9 @@
 #        skanlite >> 9600dpi
 # --------------------------
 # Email
-# mbsync
-# xbps-install isync
+# xbps-install isync notmuch afew astroid
+# ----------------------
+# Mbsync
 # Notes: isync(mbsync) is faster then offlineimap
 # .mbsyncrc
 # -----------
@@ -525,7 +526,7 @@
 # from = name <email@address>
 # copy-to =
 # -------------------
-# Lieer
+# Lieer - Gmail
 # git clone https://github.com/gauteh/lieer.git
 # xbps-install python3-google-api-python-client notmuch python3-tqdm python3-yarl python3-oauth2client
 # cd lieer && pip install .
