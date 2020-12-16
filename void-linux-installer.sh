@@ -263,10 +263,10 @@
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
-# Alock
-# Pauses dunst notifications
-# https://github.com/Arkq/alock/
-# xbps-install automake
+# Alock (Pauses dunst notifications)
+# xbps-install automake imlib2-devel pam-devel
+# git clone https://github.com/Arkq/alock.git
+# cd alock
 # $ autoreconf --install
 # $ mkdir build && cd build
 # $ ../configure --enable-pam --enable-hash --enable-xrender --enable-imlib2 \
