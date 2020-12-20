@@ -1457,7 +1457,7 @@ server:
 # port 53
 
 # wget https://www.internic.net/domain/named.cache -O /etc/unbound/root.hints
-    root-hints: root.hints
+    root-hints: /etc/unbound/root.hints
 # auto-trust-anchor-file: unbound restarts on using dig/ping
     trust-anchor-file: /etc/dns/root.key
 # transparent is default
