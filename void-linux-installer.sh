@@ -394,9 +394,6 @@
 # =====================================
 # [!] IMPORTANT - POST INSTALLATION [!]
 # =====================================
-# /etc/hosts
-# 127.0.0.1 $HOSTNAME.local localhost
-# ------------------------------------------
 # /etc/dnscrypt-proxy.toml
 # server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
 # listen_addresses = ['127.0.0.1:5335']
