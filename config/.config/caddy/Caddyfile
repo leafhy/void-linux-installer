@@ -1,6 +1,6 @@
 #$HOSTNAME
 :2016
-tls /home/USER/.local/certificates/cert.crt /home/USER/.local/certificates/cert.key
+tls /home/$USER/.local/certificates/cert.crt /home/$USER/.local/certificates/cert.key
 
 # The negotiation endpoint is also proxied to Rocket
 reverse_proxy /notifications/hub/negotiate 127.0.0.1:2016
