@@ -748,6 +748,8 @@ eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
+export RUSTUP_HOME=".local/share/rustup"
+export CARGO_HOME=".local/share/cargo"
 # Weather Check
 alias weather='curl wttr.in/?0'
 alias w="curl wttr.in/~Adelaide"
