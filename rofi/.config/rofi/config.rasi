@@ -11,7 +11,9 @@ configuration {
   modi:              "drun,run,window,ssh,calc,clipboard:greenclip print,keys";
   sidebar-mode:       true;
   display-drun:      "apps";
-  columns:            3;
+  columns:            1;
+  fullscreen:         false;
+  lines:              20;
 }
 /* @import "/usr/share/rofi/themes/Arc-Dark.rasi" */
 @import "~/.config/rofi/Arc-Dark.rasi"
