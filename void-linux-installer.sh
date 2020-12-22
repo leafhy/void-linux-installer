@@ -420,7 +420,7 @@
 # Caddy2
 # &bootrun,first(1) * * * * * /sbin/caddy start --config /home/user/.config/caddy/Caddyfile 2>&1
 # Bitwarden_rs - 1m after boot
-# &bootrun,first(1) * * * * * $username cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs >> /home/$username/src/bitwarden_rs.log 2>&1
+# &bootrun,first(2) * * * * * $username /home/$username/scripts/bitwarden_rs-fcron-start.sh >> /var/log/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
 # &bootrun,first(1) * * * * * vuurmuur -D && vuurmuur_log 2>&1
 # Osync 2m after boot
@@ -1533,6 +1533,12 @@ chroot --userspec=$username:users /mnt tee home/$username/.config/fontconfig/fon
                <edit name="prefer_outline"><bool>true</bool></edit>
        </match>
 </fontconfig>
+EOF
+
+# Bitwarden_rs Start
+chroot --userspec=$username:users /mnt tee home/$username/scripts/bitwarden_rs-fcron-start.sh <<EOF
+#!/bin/sh
+cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs
 EOF
 
 # Borg Backup
