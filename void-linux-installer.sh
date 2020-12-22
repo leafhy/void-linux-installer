@@ -57,7 +57,7 @@
 #
 # IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
-#           : Firefox is slow (10s) to start if /etc/hosts $HOSTNAME is missing
+#           : Firefox is slow (10s) to start if /etc/hosts is incorrect (default hosts starts firefox ~5sec)
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
 #
@@ -819,7 +819,7 @@ EOF
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
   
   services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind cgmanager polkitd"
-  HOSTNAME="voidlinux.local"
+  HOSTNAME="voidli"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
   HARDWARECLOCK="UTC"
@@ -1299,8 +1299,9 @@ fi
 echo $HOSTNAME > /mnt/etc/hostname
 
 # hosts
-mv /mnt/etc/hosts /mnt/etc/hosts.bak
-echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
+cp /mnt/etc/hosts /mnt/etc/hosts.bak
+# Apparenty adding hostname to hosts is unnecessary
+# echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
 
 echo "TIMEZONE=$TIMEZONE" >> /mnt/etc/rc.conf
 echo "HARDWARECLOCK=$HARDWARECLOCK" >> /mnt/etc/rc.conf
