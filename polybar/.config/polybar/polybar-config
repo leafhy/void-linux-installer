@@ -583,7 +583,7 @@ menu-0-2-foreground = ${colors.foreground}
 
 ;; lock screen
 menu-0-3 = ""
-menu-0-3-exec = amixer set Master mute && ~/.config/i3/lock.sh
+menu-0-3-exec = ~/.local/bin/lockscreen.sh
 menu-0-3-foreground = ${colors.foreground}
 
 ;; suspend to ram
