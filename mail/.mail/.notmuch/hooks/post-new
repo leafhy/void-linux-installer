@@ -7,3 +7,5 @@ gmi pull
 
 cd ~/.mail/email-2@gmail.com
 gmi pull
+
+afew --tag --new
