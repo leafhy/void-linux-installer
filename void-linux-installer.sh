@@ -33,6 +33,7 @@
 # https://nlnetlabs.nl/documentation/unbound
 # https://www.funtoo.org/Keychain
 # https://github.com/denysdovhan/bash-handbook
+# http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, Ubuntu Linux
 #
 # ### symlink managers ###
 # https://github.com/anishathalye/dotbot
