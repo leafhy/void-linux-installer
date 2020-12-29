@@ -1,4 +1,8 @@
 #!/bin/bash
+##################### WARNING ######################
+# i3 lock allows notifications
+# Sometimes underlying text is shown on asciiquarium
+####################################################
 set -e
 
 screen=$(xrandr --listactivemonitors | grep -- "-1" | cut -d " " -f 6)
