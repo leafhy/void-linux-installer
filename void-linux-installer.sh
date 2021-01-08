@@ -1191,6 +1191,9 @@ fi
 
 echo
   
+# Get / UUID
+rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 | grep - | tr -d '"')
+
 # Configure efibootmgr
 # efibootmgr -c -d /dev/sda -p 1 -l '\vmlinuz-5.7.7_1' -L 'Void' initrd=\initramfs-5.7.7_1.img root=/dev/sda2
 cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.bak
@@ -1198,7 +1201,8 @@ cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.b
 if [[ $device != /dev/mmcblk0 ]]; then
 tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
 MODIFY_EFI_ENTRIES=1
-OPTIONS=root="${device}2 loglevel=4 Page_Poison=1"
+# OPTIONS=root="${device}2 loglevel=4 Page_Poison=1"
+OPTIONS=root="$rootuuid loglevel=4 Page_Poison=1"
 DISK="$device"
 PART=1
 EOF
@@ -1211,9 +1215,6 @@ DISK="$device"
 PART=1
 EOF
 fi
-
-# Get / UUID
-rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 | grep - | tr -d '"')
 
 # Add fstab entries
 if [[ $UEFI ]] && [[ $device = /dev/mmcblk0 ]]; then
