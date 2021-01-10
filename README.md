@@ -18,6 +18,8 @@ cd void-linux-installer
 /path/to/summon.sh i3
 ```
 
+# voidlinux-server-install.sh
+This script has the bare minumum for an headless server.
 
 
 \*rice not included
