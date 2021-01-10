@@ -7,11 +7,12 @@
 #########################################################
 #################### WARNING ############################
 #########################################################
-# Use CD drive /dev/sr0 to install to /dev/sda
-#
-# Installing from /dev/sda to /dev/sdb will cause root to only mount if both drives are connected
-#
-# If void linux is installed to USB motherboard SATA hdd will become /dev/sda thus preventing USB from booting
+# Note: If drive order changes ie USB
+# UEFI defaults to /dev/sda
+# efibootmgr-kernel-hook
+# Replace OPTIONS=root="/dev/sda"
+# with 
+# OPTIONS=root="UUID=$rootuuid" 
 #########################################################
 #########################################################
 #########################################################
