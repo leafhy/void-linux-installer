@@ -8,7 +8,7 @@
 #################### WARNING ############################
 #########################################################
 # Note: If drive order changes ie USB
-# UEFI defaults to /dev/sda
+# efibootmgr --disk defaults to /dev/sda
 # efibootmgr-kernel-hook
 # Replace OPTIONS=root="/dev/sda"
 # with 
@@ -135,8 +135,8 @@ EOF
   wifipassword=""
   # nameserver0 is for unbound & dnscrypt-proxy
   # nameserver0="127.0.0.1"
-  # nameserver1="1.0.0.1"
-  # nameserver2="1.1.1.1"
+  nameserver1="1.0.0.1"
+  nameserver2="1.1.1.1"
   labelroot="VOID_LINUX"
   labelfat="EFI"
   
