@@ -14,6 +14,9 @@
     # DNScrypt.info https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Public-blacklists
     # anudeepND https://github.com/anudeepND/whitelist
 
+# Add to root fcrontab                                                                        
+# @ 1m cd /etc/unbound/unbound-updater ./unbound-update-blocklist.sh 2>&1
+
     # Check for sudo
 if [[ "${UID}" -ne 0 ]];
 then
