@@ -36,6 +36,7 @@ echo '*********************************************'
 #############################################
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs /opt
+# mount -L VOID_LIVE /media
 cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
 
 # Change font to be more legible
