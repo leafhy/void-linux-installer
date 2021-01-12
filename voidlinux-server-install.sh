@@ -819,7 +819,7 @@ read -n 1 -p "[ U \ E \ R \ P ]: " ans
 case $ans in
     r|R)
         umount -l -R /mnt && reboot;;
-    s|S)
+    p|P)
         umount -l -R /mnt && poweroff;;
     e|E)
         exit;;
