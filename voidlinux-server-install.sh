@@ -130,7 +130,7 @@ EOF
   ipstaticwlan0=""
   routerssid=""
   gateway="192.168.1.1"
-  # Ethernet - eno1 (intel server) / enp0s25 (lenovo thinkpad)
+  # Ethernet - eno1 (intel server) - enp0s25 (lenovo thinkpad)
   eth="eno1"
   wifipassword=""
   # nameserver0 is for unbound & dnscrypt-proxy
