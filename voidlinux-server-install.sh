@@ -34,10 +34,6 @@ echo '*********************************************'
 #### [!] START OF USER CONFIGURATION [!] ####
 #############################################
 #############################################
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs /opt
-# mount -L VOID_LIVE /media
-cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
 
 # Change font to be more legible
 setfont Lat2-Terminus16
@@ -145,6 +141,24 @@ EOF
   # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
   # xbps-install --repository $repopath 
   repopath="/opt"
+  
+if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
+echo 'Creating ramfs for repo....'
+mount -t ramfs ramfs /opt
+cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+else
+exit 1
+fi
+
+usbrepo=$(blkid | grep VOID_LIVE | cut -d '"' -f 2)
+if [ $usbrepo ] ; then
+mount -L VOID_LIVE /media
+echo 'Creating ramfs for repo....'
+mount -t ramfs ramfs /opt
+cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+else
+exit 1
+fi
   
   ### Use this to save packages to somewhere other then live disk ###
   # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
