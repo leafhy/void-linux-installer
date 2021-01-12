@@ -144,18 +144,18 @@ EOF
   
 if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
 echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs /opt
-cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+mount -t ramfs ramfs $repopath
+cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 else
 exit 1
 fi
 
 usbrepo=$(blkid | grep VOID_LIVE | cut -d '"' -f 2)
-if [ $usbrepo ] ; then
+if [ $usbrepo ] && [ $repopath != "" ]; then
 mount -L VOID_LIVE /media
 echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs /opt
-cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* /opt
+mount -t ramfs ramfs $repopath
+cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 else
 exit 1
 fi
