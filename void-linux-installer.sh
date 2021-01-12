@@ -104,6 +104,15 @@
 # create ramfs: mount -t ramfs ramfs /opt                                                #
 #               cp -R /run/initramfs/live/data-is-here /opt                              #
 ##########################################################################################
+#################### WARNING #############################################################
+##########################################################################################
+# Use UUID if using multiple drives - SATA appears to have priority over USB 
+# efibootmgr --disk defaults to /dev/sda
+# efibootmgr-kernel-hook
+# Replace OPTIONS=root="/dev/sda"
+# with 
+# OPTIONS=root="UUID=$rootuuid" 
+##########################################################################################
 ##########################################################################################
 # base-voidstrap
 # base-files ncurses coreutils findutils diffutils
