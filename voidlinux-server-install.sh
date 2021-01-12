@@ -25,9 +25,9 @@
 # mkdir -p /var/mail/new/
 #### [!] Warning [!] ####
 # make uninstall - will delete /usr/sbin and not femtomail
-# #### email-test.sh
-#!/bin/bash
-#(echo Subject: testING; echo) | sendmail -i $username
+#### email-test.sh
+# #!/bin/bash
+# (echo Subject: testING; echo) | sendmail -i $username
 ##########################################################
 # 
 # exit on error 
