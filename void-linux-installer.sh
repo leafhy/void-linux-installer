@@ -1766,14 +1766,14 @@ echo '(E)xit'
 echo '' 
 echo '(R)eboot'
 echo ''
-echo '(S)hutdown'
+echo '(P)oweroff'
 echo ''
 read -n 1 -p "[ U | E | R | S ]: " ans
 # Chroot may fail to unmount hence -l
 case $ans in
     r|R)
         umount -l -R /mnt && reboot;;
-    s|S)
+    p|P)
         umount -l -R /mnt && poweroff;;
     e|E)
         exit;;
