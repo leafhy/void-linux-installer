@@ -12,10 +12,21 @@
 # efibootmgr-kernel-hook
 # Replace OPTIONS=root="/dev/sda"
 # with 
-# OPTIONS=root="UUID=$rootuuid" 
+# OPTIONS=root="UUID=$rootuuid"
 #########################################################
 #########################################################
 #########################################################
+# femtomail
+# xbps-install make gcc git
+# git clone https://git.lekensteyn.nl/femtomail.git
+# cd femtomail
+# make USERNAME=root MAILBOX_PATH=/var/mail
+# make install install-link-sendmail setcap
+# mkdir -p /var/mail/new/
+#### [!] Warning [!] ####
+# make uninstall - will delete /usr/sbin and not femtomail
+##########################################################
+# 
 # exit on error 
 set -e
 
