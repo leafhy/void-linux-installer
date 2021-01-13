@@ -824,7 +824,7 @@ EOF
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
   
   services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind cgmanager polkitd"
-  HOSTNAME="voidli"
+  HOSTNAME="void"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
   HARDWARECLOCK="UTC"
