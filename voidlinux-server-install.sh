@@ -156,24 +156,6 @@ EOF
   # xbps-install --repository $repopath 
   repopath="/opt"
   
-if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs $repopath
-cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-else
-exit 1
-fi
-
-usbrepo=$(blkid | grep VOID_LIVE | cut -d '"' -f 2)
-if [ $usbrepo ] && [ $repopath != "" ]; then
-mount -L VOID_LIVE /media
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs $repopath
-cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-else
-exit 1
-fi
-  
   ### Use this to save packages to somewhere other then live disk ###
   # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
   # xbps-install --repository $cachedir
@@ -185,7 +167,7 @@ fi
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
   
-  services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn nfs-server statd rpcbind"
+  services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn nfs-server statd rpcbind smartd"
   HOSTNAME="voidserver"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
@@ -207,6 +189,25 @@ fi
 #### [!] END OF USER CONFIGURATION [!] ####
 ###########################################
 ###########################################
+# Create ramfs for repository as xbps errors as usb not writable
+if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
+echo 'Creating ramfs for repo....'
+mount -t ramfs ramfs $repopath
+cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
+else
+exit 1
+fi
+
+# Boot from Live CD & git clone https://github.com/leafhy/void-linux-installer.git
+usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
+if [ $usbrepo ] && [ $repopath != "" ]; then
+mount $usbrepo /media
+echo 'Creating ramfs for repo....'
+mount -t ramfs ramfs $repopath
+cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
+else
+exit 1
+fi
 
 # Detect if we're in UEFI or legacy mode
 [ -d /sys/firmware/efi ] && UEFI=1
