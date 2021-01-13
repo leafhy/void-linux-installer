@@ -108,7 +108,7 @@ setfont Lat2-Terminus16
 ' snapraid'\
 ' mergerfs'
 
-  username="voidser"
+  username="voidserv"
   groups="wheel,storage,lp,cdrom,optical,scanner,socklog"
 
 doasconf="$(cat <<'EOF'
