@@ -1769,7 +1769,7 @@ echo '(R)eboot'
 echo ''
 echo '(P)oweroff'
 echo ''
-read -n 1 -p "[ U | E | R | S ]: " ans
+read -n 1 -p "[ U \ E \ R \ P ]: " ans
 # Chroot may fail to unmount hence -l
 case $ans in
     r|R)
