@@ -7,8 +7,7 @@
 #########################################################
 #################### WARNING ############################
 #########################################################
-# Use UUID if using multiple drives - SATA appears to have priority over USB 
-# efibootmgr --disk defaults to /dev/sda
+# Use UUID if using multiple drives - otherwise SATA has priority over USB 
 # efibootmgr-kernel-hook
 # Replace OPTIONS=root="/dev/sda"
 # with 
@@ -24,7 +23,7 @@
 # make install install-link-sendmail setcap
 # mkdir -p /var/mail/new/
 #### [!] Warning [!] ####
-# make uninstall - will delete /usr/sbin and not femtomail
+# make uninstall - will delete symbolic link /usr/sbin and not femtomail
 #### email-test.sh
 # #!/bin/bash
 # (echo Subject: testING; echo) | sendmail $username
