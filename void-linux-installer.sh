@@ -492,7 +492,7 @@
 #        skanlite >> 9600dpi
 # --------------------------
 # Email
-# xbps-install isync notmuch afew astroid
+# xbps-install isync notmuch afew astroid aerc
 # ----------------------
 # Mbsync
 # Notes: isync(mbsync) is faster then offlineimap
