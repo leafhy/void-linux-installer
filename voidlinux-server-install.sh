@@ -28,7 +28,12 @@
 # #!/bin/bash
 # (echo Subject: testING; echo) | sendmail $username
 ##########################################################
-# 
+# xbps-install <pkg>
+# castget
+# detox
+# newsboat (newsbeuter)
+# minidlna
+##########################################################g
 # exit on error 
 set -e
 
