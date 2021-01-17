@@ -536,7 +536,15 @@
 # git clone https://github.com/gauteh/lieer.git
 # xbps-install python3-google-api-python-client notmuch python3-tqdm python3-yarl python3-oauth2client
 # cd lieer && pip install .
-# ------------------------
+# -----------------------------
+# Ripmime - Extract Email Attachments - Requires glibc to build - binary will run on musl
+# https://pldaniels.com/ripmime/
+# git clone https://github.com/inflex/ripMIME.git
+# make
+# make install
+# ripmime -i file . # extract to current directory
+# ripmime -i file -d /tmp
+# ----------------------------
 # Nvidia
 # https://nouveau.freedesktop.org/wiki/VideoAcceleration/
 # $ mkdir /tmp/nouveau
