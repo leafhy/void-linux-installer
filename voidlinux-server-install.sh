@@ -33,6 +33,7 @@
 # detox
 # newsboat (newsbeuter)
 # minidlna
+# ipmitool
 ##########################################################g
 # exit on error 
 set -e
