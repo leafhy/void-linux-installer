@@ -106,7 +106,7 @@
 ##########################################################################################
 #################### WARNING #############################################################
 ##########################################################################################
-# Use UUID if using multiple drives - SATA appears to have priority over USB 
+# Use UUID if using multiple drives - SATA has priority over USB 
 # efibootmgr --disk defaults to /dev/sda
 # efibootmgr-kernel-hook
 # Replace OPTIONS=root="/dev/sda"
