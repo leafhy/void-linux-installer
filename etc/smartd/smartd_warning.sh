@@ -187,12 +187,12 @@ if [ -n "$SMARTD_ADDRESS" ]; then
   # Send mail, use platform mailer by default
   test -n "$SMARTD_MAILER" || SMARTD_MAILER=$os_mailer
   if [ -n "$dryrun" ]; then
-   # echo "exec '$SMARTD_MAILER' -s '$SMARTD_SUBJECT' $SMARTD_ADDRESS <<EOF
+   ## echo "exec '$SMARTD_MAILER' -s '$SMARTD_SUBJECT' $SMARTD_ADDRESS <<EOF
     echo "exec '$SMARTD_MAILER' $SMARTD_ADDRESS <<EOF
 $fullmessage
 EOF"
   else
-   # exec "$SMARTD_MAILER" -s "$SMARTD_SUBJECT" $SMARTD_ADDRESS <<EOF
+   ## exec "$SMARTD_MAILER" -s "$SMARTD_SUBJECT" $SMARTD_ADDRESS <<EOF
     exec "$SMARTD_MAILER" $SMARTD_ADDRESS <<EOF
 $fullmessage
 EOF
