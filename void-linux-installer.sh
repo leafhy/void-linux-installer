@@ -151,6 +151,7 @@
 # nemo >> gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
 #      >> Network Mount >> /home/user/.cache/gvfs/sftp\:host\=XXXXXXXXXXX
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
+# lsscsi - list drives
 # ---
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
