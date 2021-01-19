@@ -863,7 +863,7 @@ else
 exit 1
 fi
 
-# Boot from Live CD & git clone https://github.com/leafhy/void-linux-installer.git
+# Mount live usb
 usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
 if [ $usbrepo ] && [ $repopath != "" ]; then
 mount $usbrepo /media
