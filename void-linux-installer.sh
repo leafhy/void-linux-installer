@@ -1800,8 +1800,4 @@ esac
 # xrandr --output LVDS-1 --auto
 # Blank screen 1m turn off 2m
 # setterm --blank 1 --powerdown 2
-# Save/Load monitor profile
-# autorandr --save 'profile'
-# Automatically reload
-# autorandr --change
-# autorandr 'profile'
+# autorandr - create monitor profiles
