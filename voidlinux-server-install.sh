@@ -54,7 +54,7 @@ echo '*********************************************'
 #############################################
 #############################################
 
-# Change font to be more legible
+### Change font to be more legible
 setfont Lat2-Terminus16
 
   pkg_list='base-minimal'\
@@ -123,7 +123,7 @@ permit nopass :wheel as root cmd /sbin/reboot
 EOF
 )"
 
-# .bashrc
+### $HOME/.bashrc
 bashrc="$(cat <<'EOF'
 # scripts/buffquote
 eval "$(starship init bash)"
@@ -140,13 +140,13 @@ alias bumount='doas /sbin/umount /mnt/backup'
 EOF
 )"
 
-# For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
+  ### For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
   ipstaticeth0="192.168.1.52"
-  # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
+  ### For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
   ipstaticwlan0=""
   routerssid=""
   gateway="192.168.1.1"
-  # Ethernet - eno1 (intel server) - enp0s25 (lenovo thinkpad)
+  ### Ethernet - eno1 (intel server) - enp0s25 (lenovo thinkpad)
   eth="eno1"
   wifipassword=""
   # nameserver0 is for unbound & dnscrypt-proxy
@@ -179,37 +179,44 @@ EOF
   HARDWARECLOCK="UTC"
   FONT="Tamsyn8x16r"
   TTYS="2"
-  # Create $HOME directories
+  ### Create $HOME directories
   dirs="exclusions scripts" 
-# Download various scripts/whatever to /home/$username/scripts
+### Download various scripts/whatever to /home/$username/scripts
 # urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
-# Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
+### Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
 # urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
-# Add font(.tar.gz) to /usr/share/kbd/consolefonts
+### Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
-# Install to ~/.local/bin
+### Install to ~/.local/bin
 # bin=('https://' 'https://')
+
+### Xbps live usb local repo
+voidrepo="voidrepo/voidlinux-setup/voidlinux-xbps-repo"
+### Location of void repo if booting from live usb
+repath="/run/initramfs/live/$voidrepo"
+### Location to mount VOID_LIVE usb if booting from live cd
+# repath="/media"
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
 ###########################################
 ###########################################
 # Create ramfs for repository as xbps errors as usb not writable
-if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
+if [ -d $repath ] && [ $repopath != "" ]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
-cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
+cp $repath/* $repopath && ls $repopath
 else
 exit 1
 fi
 
-# Boot from Live CD & git clone https://github.com/leafhy/void-linux-installer.git
+# Mount live usb
 usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
 if [ $usbrepo ] && [ $repopath != "" ]; then
-mount $usbrepo /media
+mount $usbrepo $repath
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
-cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
+cp $repath/$voidrepo/* $repopath && ls $repopath
 else
 exit 1
 fi
