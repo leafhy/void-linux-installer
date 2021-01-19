@@ -152,11 +152,19 @@
 #      >> Network Mount >> /home/user/.cache/gvfs/sftp\:host\=XXXXXXXXXXX
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
-# ---
+# autorandr - create monitor profiles
+# ----------
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
 # login admin/admin
-# ---
+# ----------
+# Turn off screen
+# xrandr --output LVDS-1 --off
+# Turn on screen
+# xrandr --output LVDS-1 --auto
+# Blank screen 1m turn off 2m
+# setterm --blank 1 --powerdown 2
+# -------------------------------
 # [!] IMPORTANT [!] alsa-utils >>> alsamixer is required to un-mute 
 # alsamixer - changes volume in drivers - gui AlsaMixer.app  
 # intel-ucode - dracut default is to include
@@ -404,6 +412,7 @@
 # =====================================
 # [!] IMPORTANT - POST INSTALLATION [!]
 # =====================================
+# Dnscrypt-Proxy
 # /etc/dnscrypt-proxy.toml
 # server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
 # listen_addresses = ['127.0.0.1:5335']
@@ -491,8 +500,9 @@
 #        12800dpi >> Empty filename passed to function, sane_start= Invalid argument
 #        simple-scan >> 2400dpi
 #        skanlite >> 9600dpi
-# --------------------------
-# Email
+########################################
+################ Email #################
+########################################
 # xbps-install isync notmuch afew astroid aerc
 # ----------------------
 # Mbsync
@@ -545,7 +555,7 @@
 # make install
 # ripmime -i file . # extract to current directory
 # ripmime -i file -d /tmp
-# ----------------------------
+##############################
 # Nvidia
 # https://nouveau.freedesktop.org/wiki/VideoAcceleration/
 # $ mkdir /tmp/nouveau
@@ -1791,13 +1801,6 @@ case $ans in
        umount -l -R /mnt && exit  
 esac
 
-######################################################################
-# POST INSTALL SETUP
-######################################################################
-# Turn off screen
-# xrandr --output LVDS-1 --off
-# Turn on screen
-# xrandr --output LVDS-1 --auto
-# Blank screen 1m turn off 2m
-# setterm --blank 1 --powerdown 2
-# autorandr - create monitor profiles
+#########################
+# FIN
+#########################
