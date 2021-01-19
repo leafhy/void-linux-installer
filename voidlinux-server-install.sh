@@ -7,7 +7,7 @@
 #########################################################
 #################### WARNING ############################
 #########################################################
-# Use UUID if using multiple drives - otherwise SATA has priority over USB 
+# Use UUID if using multiple drives - SATA has priority over USB 
 # efibootmgr-kernel-hook
 # Replace OPTIONS=root="/dev/sda"
 # with 
