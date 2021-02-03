@@ -35,7 +35,7 @@
 sequence default {
 	utf_8;
 	safe;
-	wipeup;
+	wipeup {remove_trailing;};
 };
 
 #
