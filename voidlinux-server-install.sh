@@ -12,6 +12,8 @@
 # Replace OPTIONS=root="/dev/sda"
 # with 
 # OPTIONS=root="UUID=$rootuuid"
+#
+# using 'mv' with mergerfs mountpoint may fail to move all files (use rsync to clean up) 
 #########################################################
 #########################################################
 #########################################################
