@@ -172,6 +172,13 @@
 # intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
 # Firefox tends to lose audio output if VLC has been in use - need to restart Firefox
 #################################################################
+######### SSHFS
+# xbps-install fuse-sshfs
+# sshfs user@server:/ /mnt/server
+# /etc/fstab
+# sshfs#$USER@$SERVER:/mnt/storage /mnt/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
+# Note: unable to get nfs or autofs to work (void client > void server)
+#################################################################
 ##################  Siren Music Player ##########################
 #################################################################
 # https://www.kariliq.nl/siren
