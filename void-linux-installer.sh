@@ -176,7 +176,7 @@
 # xbps-install fuse-sshfs
 # sshfs user@server:/ /mnt/server
 # /etc/fstab
-# sshfs#$USER@$SERVER:/mnt/storage /mnt/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
+# sshfs#$USER@$SERVER:/mnt/storage /home/user/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
 # Note: unable to get nfs or autofs to work (void client > void server)
 #################################################################
 ##################  Siren Music Player ##########################
