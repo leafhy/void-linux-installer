@@ -481,6 +481,7 @@
 # mpv --audio-device=sndio video.mkv
 # .config/mpv/mpv.conf
 # audio-device=sndio
+# IMPORTANT: mpv will run slowly if mpv.conf is missing
 # ---------------------------
 # OpenAL
 # cp /usr/share/examples/libopenal/alsoftrc.sample ~/.alsoftrc
