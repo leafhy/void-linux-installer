@@ -153,6 +153,7 @@
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
 # autorandr - create monitor profiles
+# attr-progs - Extended attributes # getfattr,setfattr
 # ----------
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
