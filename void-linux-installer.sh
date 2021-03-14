@@ -781,6 +781,8 @@ bashrc="$(cat <<'EOF'
 # scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
+# Rust can use ".local/bin"
+# Python3 pkgs need "~/.local/bin"
 export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 export RUSTUP_HOME=".local/share/rustup"
