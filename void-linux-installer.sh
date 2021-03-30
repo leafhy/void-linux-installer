@@ -773,7 +773,9 @@ setfont Lat2-Terminus16
 ' astroid'\
 ' lsof'\
 ' google-fonts-ttf'\
-' emacs-x11'
+' emacs-x11'\
+' fuse-sshfs'\
+' borg'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
