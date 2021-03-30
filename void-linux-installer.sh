@@ -764,7 +764,12 @@ setfont Lat2-Terminus16
 ' i3lock-color'\
 ' elogind'\
 ' dbus-elogind-x11'\
-' asciiquarium'
+' asciiquarium'\
+' pam'\
+' astroid'\
+' lsof'\
+' google-fonts-ttf'\
+' emacs-x11'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
@@ -862,7 +867,9 @@ EOF
   FONT="Tamsyn8x16r"
   TTYS="2"
   # Create $HOME directories
- dirs="exclusions scripts .config/{fontconfig,dunst}" 
+ dirs="exclusions scripts"
+ # Create $HOME/.config/xxx 
+ dirsub="fontconfig" 
 # Download various scripts/whatever to /home/$username/scripts
 #urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
   # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
@@ -877,7 +884,7 @@ EOF
 ###########################################
 ###########################################
 # Create ramfs for repository as xbps errors as usb not writable
-if [ -d /run/initramfs/live/voidrepo ] && [ $repopath != "" ]; then
+if [[ -d /run/initramfs/live/voidrepo ]] && [[ $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
@@ -887,7 +894,7 @@ fi
 
 # Mount live usb
 usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
-if [ $usbrepo ] && [ $repopath != "" ]; then
+if [[ $usbrepo ]] && [[ $repopath != "" ]]; then
 mount $usbrepo /media
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
@@ -975,8 +982,9 @@ echo
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
-xbps-install -uy -R $repopath
-xbps-install -R $repopath -y gptfdisk
+# xbps-install -uy -R $repopath
+# pam needed for setting of password
+xbps-install -R $repopath -y gptfdisk pam
 fi
 
 if [[ $cachedir != "" ]]; then
@@ -984,14 +992,14 @@ xbps-install -S -R $repo0 --download-only --cachedir $cachedir || xbps-install -
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
-xbps-install -uy -R $cachedir
+# xbps-install -uy -R $cachedir
 xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk
 xbps-install -R $cachedir -y gptfdisk
 fi
 
 if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
 xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
-xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
+# xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
 xbps-install -R -y $repo1 gptfdisk || xbps-install -S -y -R $repo2 gptfdisk || xbps-install -S -y -R $repo0 gptfdisk
 fi
 
@@ -1258,7 +1266,7 @@ if [[ $device != /dev/mmcblk0 ]]; then
 tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
 MODIFY_EFI_ENTRIES=1
 # OPTIONS=root="${device}2 loglevel=4 Page_Poison=1"
-OPTIONS=root="$rootuuid loglevel=4 Page_Poison=1"
+OPTIONS=root=UUID="$rootuuid loglevel=4 Page_Poison=1"
 DISK="$device"
 PART=1
 EOF
@@ -1548,6 +1556,10 @@ EOF
 # Create $HOME directories
 for dire in $dirs; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
+done
+
+for dire in $dirsub; do
+chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/$dire
 done
 
 # Font Configuration needed for firefox
