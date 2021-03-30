@@ -867,17 +867,17 @@ EOF
   FONT="Tamsyn8x16r"
   TTYS="2"
   # Create $HOME directories
- dirs="exclusions scripts"
- # Create $HOME/.config/xxx 
- dirsub="fontconfig" 
-# Download various scripts/whatever to /home/$username/scripts
-#urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
-  # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
-# urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
-  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
+  dirs="exclusions scripts"
+  # Create $HOME/.config/xxx 
+  dirsub="fontconfig" 
+ # Download various scripts/whatever to /home/$username/scripts
+  # urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
+ # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
+  # urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
+ # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
   # Install to ~/.local/bin
- # bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
+  # bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -889,7 +889,7 @@ echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 else
-exit 1
+echo ''
 fi
 
 # Mount live usb
@@ -900,7 +900,7 @@ echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 else
-exit 1
+echo ''
 fi
 
 # Detect if we're in UEFI or legacy mode
