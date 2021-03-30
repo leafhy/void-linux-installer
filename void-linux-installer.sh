@@ -926,7 +926,7 @@ echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
 echo '************************************************'
 echo '**** Script is preconfigured for UEFI & GPT ****'
 echo '****                                        ****'
-echo '**** Partition Layout : Fat-32 EFI of 100MB ****'
+echo '**** Partition Layout : Fat-32 EFI of 500MB ****'
 echo '****                  : / 100%              ****'
 echo '****                                        ****'
 echo '************************************************'
@@ -1030,7 +1030,7 @@ fi
 # sgdisk creates GPT by default
 echo
 sgdisk --zap-all $device
-sgdisk -n 1:2048:100M -t 1:ef00 $device
+sgdisk -n 1:2048:500M -t 1:ef00 $device
 sgdisk -n 2:0:0 -t 2:8300 $device
 sgdisk --verify $device
 echo
