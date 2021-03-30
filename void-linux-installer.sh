@@ -417,6 +417,10 @@
 # nohang --monitor -c /usr/local/etc/nohang/nohang-desktop.conf
 #                     /usr/local/etc/nohang/nohang.conf
 #######################################
+# Spacemacs
+# xbps-install emacs-x11
+# git clone -b develop https://github.com/syl20bnr/spacemacs ~/.emacs.d
+#######################################
 #######################################
 # =====================================
 # [!] IMPORTANT - POST INSTALLATION [!]
