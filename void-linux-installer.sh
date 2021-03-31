@@ -1,5 +1,11 @@
 #!/bin/bash
 ########################################################################
+############################# CAUTION ##################################
+# After updating gcc void linux was no longer useable due to widespread corruption
+# files became inaccessible, filenames were ok.
+# Borg backup USB was not effected.
+# Cause Unknown
+########################################################################
 ############################## WARNING #################################
 ########################################################################
 ## Do Not install Grub if theres another operating system installed   
