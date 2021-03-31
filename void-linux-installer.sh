@@ -738,6 +738,7 @@ setfont Lat2-Terminus16
 ' udiskie'\
 ' keychain'\
 ' nemo'\
+' nemo-fileroller'\
 ' gvfs'\
 ' gvfs-afp'\
 ' gvfs-cdda'\
