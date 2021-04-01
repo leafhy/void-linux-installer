@@ -297,7 +297,7 @@
 # certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
 ##############################################################################
 # Alock (Pauses dunst notifications)
-# xbps-install automake imlib2-devel pam-devel
+# xbps-install automake imlib2-devel pam-devel libgcrypt-devel libXrender-devel
 # git clone https://github.com/Arkq/alock.git
 # cd alock
 # $ autoreconf --install
