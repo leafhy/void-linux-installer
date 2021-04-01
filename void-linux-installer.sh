@@ -190,6 +190,7 @@
 #################################################################
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
+# git clone https://github.com/tbvdm/siren.git
 # ./configure aac=yes mad=no sndio=yes ffmpeg=yes mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
 # make && make install
 #
