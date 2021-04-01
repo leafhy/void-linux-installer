@@ -194,7 +194,7 @@
 # make && make install
 #
 # wav,aiff = sndfile | mp3 = mad,mpg123 | ogg = ogg | wv = wavpack
-# opus = opusfile aac = faad | mp4 = mp4v2 | flac = flac
+# opus = opusfile | aac = faad | mp4 = mp4v2 | flac = flac
 # ffmpeg = flac,ogg,mp3,mp4,m4a
 #
 # libid3tag-devel wavpack-devel libmad-devel libmp4v2-devel flac-devel
