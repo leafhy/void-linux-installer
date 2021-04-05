@@ -1280,6 +1280,8 @@ if [[ $device != /dev/mmcblk0 ]]; then
 tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
 MODIFY_EFI_ENTRIES=1
 # OPTIONS=root="${device}2 loglevel=4 Page_Poison=1"
+# Note: Pressure Stall Information (PSI) not tested
+#       Add "psi=1" to enable
 OPTIONS=root=UUID="$rootuuid loglevel=4 Page_Poison=1"
 DISK="$device"
 PART=1
