@@ -275,14 +275,18 @@
 # /home/user/.config/caddy/Caddyfile
 # ---------------------------
 # #$HOSTNAME
-# :2016
+# :2016 {
 # tls /home/$username/PATH/TO/cert.crt /home/$username/PATH/TO/cert.key
 #
 # reverse_proxy 127.0.0.1:8000
 #             
 # log {                              
 #     output file /var/log/caddy.log                                                                                                                                                                                                         
-# }   
+# }
+# :2015 {
+# root * /path/to/blog/
+# file_server
+# }
 # ----------------------------
 #
 # Note: Do not install cargo/rust with xbps-install # Bitwarden_rs will not build
