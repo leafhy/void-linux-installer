@@ -740,6 +740,7 @@ setfont Lat2-Terminus16
 ' keychain'\
 ' nemo'\
 ' nemo-fileroller'\
+' ffmpegthumbnailer'\
 ' gvfs'\
 ' gvfs-afp'\
 ' gvfs-cdda'\
