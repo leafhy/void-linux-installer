@@ -156,6 +156,9 @@
 # zeroconf/bonjour >> mDNSResponder,python3-zeroconf,python-zeroconf,avahi
 # nemo >> gvfs,gvfs-afp,gvfs-cdda,gvfs-smb,gvfs-afc,gvfs-mtp,gvfs-gphoto2
 #      >> Network Mount >> /home/user/.cache/gvfs/sftp\:host\=XXXXXXXXXXX
+#      >> Archive extract >> file-roller
+#      >> Video Thumbnails >> ffmpegthumbnailer
+# tumbler -  "D-Bus Thumbnailer service" >> unsure of difference with ffmpegthumbnailer
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
 # autorandr - create monitor profiles
