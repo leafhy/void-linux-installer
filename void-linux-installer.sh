@@ -1,10 +1,11 @@
 #!/bin/bash
 ########################################################################
 ############################# CAUTION ##################################
-# After updating gcc void linux was no longer useable due to widespread corruption
-# files became inaccessible, filenames were ok.
-# Borg backup USB was not effected.
-# Cause Unknown
+# After partially updating, void linux was no longer useable due to what appeared to be corruption
+# Most files became inaccessible, permissions were all '?' filenames were ok.
+# After using ddrescue to create image - files still had corrupted? permissions
+# The strange part is after mounting the image again at a later date all files are accessible.
+#
 ########################################################################
 ############################## WARNING #################################
 ########################################################################
@@ -833,6 +834,7 @@ bashprofile="$(cat <<'EOF'
 
 # Get the aliases and functions
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
+# exec startx prevents 'ssh' login
 exec startx
 EOF
 )"
@@ -899,7 +901,7 @@ EOF
  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
   # Install to ~/.local/bin
-  # bin=('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')
+  bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -1481,7 +1483,7 @@ if [ $urlfont ]; then
 fi 
 
 if [ $bin ]; then
-     echo '**** Installing Bin ****'
+     echo '**** Installing "$bin" ****'
      for file in "${bin[@]}"; do
      chroot  --userspec=$username:users /mnt aria2c "$bin" -d home/$username/.local/bin
      done
