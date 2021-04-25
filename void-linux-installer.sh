@@ -793,7 +793,9 @@ setfont Lat2-Terminus16
 ' google-fonts-ttf'\
 ' emacs-x11'\
 ' fuse-sshfs'\
-' borg'
+' borg'\
+' ncdu'\
+' lsscsi'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
