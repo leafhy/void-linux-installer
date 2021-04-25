@@ -616,6 +616,10 @@
 #      | enable "Seek based on percent not time"
 # w_scan -c AU -L >> channels.xspf
 # Note: install xset(prevents screensaver error)
+# ---------------------
+# Gparted
+# xbps-install gparted
+# doas env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY gparted
 ##################################################################
 # exit on error 
 set -e
