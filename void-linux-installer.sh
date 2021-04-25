@@ -68,6 +68,7 @@
 #           : Firefox is slow (10s) to start if /etc/hosts is incorrect (default hosts starts firefox ~5sec)
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
+#           : eSATA on T420 also requires USB to work despite powered external enclosure & 2.5" HDD
 #
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
