@@ -919,8 +919,6 @@ if [[ -d /run/initramfs/live/voidrepo ]] && [[ $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-else
-echo ''
 fi
 
 # Mount live usb
@@ -930,8 +928,6 @@ mount $usbrepo /media
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-else
-echo ''
 fi
 
 # Detect if we're in UEFI or legacy mode
