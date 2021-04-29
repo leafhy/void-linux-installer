@@ -208,8 +208,6 @@ if [ -d $repath ] && [ $repopath != "" ]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp $repath/* $repopath && ls $repopath
-else
-exit 1
 fi
 
 # Mount live usb
@@ -219,8 +217,6 @@ mount $usbrepo $repath
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp $repath/$voidrepo/* $repopath && ls $repopath
-else
-exit 1
 fi
 
 # Detect if we're in UEFI or legacy mode
