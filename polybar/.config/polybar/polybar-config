@@ -595,7 +595,7 @@ menu-0-4-foreground = ${colors.foreground}
 ;format-padding = 1
 
 ;; monitor
-;; herbstclient reload is needed to resize windows/frames correctly
+;; herbstclient reload is needed to make sure windows/frames are resized correctly
 menu-0-5 = 
 menu-0-5-exec = xrandr --output LVDS-1 --auto --output DP-1 --off && herbstclient reload
 menu-0-6 = 
