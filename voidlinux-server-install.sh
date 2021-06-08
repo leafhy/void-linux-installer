@@ -348,11 +348,6 @@ echo '************************************'
 echo '**** FILE SYSTEM TYPE SELECTION ****'
 echo '************************************'
 echo ''
-echo -e '*******************\x1B[1;31m WARNING \x1B[0m******************'
-echo 'Nilfs2 on '/' will error on every boot'
-echo 'Need to 'exit' twice to continue'
-echo '**************************************'
-echo ''
 echo '[!] Retry if valid selection fails [!]'
 echo ''
 PS3='Select file system to format partition: '
@@ -370,12 +365,6 @@ do
       fsys1='xfs'
       pkg_list="$pkg_list xfsprogs"
       xbps-install -R $repopath -y xfsprogs
-      break
-      ;;
-    'nilfs2')
-      fsys1='nilfs2'
-      pkg_list="$pkg_list nilfs-utils"
-      xbps-install -R $repopath -y nilfs-utils
       break
       ;;
     'ext4')
@@ -410,20 +399,19 @@ fi
 # ${fsys1} -f -L
 # btrfs
 # xfs
-# nilfs2
-if [[ "$fsys1" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys1 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}p2
    
-   elif [[ "$fsys1" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys1 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
 
 # ${fsys2} -F -L
 # ext4 
-if [[ "$fsys2" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys2 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}p2
    
-   elif [[ "$fsys2" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys2 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
@@ -462,10 +450,10 @@ fi
 
 # ${fsys3} -f -l
 # f2fs  
-if [[ "$fsys3" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys3 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}p2
    
-   elif [[ "$fsys3" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys3 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
 
