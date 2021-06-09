@@ -3,6 +3,8 @@
 -- VLC Extension 
 --
 --[[
+VLC extension that forces the 'title' field in the VLC Playlist and Media Library to use filename instead of using metadata.
+
 Author - ogilvierothchild >> https://forum.videolan.org/viewtopic.php?f=29&t=136996#p502502
 STEP 1/2:
 
