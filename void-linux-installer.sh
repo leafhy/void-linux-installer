@@ -69,7 +69,7 @@
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
 #           : eSATA (powered enclosure - usb not needed) on T420 - place the folowing in bash script (rescan-scsi-bus.sh didn't work)
-#             for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done
+#             "for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done"
 #
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
@@ -531,6 +531,9 @@
 #        12800dpi >> Empty filename passed to function, sane_start= Invalid argument
 #        simple-scan >> 2400dpi
 #        skanlite >> 9600dpi
+# ----------------------------
+# Firefox
+# ~/.config/fontconfig/fonts.conf is needed to display fonts correctly
 ########################################
 ################ Email #################
 ########################################
