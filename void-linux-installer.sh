@@ -1533,56 +1533,6 @@ EOF
 # chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
 # chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 
-# Unbound Configuration
-tee /mnt/etc/unbound/unbound.conf <<EOF
-server:
-    use-syslog: yes
-    interface: 127.0.0.1
-    
-    # Need chroot to prevent fatal error: trust-anchor-file: does not exist
-    chroot: ""
-#interface: ::0
-  #   access-control: 127.0.0.0/8 allow
-#     access-control: 192.168.0.0/24 allow
- #  access-control: 192.168.1.0/24 allow
-#interface: ::1
- #   access-control: ::1 allow
-       include: /etc/unbound/unbound-blocked.conf
-# Ports other then default (53) don't appear to work 
-# port 53
-
-# wget https://www.internic.net/domain/named.cache -O /etc/unbound/root.hints
-    root-hints: /etc/unbound/root.hints
-# auto-trust-anchor-file: unbound restarts on using dig/ping
-    trust-anchor-file: /etc/dns/root.key
-# transparent is default
-#local-zone: "192.in-addr.arpa." transparent
-local-data: "hostname-1 A 192.168.1.XX"
-local-data: "hostname-2 A 192.168.1.XX"
-local-data: "hostname-3 A 192.168.1.XX"
-
-local-data-ptr: "192.168.1.XX hostname-1"
-local-data-ptr: "192.168.1.XX hostname-2"
-local-data-ptr: "192.168.1.XX hostname-3"
-
-    do-not-query-localhost: no
-# Removal of forward zone uses ISP
-forward-zone:
-        name: "."
-        forward-addr: 127.0.0.1@5335
-#        forward-addr: 8.8.8.8
-#        forward-addr: 1.1.1.1
-# enable remote-control
-remote-control:
-    control-enable: yes
-control-interface: 0.0.0.0
-# Test unbound
-# $ unbound-host -C /etc/unbound/unbound.conf -v sigok.verteiltesysteme.net
-#  (secure)
-#  $ unbound-host -C /etc/unbound/unbound.conf -v sigfail.verteiltesysteme.net
-#  (servfail)
-EOF
-
 # Create $HOME directories
 for dire in $dirs; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
