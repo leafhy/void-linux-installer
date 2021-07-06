@@ -20,6 +20,7 @@ killall -q nohang
 killall -q redshift-gtk
 killall -q clipster
 killall -q greenclip
+Killall -q autocutsel
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
@@ -27,10 +28,14 @@ while pgrep -u $UID -x nohang >/dev/null; do sleep 1; done
 while pgrep -u $UID -x redshift-gtk >/dev/null; do sleep 1; done
 while pgrep -u $UID -x clipster >/dev/null; do sleep 1; done
 while pgrep -u $UID -x greenclip >/dev/null; do sleep 1; done
+while pgrep -u $UID -x autocutsel >/dev/null; do sleep 1; done
 
 # Start programs
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 redshift-gtk &
+# autocutsel - synchronize CLIPBOARD PRIMARY (-fork Run as a daemon program in the background)
+autocutsel -fork
+autocutsel -selection PRIMARY -fork
 clipster --daemon &
 greenclip daemon &
 nohang --monitor --config /usr/local/etc/nohang/nohang-desktop.conf &
