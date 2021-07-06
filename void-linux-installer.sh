@@ -803,7 +803,8 @@ setfont Lat2-Terminus16
 ' fuse-sshfs'\
 ' borg'\
 ' ncdu'\
-' lsscsi'
+' lsscsi'\
+' autocutsel'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
