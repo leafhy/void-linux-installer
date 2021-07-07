@@ -33,7 +33,7 @@ while pgrep -u $UID -x autocutsel >/dev/null; do sleep 1; done
 # Start programs
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 redshift-gtk &
-# autocutsel - synchronize CLIPBOARD PRIMARY (-fork Run as a daemon program in the background)
+# autocutsel - synchronize CLIPBOARD[default] PRIMARY (-fork Run as a daemon program in the background)
 autocutsel -fork
 autocutsel -selection PRIMARY -fork
 clipster --daemon &
