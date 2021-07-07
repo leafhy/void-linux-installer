@@ -166,6 +166,11 @@
 # lsscsi - list drives
 # autorandr - create monitor profiles
 # attr-progs - Extended attributes # getfattr,setfattr
+# gparted >> install polkit-gnome to use icon to start
+#         or
+#         >> xhost to start from cli
+#            xhost +si:localuser:root # add user
+#            xhost -si:localuser:root # remove user
 # ----------
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
@@ -489,15 +494,6 @@
 # exportfs -a
 # mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
 # Note: make sure permissions are correct or 'finder' will not not write
-# ---------------------
-# ~/.xinitrc
-# xss-lock -- ~/.config/i3/lock.sh -l &
-# xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
-# udiskie needs to start before window manager for icon to appear in polybar
-# udiskie --tray &
-# exec --no-startup-id clipster -d
-# exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
-# xbanish -a # hide mouse cursor
 # ---------------------
 # mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # mpv --audio-device=sndio video.mkv
@@ -858,10 +854,13 @@ xinitrc="$(cat <<'EOF'
 #
 # xss-lock -- ~/.config/i3/lock.sh -l &
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
+# polkit-gnome needed to start gparted as $USER
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # udiskie needs to start before window manager for icon to appear in polybar
 udiskie --tray &
-# exec --no-startup-id clipster -d
+# exec --no-startup-id clipster --daemon
 exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
+# hide mouse cusor
 xbanish -a
 EOF
 )"
