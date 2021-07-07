@@ -835,7 +835,8 @@ alias reboot='doas /sbin/reboot'
 alias bmount='doas /sbin/mount /mnt/backup'
 alias bumount='doas /sbin/umount /mnt/backup'
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
-alias clipsr="clipster -r"
+alias clipsr="clipster --delete"
+alias clipsc="clipster --erase-entire-board"
 alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -theme ~/.config/rofi/hlwm.rasi"
 EOF
 )"
