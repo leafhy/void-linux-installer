@@ -998,7 +998,7 @@ echo
 #      devname='/dev/sdb'
 #      break
 #      ;;
-#      'sdc')
+#    'sdc')
 #      devname='/dev/sdc'
 #      break
 #      ;;
