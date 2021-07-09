@@ -166,11 +166,6 @@
 # lsscsi - list drives
 # autorandr - create monitor profiles
 # attr-progs - Extended attributes # getfattr,setfattr
-# gparted >> install polkit-gnome to use icon to start
-#         or
-#         >> xhost to start from cli
-#            xhost +si:localuser:root # add user
-#            xhost -si:localuser:root # remove user
 # ----------
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
@@ -615,10 +610,17 @@
 #      | disable "Trust in-stream PCR"
 #      | enable "Seek based on percent not time"
 # w_scan -c AU -L >> channels.xspf
-# Note: install xset(prevents screensaver error)
+# Note: installing xset prevents screensaver error
 # ---------------------
 # Gparted
-# xbps-install gparted
+# xbps-install gparted polkit-gnome
+# Note: polkit-gnome allows gparted to be started by $USER via icon  
+#       xhost allows ROOT to open display
+# -------------
+# xhost +si:localuser:root # add user
+# doas gparted
+# xhost -si:localuser:root # remove user
+# -------------
 # doas env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY gparted
 ##################################################################
 # exit on error 
