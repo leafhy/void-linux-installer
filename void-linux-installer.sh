@@ -858,10 +858,7 @@ xinitrc="$(cat <<'EOF'
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 # udiskie needs to start before window manager for icon to appear in polybar
 udiskie --tray &
-# exec --no-startup-id clipster --daemon
 exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
-# hide mouse cusor
-xbanish -a
 EOF
 )"
 
@@ -936,14 +933,14 @@ cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 fi
 
 # Detect if we're in UEFI or legacy mode
-[ -d /sys/firmware/efi ] && UEFI=1
-if [ $UEFI ]; then
+[[ -d /sys/firmware/efi ]] && UEFI=1
+if [[ $UEFI ]]; then
   pkg_list="$pkg_list efibootmgr"
 fi
 
 # Detect if we're on an Intel system
 cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
-if [ "$cpu_vendor" = "GenuineIntel" ]; then
+if [[ "$cpu_vendor" = "GenuineIntel" ]]; then
   pkg_list="$pkg_list intel-ucode"
 fi
  
@@ -1120,7 +1117,7 @@ clear
 
 # Format filesystems
 # fat-32
-if [ $UEFI ] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $UEFI ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.vfat -F 32 -n EFI ${device}p1
    
    elif [[ $device != /dev/mmcblk0 ]]; then
@@ -1200,7 +1197,7 @@ for dir in dev proc sys boot; do
   mkdir /mnt/${dir}
 done
 
-if [ $UEFI ]; then
+if [[ $UEFI ]]; then
      mkdir -p /mnt/boot/efi
      else
      echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"  
@@ -1372,7 +1369,7 @@ echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
 echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 
 # Use static Wifi (dynamic is default)
-if [ "$ipstaticwlan0" ]; then
+if [[ "$ipstaticwlan0" ]]; then
 tee /mnt/etc/iwd/main.conf <<EOF
 [General]
 EnableNetworkConfiguration=true
@@ -1380,7 +1377,7 @@ EOF
 fi
 
 # Set static ip address for wifi
-if [ "$ipstaticwlan0" ]; then 
+if [[ "$ipstaticwlan0" ]]; then 
 tee /mnt/var/lib/iwd/${routerssid}.psk <<EOF
 [IPv4]
 Address="${ipstaticwlan0}"
@@ -1461,11 +1458,11 @@ chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
 # Install Extras
-if [ $urlscripts ] || [ $urlfont ] || [ $bin ] && [ $repopath != "" ] || [ $cachedir != "" ] ; then
+if [[ $urlscripts ]] || [[ $urlfont ]] || [[ $bin ]] && [[ $repopath != "" ]] || [[ $cachedir != "" ]] ; then
      xbps-install -R $repopath $cachedir -y aria2
 fi
   
-if [ $urlscripts ]; then
+if [[ $urlscripts ]]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
      chroot  --userspec=$username:users /mnt aria2c "$file" -d home/$username/scripts
@@ -1474,14 +1471,14 @@ if [ $urlscripts ]; then
      sleep 3s
 fi
 
-if [ $urlup ]; then
+if [[ $urlup ]]; then
 echo '**** Downloading unbound updater ****'
 aria2c $urlup -d /mnt/etc/unbound/unbound-updater
 fi
 
 echo
 
-if [ $urlfont ]; then
+if [[ $urlfont ]]; then
      echo '**** Installing Font ****'
      aria2c "$urlfont" -d /mnt/usr/local/src
      cd /mnt/usr/local/src && tar zxf $(echo $urlfont | cut -d d -f 3 | tr -d /)
@@ -1490,7 +1487,7 @@ if [ $urlfont ]; then
      sleep 3s
 fi 
 
-if [ $bin ]; then
+if [[ $bin ]]; then
      echo '**** Installing "$bin" ****'
      for file in "${bin[@]}"; do
      chroot  --userspec=$username:users /mnt aria2c "$bin" -d home/$username/.local/bin
