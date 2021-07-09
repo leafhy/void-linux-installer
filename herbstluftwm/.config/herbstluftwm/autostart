@@ -55,10 +55,12 @@ hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn sakura -m --title sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
 hc keybind $Mod-n spawn nemo
+hc keybind $Mod-a spawn astroid
 # rofi opens micro with xterm
 hc keybind $Mod-Control-m spawn sakura --title micro -x micro
 hc keybind $Mod-Control-s spawn sakura --title siren -x siren
 hc keybind $Mod-Control-g spawn sakura --title glances -x /bin/glances
+hc keybind $Mod-Control-a spawn sakura --title aerc -x aerc
 
 # herbstluftwm extras > /usr/share/doc/herbstluftwm/examples/
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
