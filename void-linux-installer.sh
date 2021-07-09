@@ -1039,7 +1039,7 @@ fi
 # dd if=/dev/zero of=/dev/$devname bs=1M count=100
 
 # Create partitions
-# if [ $UEFI ]; then
+# if [[ $UEFI ]]; then
   # parted /dev/${DEVNAME} mklabel gpt
   # parted -a optimal /dev/${devname} mkpart primary 2048s 100M
   # parted -a optimal /dev/${devname} mkpart primary 100M 100%
