@@ -5,6 +5,7 @@ OUTPUT_IMAGE=/tmp/i3lock.png
 
 RESOLUTION=$(xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
 
+amixer set Master mute
 
 ffmpeg -f x11grab -video_size $RESOLUTION -i $DISPLAY -filter_complex "gblur=40, eq=brightness=-.02" -y -vframes 1 $OUTPUT_IMAGE
 
