@@ -166,6 +166,8 @@
 # lsscsi - list drives
 # autorandr - create monitor profiles
 # attr-progs - Extended attributes # getfattr,setfattr
+# imgcat - https://github.com/danielgatis/imgcat/releases/download/v1.0.8/imgcat_1.0.8_Linux_x86_64.tar.gz # Binary works
+#        - https://github.com/eddieantonio/imgcat # failed to compile
 # ----------
 # grafana - failed to start due to no permission to mkdir /var/log/grafana
 # Create /var/log/grafana manually
