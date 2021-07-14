@@ -104,8 +104,8 @@ tray-padding =
 ;font-2  = siji:pixelsize=10;1
 font-0  = "Iosevka Term SS10:style=Regular:size=10;3"
 font-1 = icomoon\-feather:style=Regular:size=10;3
-font-2 = IcoMoon\-Free:size=10;3
-font-3 = "NotoEmoji Nerd Font Mono:size=10;3"
+;font-1 = IcoMoon\-Free:size=10;3
+font-2 = "NotoEmoji Nerd Font Mono:size=10;3"
 
 #################
 #### Modules ####
@@ -400,19 +400,18 @@ format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-prefix = "" 
+format-connected-prefix =  "直"
 format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
 format-connected-underline = ${colors.underline2}
 
-label-disconnected = " " 
-;""
+label-disconnected = "直"
 label-disconnected-foreground = ${colors.foreground-1}
 label-disconnected-background = ${colors.background}
 format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.alert}
 format-disconnected-background = ${colors.background}
-;format-disconnected-prefix = " "
+;format-disconnected-prefix = "直"
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-prefix-background = ${colors.background}
 ;format-disconnected-underline =${colors.alert}
