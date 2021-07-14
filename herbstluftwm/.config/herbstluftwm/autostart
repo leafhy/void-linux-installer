@@ -16,11 +16,12 @@ xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --ou
 
 # Terminate already running processes
 killall -q polybar
-killall -q nohang
 killall -q redshift-gtk
 killall -q clipster
 killall -q greenclip
 Killall -q autocutsel
+killall -q dunst
+pgrep -f nohang | xargs kill -9
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
