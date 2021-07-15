@@ -481,8 +481,10 @@
 # editor = /usr/bin/mle
 # ---------------------
 # Network - WIFI
+# xbps-install iwd openresolv
+# sv start iwd
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
-# password file >>> /var/lib/iwd/routerssid
+# password file >> /var/lib/iwd/routerssid
 # ---------------------
 # NFS Mount
 # /etc/exports
@@ -670,6 +672,7 @@ setfont Lat2-Terminus16
 ' inxi'\
 ' iproute2'\
 ' iwd'\
+' openresolv'\
 ' kbd'\
 ' kid3'\
 ' libinput-gestures'\
