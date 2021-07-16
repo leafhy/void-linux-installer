@@ -496,6 +496,7 @@
 # ------------
 # /etc/network/interfaces.d/ifcfg-eth0
 # auto enp0s00
+# allow-hotplug enp0s00
 # iface enp0s00 inet static
 # address 192.168.1.XX
 # netmask 255.255.255.0
@@ -1381,10 +1382,7 @@ echo "#nameserver $nameserver0" >> /mnt/etc/resolv.conf
 # Options for dnscrypt-proxy
 echo "#options edns0" >> /mnt/etc/resolv.conf
 fi
-# Google
-# echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-# echo "nameserver 8.8.4.4" >> /etc/resolv.conf
-# Cloudflare
+
 if [[ $nameserver1 ]]; then
 echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
 fi
@@ -1394,12 +1392,13 @@ fi
 if [[ $gateway ]]; then
 echo "nameserver $gateway" >> /mnt/etc/resolv.conf
 fi
-# Static IP configuration via iproute2
+
 cp /etc/rc.local /mnt/etc
+# Static IP configuration via iproute2 - Not needed for $eth if using ifupdown
 eth=$(ip link | grep enp | cut -d : -f 2)
-echo "ip link set dev $eth up" >> /mnt/etc/rc.local
-echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
-echo "ip route add default via $gateway" >> /mnt/etc/rc.local
+#echo "ip link set dev $eth up" >> /mnt/etc/rc.local
+#echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
+#echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 
 # Use static Wifi (dynamic is default)
 if [[ "$ipstaticwlan0" ]]; then
