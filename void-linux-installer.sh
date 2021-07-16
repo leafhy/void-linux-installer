@@ -481,11 +481,36 @@
 # editor = /usr/bin/mle
 # ---------------------
 # Network - WIFI
-# xbps-install iwd openresolv
+# xbps-install iwd openresolv ifupdown
 # sv start iwd
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
 # password file >> /var/lib/iwd/routerssid
+# -------------
+# /etc/iwd/main.conf
+# [General]
+# EnableNetworkConfiguration=true
+# UseDefaultInterface=true
+#
+# [Network]
+# NameResolvingService=resolvconf
+# ------------
+# /etc/network/interfaces.d/ifcfg-eth0
+# auto enp0s00
+# iface enp0s00 inet static
+# address 192.168.1.XX
+# netmask 255.255.255.0
+# gateway 192.168.1.X
+# dns-nameservers 127.0.0.1
 # ---------------------
+# /etc/resolvconf.conf
+# name_servers=127.0.0.1
+# resolv_conf_options=edns0
+# ---------------
+# resolvconf -u
+# ---------------------
+# ip link set wlp1s0 up/down
+# ifup/down enp0s00 
+# --------------------
 # NFS Mount
 # /etc/exports
 # /path/here 'ip of OSX'(insecure,rw,sync,no_root_squash)
@@ -807,7 +832,8 @@ setfont Lat2-Terminus16
 ' borg'\
 ' ncdu'\
 ' lsscsi'\
-' autocutsel'
+' autocutsel'\
+' ifupdown'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
