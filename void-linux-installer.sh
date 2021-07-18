@@ -833,8 +833,7 @@ setfont Lat2-Terminus16
 ' borg'\
 ' ncdu'\
 ' lsscsi'\
-' autocutsel'\
-' ifupdown'
+' autocutsel'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
@@ -1394,7 +1393,7 @@ echo "nameserver $gateway" >> /mnt/etc/resolv.conf
 fi
 
 cp /etc/rc.local /mnt/etc
-# Static IP configuration via iproute2 - Not needed for $eth if using ifupdown
+# Static IP configuration via iproute2
 eth=$(ip link | grep enp | cut -d : -f 2)
 #echo "ip link set dev $eth up" >> /mnt/etc/rc.local
 #echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
