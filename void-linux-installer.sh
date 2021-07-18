@@ -889,8 +889,6 @@ xinitrc="$(cat <<'EOF'
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # polkit-gnome needed to start gparted as $USER
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-# udiskie needs to start before window manager for icon to appear in polybar
-udiskie --tray &
 exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 EOF
 )"
