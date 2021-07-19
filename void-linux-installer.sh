@@ -922,7 +922,7 @@ EOF
   # xbps-install --repository $cachedir
   cachedir=""
   
-  ### Leave $repopath & $cachedir empty to use default repository /var/cache/xbps
+  ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
   # xbps-install --repository $repo0
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
