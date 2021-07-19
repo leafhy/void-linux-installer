@@ -1593,39 +1593,6 @@ chroot --userspec=$username:users /mnt tee home/$username/scripts/bitwarden_rs-f
 cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs
 EOF
 
-# Borg Backup
-# exclusions directory will NOT be backed up by borg
-
-# create mount point for borg repo
-chroot /mnt mkdir mnt/borg-backup
-# create mount point to access borg repo
-chroot /mnt mkdir mnt/backup
-
-chroot --userspec=$username:users /mnt tee home/$username/scripts/borg-backup.sh <<EOF
-#!/bin/sh
-# https://superuser.com/questions/1361971/how-do-i-automate-borg-backup
-
-DATE=$(date)
-echo "Starting backup at $DATE\n"
-
-# setup script variables
-# export BORG_PASSPHRASE="secret-passphrase-here!"
-export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
-export BORG_REPO="/mnt/void-backup/borg"
-export BACKUP_TARGETS="/"
-# export BACKUP_NAME="$HOSTNAME"
-BORG_OPTS="--stats --one-file-system"
-
-# create borg backup archive
-borg create -e "/dev" -e "/tmp" -e "/proc" -e "/sys" -e "/run" -e "/home/$username/exclusions" $BORG_OPTS ::{now:%Y-%m-%d_T%H-%M-%S}_{hostname} $BACKUP_TARGETS
-
-# prune old archives to keep disk space in check
-borg prune -v --list --keep-daily=7 --keep-weekly=4 --keep-monthly=6
-
-# all done!
-echo "Backup complete at $DATE\n";
-EOF
-
 clear
  
 echo '**********************************************************'
