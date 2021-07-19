@@ -4,11 +4,10 @@
 DATE=$(date)
 
 echo "Starting backup at $DATE"
-
+# Bitwarden database backup
 cd /home/$USER/src/bitwarden_rs/target/release/data
 rm backup.sqlite3
 sqlite3 db.sqlite3 ".backup 'backup.sqlite3'"
-chown $USER:users backup.sqlite3
 
 # setup script variables
 # export BORG_PASSPHRASE="secret-passphrase-here!"
