@@ -903,7 +903,7 @@ EOF
   routerssid=""
   gateway="192.168.1.1"
   wifipassword=""
-  # use openresolv /etc/resolvconf.conf
+  # use openresolv /etc/resolvconf.conf instead of /etc/resolv.conf
   openresolv="YES"
   # nameserver0 is for unbound & dnscrypt-proxy
   nameserver0="127.0.0.1"
