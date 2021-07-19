@@ -26,7 +26,7 @@ borg create $BORG_OPTS -e "/dev" -e "/tmp" -e "/proc" -e "/sys" -e "/run" -e "/h
 borg prune -v --list --keep-daily=7 --keep-weekly=4 --keep-monthly=6
 
 # all done!
-notify-send "Backup complete at $DATE\n"
+notify-send "Borg Backup complete at $DATE"
 else
-notify-send "ERROR Borg Backup FAILED at $DATE\n"
+notify-send "ERROR Borg Backup FAILED at $DATE"
 fi
