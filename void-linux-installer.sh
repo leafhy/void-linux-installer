@@ -481,7 +481,8 @@
 # editor = /usr/bin/mle
 # ---------------------
 # Network - WIFI
-# xbps-install iwd openresolv ifupdown
+# xbps-install iwd openresolv iproute2 
+# use ifupdown/iproute2
 # sv start iwd
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
 # password file >> /var/lib/iwd/routerssid
@@ -494,6 +495,7 @@
 # [Network]
 # NameResolvingService=resolvconf
 # ------------
+# ifupdown
 # /etc/network/interfaces.d/ifcfg-eth0
 # auto enp0s00
 # allow-hotplug enp0s00
@@ -503,6 +505,7 @@
 # gateway 192.168.1.X
 # dns-nameservers 127.0.0.1
 # ---------------------
+# openresolv
 # /etc/resolvconf.conf
 # name_servers=127.0.0.1
 # resolv_conf_options=edns0
@@ -897,9 +900,11 @@ EOF
   ipstaticeth0="192.168.1.X"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
   ipstaticwlan0="192.168.1.X"
-  routerssid="XXXX"
+  routerssid=""
   gateway="192.168.1.1"
   wifipassword=""
+  # use openresolv /etc/resolvconf.conf
+  openresolv="YES"
   # nameserver0 is for unbound & dnscrypt-proxy
   nameserver0="127.0.0.1"
   #nameserver1="1.0.0.1"
@@ -1373,7 +1378,15 @@ echo "repository=$repo2" >> /mnt/etc/xbps.d/00-repository-main.conf
 echo "repository=$repo0" >> /mnt/etc/xbps.d/00-repository-main.conf
 
 # Networking
+# iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
+# resolvconf -u # update /etc/resolv.conf
+if [[ -f /mnt/etc/resolvconf.conf && $openresolv = YES ]]; then
+echo "name_servers=$nameserver0" >> /mnt/etc/resolvconf.conf
+echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
+else
 cp /etc/resolv.conf /mnt/etc
+fi
+
 if [[ $nameserver0 ]]; then
 echo "#nameserver $nameserver0" >> /mnt/etc/resolv.conf
 # Options for dnscrypt-proxy
@@ -1383,9 +1396,11 @@ fi
 if [[ $nameserver1 ]]; then
 echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
 fi
+
 if [[ $nameserver2 ]]; then
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
 fi
+
 if [[ $gateway ]]; then
 echo "nameserver $gateway" >> /mnt/etc/resolv.conf
 fi
