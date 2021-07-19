@@ -1408,9 +1408,9 @@ fi
 cp /etc/rc.local /mnt/etc
 # Static IP configuration via iproute2
 eth=$(ip link | grep enp | cut -d : -f 2)
-#echo "ip link set dev $eth up" >> /mnt/etc/rc.local
-#echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
-#echo "ip route add default via $gateway" >> /mnt/etc/rc.local
+echo "ip link set dev $eth up" >> /mnt/etc/rc.local
+echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
+echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 
 # Use static Wifi (dynamic is default)
 if [[ "$ipstaticwlan0" ]]; then
