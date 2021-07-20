@@ -1605,7 +1605,7 @@ echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
-echo '**** Verify 'intel-ucode' did install ****'
+echo '**** Verify 'intel-ucode' is installed ****'
 echo '**** 'Herbstluftwm' will start after login ****'
 echo ''
 echo "(U)nmount $device and exit"
