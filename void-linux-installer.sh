@@ -1164,19 +1164,19 @@ fi
 # btrfs
 # xfs
 # nilfs2
-if [[ "$fsys1" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys1 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}p2
    
-   elif [[ "$fsys1" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys1 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
 
 # ${fsys2} -F -L
 # ext4 
-if [[ "$fsys2" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys2 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}p2
    
-   elif [[ "$fsys2" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys2 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
@@ -1215,10 +1215,10 @@ fi
 
 # ${fsys3} -f -l
 # f2fs  
-if [[ "$fsys3" ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys3 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}p2
    
-   elif [[ "$fsys3" ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys3 ]] && [[ $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
 
