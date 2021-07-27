@@ -896,8 +896,10 @@ pkg_listsrv='base-minimal'\
 ' mergerfs'
 
   username="vade"
+  # Desktop
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
-
+  # Server
+  # groups="wheel,storage,cdrom,optical,socklog"
 doasconf="$(cat <<'EOF'
 permit persist :wheel
 permit nopass :wheel as root cmd /sbin/poweroff
@@ -956,11 +958,11 @@ EOF
 # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
   ipstaticeth0="192.168.1.X"
   # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
-  ipstaticwlan0="192.168.1.X"
+  ipstaticwlan0=""
   routerssid=""
   gateway="192.168.1.1"
   wifipassword=""
-  # use /etc/resolvconf.conf instead of /etc/resolv.conf
+  # use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
   openresolv="YES"
   # nameserver0 is for unbound & dnscrypt-proxy
   nameserver0="127.0.0.1"
@@ -984,8 +986,10 @@ EOF
   repo0="http://alpha.de.repo.voidlinux.org/current/musl"
   repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
   repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
-  
-  services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp nfs-server sndiod dbus statd rpcbind cgmanager polkitd"
+  # Desktop Services
+  services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
+  # Server Services
+  # srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
   HOSTNAME="void"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
@@ -1573,7 +1577,7 @@ echo '********************************************'
 echo ''
 
 # Activate services
-for srv in $services; do
+for srv in $services $srv-services; do
 chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
@@ -1617,10 +1621,9 @@ fi
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
+if [[ pkg_list != pkg_listsrv ]]; then
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
-
 # Audio Configuration
-if [[ $pkg_list != $pkg_listsrv ]]; then
 chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
 pcm.sndio {
 type asym
