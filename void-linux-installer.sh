@@ -856,7 +856,6 @@ pkg_listsrv='base-minimal'\
 ' hddtemp'\
 ' inetutils'\
 ' inxi'\
-' iproute2'\
 ' kbd'\
 ' linux-firmware'\
 ' linux-firmware-intel'\
@@ -868,7 +867,7 @@ pkg_listsrv='base-minimal'\
 ' nano'\
 ' ncurses'\
 ' rsync'\
-' nfs-utils'\
+' iproute2'\
 ' opendoas'\
 ' openssh'\
 ' p7zip'\
@@ -1621,6 +1620,7 @@ echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 
 # Audio Configuration
+if [[ $pkg_list != $pkg_listsrv ]]; then
 chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
 pcm.sndio {
 type asym
@@ -1650,6 +1650,7 @@ hint {
 }
 pcm.default sndio
 EOF
+fi
 
 # Herbstluftwm
 # chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/herbstluftwm
