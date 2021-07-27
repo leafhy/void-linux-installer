@@ -168,6 +168,8 @@
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
 # autorandr - create monitor profiles
+# audacity - fails to start via icon - starts via cli with errors then stops responding
+# reaper - starts then freezes - need to poweroff
 # attr-progs - Extended attributes # getfattr,setfattr
 # imgcat - https://github.com/danielgatis/imgcat/releases/download/v1.0.8/imgcat_1.0.8_Linux_x86_64.tar.gz # Binary works
 #        - https://github.com/eddieantonio/imgcat # failed to compile
