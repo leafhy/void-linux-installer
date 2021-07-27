@@ -4,7 +4,7 @@ I know next to nothing about bash so there could be dragons and possibly a few t
 # void-linux-installer.sh
 This partially interarctive bash script is setup to *install Void Linux for Desktop or Server (headless).
 
-#### Requirement (glibc version not tested)
+### Requirement (glibc version not tested)
 [void-live-x86_64-musl-20191109](https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso)
 
 ### Install dotfiles manually or use [summon](https://gitlab.com/semente/summon)
