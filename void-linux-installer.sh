@@ -917,7 +917,11 @@ pkg_listsrv='base-minimal'\
 ' newsboat'\
 ' minidlna'\
 ' ipmitool'\
-' detox'
+' detox'\
+' lsof'\
+' lsscsi'\
+' borg'\
+' ncdu'
 
   username="vade"
   # Desktop
