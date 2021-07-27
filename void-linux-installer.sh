@@ -963,8 +963,6 @@ EOF
 
 # .bash_profile
 bashprofile="$(cat <<'EOF'
-# .bash_profile
-
 # Get the aliases and functions
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
 # exec startx prevents 'ssh' login
