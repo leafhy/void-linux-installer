@@ -238,10 +238,10 @@
 ############################# Bitwarden - Bitwarden_rs ####################################
 ###########################################################################################
 # https://bitwarden.com
-# Add CARGO_HOME & RUSTUP_HOME to .bashrc
+# .bashrc
 # export RUSTUP_HOME=".local/share/rustup"
 # export CARGO_HOME=".local/share/cargo"
-#
+# -------------------------
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 # select (1)
 # git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
