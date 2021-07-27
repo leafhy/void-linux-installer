@@ -1457,7 +1457,7 @@ fi
 # Add fstab entries
 if [[ $UEFI ]] && [[ $device = /dev/mmcblk0 ]]; then
      echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
-   elif [[ UEFI ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $UEFI ]] && [[ $device != /dev/mmcblk0 ]]; then
      echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
 fi
 # echo "LABEL=root  /       ext4    rw,relatime,data=ordered,discard    0 0" > /mnt/etc/fstab
