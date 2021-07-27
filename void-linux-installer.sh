@@ -1424,8 +1424,6 @@ if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
  # Make sure everything was installed
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
 fi
-
-echo
   
 # Get / UUID
 rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 | grep - | tr -d '"')
@@ -1555,7 +1553,7 @@ echo "KEYMAP=$KEYMAP" >> /mnt/etc/rc.conf
 echo "FONT=$FONT" >> /mnt/etc/rc.conf
 echo "TTYS=$TTYS" >> /mnt/etc/rc.conf
 
-# set "DOAS(root)" privileges
+# set "doas(root)" privileges
 # test doas.conf
 # $ doas -C /etc/doas.conf
 # check permission of command
