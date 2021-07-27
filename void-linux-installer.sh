@@ -17,6 +17,8 @@
 ## 
 ## OSX 'finder' can truncate filenames (fat-32) , renaming will error filename already exists
 ## Need to rename with 'Terminal.app'
+##
+## Using 'mv' with mergerfs mountpoint may fail to move all files (use rsync to clean up) 
 ########################################################################
 ########################################################################
 # References
@@ -301,13 +303,17 @@
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
 #       xbps-install caddy # caddy v2 not available                                                                                                                                                                                              
 #
-# Caddy Log (Errors only occur when using $HOSTNAME in Caddyfile)
+# Caddy Log (Errors occured when using $HOSTNAME in Caddyfile - missing braces?)
 # ---------------------------------------
 # WARN pki.ca.local installing root certificate (you might be prompted for password) {“path”: “storage:pki/authorities/local/root.crt”}
 # 2020/09/08 not NSS security databases found
 # 2020/09/08 define JAVA_HOME environment variable to use the Java trust
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
+# -----------------------
+# 'caddy stop' occasionally errors - re-running command works
+# 2021/07/25 22:28:56.270    WARN    failed using API to stop instance    {"error": "performing request: Post \"http://localhost:2019/stop\": dial tcp [::1]:2019: connect: connection refused"}
+# stop: performing request: Post "http://localhost:2019/stop": dial tcp [::1]:2019: connect: connection refused
 ##############################################################################
 # Alock (Pauses dunst notifications)
 # xbps-install automake imlib2-devel pam-devel libgcrypt-devel libXrender-devel
@@ -614,6 +620,19 @@
 # ripmime -i file . # extract to current directory
 # ripmime -i file -d /tmp
 ##############################
+# Femtomail
+# xbps-install make gcc git
+# git clone https://git.lekensteyn.nl/femtomail.git
+# cd femtomail
+# make USERNAME=root MAILBOX_PATH=/var/mail
+# make install install-link-sendmail setcap
+# mkdir -p /var/mail/new/
+#### [!] Warning [!] ####
+# make uninstall - will delete symbolic link /usr/sbin and not femtomail
+#### email-test.sh
+# #!/bin/bash
+# (echo Subject: testING; echo) | sendmail $username
+##########################################################
 # Nvidia
 # https://nouveau.freedesktop.org/wiki/VideoAcceleration/
 # $ mkdir /tmp/nouveau
@@ -893,7 +912,12 @@ pkg_listsrv='base-minimal'\
 ' xz'\
 ' lshw'\
 ' snapraid'\
-' mergerfs'
+' mergerfs'\
+' castget'\
+' newsboat'\
+' minidlna'\
+' ipmitool'\
+' detox'
 
   username="vade"
   # Desktop
@@ -1682,8 +1706,8 @@ echo '**********************************************************'
 echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
 echo '**********************************************************'
 echo '**********************************************************'
-echo '**** Verify 'intel-ucode' is installed ****'
-echo '**** 'Herbstluftwm' will start after login ****'
+echo '**** Verify 'intel-ucode' installed ****'
+echo '****************************************'
 echo ''
 echo "(U)nmount $device and exit"
 echo ''
