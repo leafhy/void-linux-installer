@@ -464,11 +464,11 @@
 # Borg Backup - Hourly 
 # 0 * * * * /home/$username/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
-# @ 1m /etc/unbound/unbound-updater/unbound-update-blocklist.sh 2>&1
+# @ 1m cd /etc/unbound/unbound-updater && ./unbound-update-blocklist.sh 2>&1
 # Caddy2
 # &bootrun,first(1) * * * * * /sbin/caddy start --config /home/user/.config/caddy/Caddyfile 2>&1
-# Bitwarden_rs - 1m after boot
-# &bootrun,first(2) * * * * * $username /home/$username/scripts/bitwarden_rs-fcron-start.sh >> /var/log/bitwarden_rs.log 2>&1
+# Bitwarden_rs - 2m after boot
+# &bootrun,first(2) * * * * * cd /home/$username/src/bitwarden_rs/target/release ./bitwarden_rs >> /var/log/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
 # &bootrun,first(1) * * * * * vuurmuur -D && vuurmuur_log 2>&1
 # Osync 2m after boot
@@ -1621,8 +1621,10 @@ fi
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
+
 if [[ pkg_list != pkg_listsrv ]]; then
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
+
 # Audio Configuration
 chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
 pcm.sndio {
@@ -1667,12 +1669,6 @@ done
 for dire in $dirsub; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/$dire
 done
-
-# Bitwarden_rs Start
-chroot --userspec=$username:users /mnt tee home/$username/scripts/bitwarden_rs-fcron-start.sh <<EOF
-#!/bin/sh
-cd /home/$username/src/bitwarden_rs/target/release && ./bitwarden_rs
-EOF
 
 clear
  
