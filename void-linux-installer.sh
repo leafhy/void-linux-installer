@@ -678,6 +678,7 @@ echo '*********************************************'
 # Change font to be more legible
 setfont Lat2-Terminus16
 
+# Desktop Packages
   pkg_list='base-minimal'\
 ' aria2'\
 ' atool'\
@@ -837,6 +838,63 @@ setfont Lat2-Terminus16
 ' ncdu'\
 ' lsscsi'\
 ' autocutsel'
+
+# Server Packages
+pkg_listsrv='base-minimal'\
+' aria2'\
+' atool'\
+' bash'\
+' bwm-ng'\
+' chrony'\
+' dosfstools'\
+' dracut'\
+' exfat-utils'\
+' ntfs-3g'\
+' fcron'\
+' fd'\
+' glances'\
+' hddtemp'\
+' inetutils'\
+' inxi'\
+' iproute2'\
+' kbd'\
+' linux-firmware'\
+' linux-firmware-intel'\
+' lm_sensors'\
+' lnav'\
+' lr'\
+' micro'\
+' mle'\
+' nano'\
+' ncurses'\
+' rsync'\
+' nfs-utils'\
+' opendoas'\
+' openssh'\
+' p7zip'\
+' pciutils'\
+' PopCorn'\
+' smartmontools'\
+' socklog-void'\
+' tree'\
+' vsv'\
+' wget'\
+' man-pages'\
+' mdocml'\
+' xterm'\
+' dtach'\
+' xfsprogs'\
+' e2fsprogs'\
+' curl'\
+' gptfdisk'\
+' unzip'\
+' ranger'\
+' font-tamsyn'\
+' starship'\
+' xz'\
+' lshw'\
+' snapraid'\
+' mergerfs'
 
   username="vade"
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
