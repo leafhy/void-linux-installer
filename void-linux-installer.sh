@@ -952,6 +952,25 @@ EOF
 #### [!] END OF USER CONFIGURATION [!] ####
 ###########################################
 ###########################################
+PS3="Select Server/Desktop for installation : "
+options=('Desktop' 'Server')
+select opt in "${options[@]}"
+do
+case $opt in
+    'Desktop')
+      pkg_list="$pkg_list"
+      break
+      ;;
+    'Server')
+      pkg_list="$pkg_listsrv"
+      break
+      ;;
+    *)
+      echo 'This option is invalid.'
+      ;;
+esac
+done
+
 # Create ramfs for repository as xbps errors as usb not writable
 if [[ -d /run/initramfs/live/voidrepo ]] && [[ $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
