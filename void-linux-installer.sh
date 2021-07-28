@@ -859,7 +859,8 @@ setfont Lat2-Terminus16
 ' borg'\
 ' ncdu'\
 ' lsscsi'\
-' autocutsel'
+' autocutsel'\
+' shellcheck'
 
 # Server Packages
 pkg_listsrv='base-minimal'\
