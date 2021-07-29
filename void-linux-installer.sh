@@ -314,7 +314,7 @@
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
 # -----------------------
-# 'caddy stop' occasionally errors - re-running command works
+# 'caddy stop' occasionally errors
 # 2021/07/25 22:28:56.270    WARN    failed using API to stop instance    {"error": "performing request: Post \"http://localhost:2019/stop\": dial tcp [::1]:2019: connect: connection refused"}
 # stop: performing request: Post "http://localhost:2019/stop": dial tcp [::1]:2019: connect: connection refused
 ##############################################################################
