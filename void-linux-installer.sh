@@ -240,12 +240,19 @@
 ############################# Bitwarden - Bitwarden_rs ####################################
 ###########################################################################################
 # https://bitwarden.com
+# ---------- Extract vaultwarden binary and web-vault from docker image ------------------
+# https://github.com/jjlin/docker-image-extract
+# docker-image-extract vaultwarden/server:alpine
+# docker-image-extract bitwardenrs/server:testing-alpine
+# --------------------- Build ----------------------------
+# curl https://sh.rustup.rs -sSf | sh # installs to $HOME
+# select (1)
+# -------------
 # .bashrc
 # export RUSTUP_HOME=".local/share/rustup"
 # export CARGO_HOME=".local/share/cargo"
-# -------------------------
-# curl https://sh.rustup.rs -sSf | sh # installs to $HOME
-# select (1)
+# ------------------
+# https://github.com/dani-garcia/vaultwarden
 # git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
 # cargo clean && cargo build --features sqlite --release
 # mkdir ~/src/bitwarden_rs/target/release/data # needed for creation of rsa key
@@ -314,7 +321,7 @@
 # 2020/09/08 ERROR pki.ca.local failed to install root certificate {“error”: “install is not supported on this system”, “certificate_file”: “storage:pki/authorities/local/root.crt”}
 # certificates did install to ~/.local/share/caddy/pki/authorities/local/caddy
 # -----------------------
-# 'caddy stop' occasionally errors
+# 'caddy stop' errors if already stopped
 # 2021/07/25 22:28:56.270    WARN    failed using API to stop instance    {"error": "performing request: Post \"http://localhost:2019/stop\": dial tcp [::1]:2019: connect: connection refused"}
 # stop: performing request: Post "http://localhost:2019/stop": dial tcp [::1]:2019: connect: connection refused
 ##############################################################################
