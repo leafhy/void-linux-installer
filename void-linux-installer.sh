@@ -240,8 +240,10 @@
 ############################# Bitwarden - Bitwarden_rs ####################################
 ###########################################################################################
 # https://bitwarden.com
-# ---------- Extract vaultwarden binary and web-vault from docker image ------------------
+# ---------- Extract Vaultwarden binary and Web-vault from docker image ------------------
 # https://github.com/jjlin/docker-image-extract
+# wget https://raw.githubusercontent.com/jjlin/docker-image-extract/main/docker-image-extract
+# chmod +x docker-image-extract
 # docker-image-extract vaultwarden/server:alpine
 # docker-image-extract bitwardenrs/server:testing-alpine
 # --------------------- Build ----------------------------
@@ -280,7 +282,7 @@
 # NODE_TLS_REJECT_UNAUTHORIZED=0 bw login # disable certifcate check
 # NODE_EXTRA_CA_CERTS=<path to my ca> bw login
 # ------------------------
-# Caddy V2 Reverse Proxy https
+# Caddy v2 Reverse Proxy https
 # https://github.com/caddyserver/caddy
 # https://github.com/caddyserver/caddy/releases/download/v2.2.0-rc.1/caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
@@ -307,7 +309,7 @@
 # ----------------------------
 #
 # Note: Do not install cargo/rust with xbps-install # Bitwarden_rs will not build
-#       rustup & cargo install size >1GB
+#       rustup & cargo install size >1GB & ~3GB packages for vaultwarden
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
