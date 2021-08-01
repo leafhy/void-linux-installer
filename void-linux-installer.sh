@@ -87,7 +87,7 @@
 # Need to 'exit' twice to continue booting and 'enter' to display login prompt
 #
 # Bash script buffquote initially only showed the first quote in bash (RANDOM couldn't be found)
-# due to /bin/sh -> dash (works in dash) - need to run buffquote without sh
+# due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
 ##########################################################################################
 ##########################################################################################
 ####                      Preparatory Instructions                                    ####
