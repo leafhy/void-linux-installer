@@ -246,6 +246,13 @@
 # chmod +x docker-image-extract
 # docker-image-extract vaultwarden/server:alpine
 # docker-image-extract bitwardenrs/server:testing-alpine
+# mkdir -p vaultwarden/data
+# mv output/vaultwarden /path/to/vaultwarden
+# mv output/web-vault /path/to/vaultwarden
+# rm -r output
+# wget https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/.env.template --output-document=/path/to/vaultwarden/.env
+# Add to fcron
+# &bootrun,first(2) * * * * * cd /home/$username/src/vaultwarden ./vaultwarden >> /var/log/vaultwarden.log 2>&1
 # --------------------- Build ----------------------------
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 # select (1)
@@ -264,7 +271,7 @@
 # mv web-vault bitwarden_rs/target/release
 # cp bitwarden_rs/.env.template bitwarden_rs/target/release/.env
 # ----------------- .env --------------------------------
-# DISABLE_ICON_DOWNLOAD=true # prevents Segmentaion Fault
+# DISABLE_ICON_DOWNLOAD=true # prevents Segmentaion Fault - appears to have been fixed
 # WEBSOCKET_ENABLED=true
 # WEBSOCKET_ADDRESS=0.0.0.0
 # WEBSOCKET_PORT=3012
@@ -1530,7 +1537,7 @@ echo "ip addr add $ipstaticeth0/24 brd + dev $eth" >> /mnt/etc/rc.local
 echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 
 # Use static Wifi (dynamic is default)
-if [[ "$ipstaticwlan0" ]]; then
+if [[ $ipstaticwlan0 ]]; then
 tee /mnt/etc/iwd/main.conf <<EOF
 [General]
 EnableNetworkConfiguration=true
@@ -1538,7 +1545,7 @@ EOF
 fi
 
 # Set static ip address for wifi
-if [[ "$ipstaticwlan0" ]]; then 
+if [[ $ipstaticwlan0 ]]; then 
 tee /mnt/var/lib/iwd/${routerssid}.psk <<EOF
 [IPv4]
 Address="${ipstaticwlan0}"
