@@ -320,7 +320,8 @@
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
-#       xbps-install caddy # caddy v2 not available                                                                                                                                                                                              
+#       xbps-install caddy # caddy v2 not available
+#       Start Caddy with fcron or via /etc/rc.local (displays caddy startup messages)
 #
 # Caddy Log (Errors occured when using $HOSTNAME in Caddyfile - missing braces?)
 # ---------------------------------------
