@@ -16,6 +16,7 @@
 
 # Add to root fcrontab                                                                        
 # @ 1m cd /etc/unbound/unbound-updater ./unbound-update-blocklist.sh 2>&1
+# wget --timestamping prevents file renaming ie filename filename.1 filename.2
 
     # Check for sudo
 if [[ "${UID}" -ne 0 ]];
@@ -24,21 +25,21 @@ then
   exit 1
 fi
     
-    wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+    wget --timestamping --quiet https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
     
     if [[ $? -ne 0 ]]; then
         echo 'Steven Black blacklist failed to download, please check network connection' >&2
         exit 1;
     fi
     
-    wget -q https://download.dnscrypt.info/blacklists/domains/mybase.txt
+    wget --timestamping --quiet https://download.dnscrypt.info/blacklists/domains/mybase.txt
     
     if [[ $? -ne 0 ]]; then
         echo 'DNScrypt blacklist failed to download, please check network connection' >&2
         exit 1;
     fi
     
-    wget -q https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+    wget --timestamping --quiet https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
     
     if [[ $? -ne 0 ]]; then
         echo 'anudeepND whitelist failed to download, please check network connection' >&2
