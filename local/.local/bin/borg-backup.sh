@@ -11,8 +11,9 @@ export BACKUP_TARGETS="/"
 #export BACKUP_NAME="voidlinux.local"
 BORG_OPTS="--stats --one-file-system"
 
-# create Bitwarden database backup
-cd /home/$USER/src/bitwarden_rs/target/release/data
+# create Vaultwarden(Bitwarden) database backup
+# cd /home/$USER/src/bitwarden_rs/target/release/data
+cd /home/$USER/src/vaultwarden/data
 if [[ -f backup.sqlite3 ]]; then
 rm backup.sqlite3
 else
