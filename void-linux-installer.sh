@@ -1048,7 +1048,7 @@ EOF
   dirs="exclusions scripts"
   # Create $HOME/.config/xxx 
   dirsub="fontconfig" 
- # Download scripts to /home/$username/scripts
+ # Download scripts to /home/$USER/scripts
   # urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
