@@ -1306,13 +1306,17 @@ if [[ $fsys2 ]] && [[ $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
-if [[ $fsys3 ]] ; then
+if [[ $fsys3 ]]; then
 echo "Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
 echo "No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
 echo "No Checksums = lost_found"
 echo "None = No Options"
-echo "*encrypt does not work with 'casefold/utf8'"
-echo "f2fs-tools v1.14 casefold doesn't work without utf8 -> keyboard momentarily stopped working - compression unknown option"
+echo
+echo "Notes: f2fs-tools v1.14"
+echo "       | encrypt does not work with 'casefold/utf8'"
+echo "       | casefold doesn't work without utf8"
+echo "       | compression unknown option"
+echo "       | keyboard momentarily stopped working (casefold was used)"
 
 PS3='Select f2fs options to use: '
  select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
