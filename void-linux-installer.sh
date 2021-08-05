@@ -880,7 +880,7 @@ setfont Lat2-Terminus16
 ' shellcheck'
 
 # Server Packages
-pkg_listsrv='base-minimal'\
+  pkg_listsrv='base-minimal'\
 ' aria2'\
 ' atool'\
 ' bash'\
@@ -907,6 +907,7 @@ pkg_listsrv='base-minimal'\
 ' nano'\
 ' ncurses'\
 ' rsync'\
+' lftp'\
 ' iproute2'\
 ' opendoas'\
 ' openssh'\
@@ -948,7 +949,7 @@ pkg_listsrv='base-minimal'\
   # Desktop
   groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
   # Server
-  # groups="wheel,storage,cdrom,optical,socklog"
+  groupsrv="wheel,storage,cdrom,optical,socklog"
 doasconf="$(cat <<'EOF'
 permit persist :wheel
 permit nopass :wheel as root cmd /sbin/poweroff
@@ -997,7 +998,7 @@ xinitrc="$(cat <<'EOF'
 # xss-lock -- ~/.config/i3/lock.sh -l &
 # xss-lock -- sakura -s -x asciiquarium & alock -bg none; xdotool key --clearmodifiers q
 # polkit-gnome needed to start gparted as $USER
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/libexec/polkit-gnome-authentication-agent-1 &
 exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 EOF
 )"
@@ -1047,10 +1048,8 @@ EOF
   dirs="exclusions scripts"
   # Create $HOME/.config/xxx 
   dirsub="fontconfig" 
- # Download various scripts/whatever to /home/$username/scripts
+ # Download scripts to /home/$username/scripts
   # urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
- # Run unbound-update-blocklist.sh manually or add to fcron - make executable - chmod +x
-  # urlup="https://raw.githubusercontent.com/leafhy/void-linux-installer/master/etc/unbound/unbound-updater/unbound-update-blocklist.sh"
  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
   # Install to ~/.local/bin
@@ -1593,7 +1592,12 @@ while true; do
   echo ''
 done
 
+if [[ pkg_list = $pkg_list ]]; then
 chroot /mnt useradd -g users -G $groups $username
+else
+chroot /mnt useradd -g users -G $groupsrv $username
+fi
+
 # [Bug?] useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
 # home directory is still created
@@ -1612,7 +1616,7 @@ while true; do
   echo ''
 done
 
-# Check $pkg_list installed
+# Create list of installed packages
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 echo '********************************************'
@@ -1625,31 +1629,19 @@ echo ''
 for srv in $services $srv-services; do
 chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
-
-# Install Extras
-if [[ $urlscripts ]] || [[ $urlfont ]] || [[ $bin ]] && [[ $repopath != "" ]] || [[ $cachedir != "" ]] ; then
-     xbps-install -R $repopath $cachedir -y aria2
-fi
   
 if [[ $urlscripts ]]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
-     chroot  --userspec=$username:users /mnt aria2c "$file" -d home/$username/scripts
+     chroot  --userspec=$username:users /mnt wget "$file" -d home/$username/scripts
      done
      echo "**** Scripts have been installed to /home/$username/scripts ****"
      sleep 3s
 fi
 
-if [[ $urlup ]]; then
-echo '**** Downloading unbound updater ****'
-aria2c $urlup -d /mnt/etc/unbound/unbound-updater
-fi
-
-echo
-
 if [[ $urlfont ]]; then
      echo '**** Installing Font ****'
-     aria2c "$urlfont" -d /mnt/usr/local/src
+     wget "$urlfont" -d /mnt/usr/local/src
      cd /mnt/usr/local/src && tar zxf $(echo $urlfont | cut -d d -f 3 | tr -d /)
      cp $(echo $urlfont | cut -d d -f 3 | tr -d / | sed 's/.tar.gz$//')/*gz /mnt/usr/share/kbd/consolefonts
      echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"
@@ -1659,7 +1651,7 @@ fi
 if [[ $bin ]]; then
      echo '**** Installing "$bin" ****'
      for file in "${bin[@]}"; do
-     chroot  --userspec=$username:users /mnt aria2c "$bin" -d home/$username/.local/bin
+     chroot  --userspec=$username:users /mnt wget "$bin" -d home/$username/.local/bin
      done
 fi
 
@@ -1667,7 +1659,7 @@ fi
 echo "$bashrc" > /mnt/home/$username/.bashrc
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
 
-if [[ pkg_list != pkg_listsrv ]]; then
+if [[ pkg_list != $pkg_listsrv ]]; then
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 
 # Audio Configuration
