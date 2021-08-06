@@ -717,6 +717,9 @@ echo '*********************************************'
 # Change font to be more legible
 setfont Lat2-Terminus16
 
+# Ignored Packages
+echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
+
 # Desktop Packages
   pkg_list='base-minimal'\
 ' aria2'\
@@ -1504,6 +1507,11 @@ cp -a /usr/share/xbps.d/* /mnt/etc/xbps.d
 echo "repository=$repo1" > /mnt/etc/xbps.d/00-repository-main.conf
 echo "repository=$repo2" >> /mnt/etc/xbps.d/00-repository-main.conf
 echo "repository=$repo0" >> /mnt/etc/xbps.d/00-repository-main.conf
+
+# Packages to ignore
+tee /mnt/etc/xbps.d/10-ignore.conf <<EOF
+ignorepkg=sudo
+EOF
 
 # Networking
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
