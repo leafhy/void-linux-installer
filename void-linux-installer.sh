@@ -956,7 +956,7 @@ groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
 services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
 hostname="void"
 
-### .bashrc
+### /home/$USER/.bashrc
 bashrc="$(cat <<'EOF'
 scripts/buffquote
 eval "$(starship init bash)"
@@ -979,7 +979,7 @@ alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' 
 EOF
 )"
 
-### .bash_profile
+### /home/$USER/.bash_profile
 bashprofile="$(cat <<'EOF'
 # Get the aliases and functions
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
@@ -988,7 +988,7 @@ exec startx
 EOF
 )"
 
-### .xinitrc
+### /home/$USER/.xinitrc
 xinitrc="$(cat <<'EOF'
 # [!] 'startx' will exit immediately if program cannot be found
 #
@@ -1008,7 +1008,7 @@ groupsrv="wheel,storage,cdrom,optical,socklog"
 srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
 hostnamesrv="voidux"
 
-### .bashrc
+### /home/$USER/.bashrc
 bashrcsrv="$(cat <<'EOF'
 export PATH="~/.local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
