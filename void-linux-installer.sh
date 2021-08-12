@@ -948,26 +948,22 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' borg'\
 ' ncdu'
 
-  username="vade"
-  # Desktop
-  groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
-  # Server
-  groupsrv="wheel,storage,cdrom,optical,socklog"
-doasconf="$(cat <<'EOF'
-permit persist :wheel
-permit nopass :wheel as root cmd /sbin/poweroff
-permit nopass :wheel as root cmd /sbin/reboot
-EOF
-)"
+###################
+##### Desktop #####
+###################
+username="vade"
+groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
+services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
+hostname="void"
 
-# .bashrc
+### .bashrc
 bashrc="$(cat <<'EOF'
-# scripts/buffquote
+scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 # Rust pkg path ".local/bin"
 # Python3 pkg path "~/.local/bin"
-export PATH=".local/bin:$PATH"
+# export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 # Weather Check
 alias weather='curl wttr.in/?0'
@@ -983,7 +979,7 @@ alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' 
 EOF
 )"
 
-# .bash_profile
+### .bash_profile
 bashprofile="$(cat <<'EOF'
 # Get the aliases and functions
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
@@ -992,7 +988,7 @@ exec startx
 EOF
 )"
 
-# .xinitrc
+### .xinitrc
 xinitrc="$(cat <<'EOF'
 # [!] 'startx' will exit immediately if program cannot be found
 #
@@ -1004,57 +1000,94 @@ exec dbus-launch --exit-with-session --sh-syntax herbstluftwm --locked
 EOF
 )"
 
-# For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
-  ipstaticeth0="192.168.1.X"
-  # For dhcp leave ipstaticwlan0 empty (iwd includes dhcp)
-  ipstaticwlan0=""
-  routerssid=""
-  gateway="192.168.1.1"
-  wifipassword=""
-  # use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
-  openresolv="YES" # any other value if not used
-# nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
-  nameserver0="127.0.0.1"
-  nameserver1="1.0.0.1"
-  nameserver2="1.1.1.1"
-  labelroot="VOID_LINUX"
-  labelfat="EFI"
+##################
+##### Server #####
+##################
+usernamesrv=""
+groupsrv="wheel,storage,cdrom,optical,socklog"
+srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
+hostnamesrv="voidux"
+
+### .bashrc
+bashrcsrv="$(cat <<'EOF'
+export PATH="~/.local/bin:$PATH"
+export MANPATH="/usr/local/man:$MANPATH"
+alias poweroff='doas /sbin/poweroff'
+alias reboot='doas /sbin/reboot'
+alias bmount='doas /sbin/mount /mnt/backup'
+alias bumount='doas /sbin/umount /mnt/backup
+EOF
+)"
+
+##################
+##### System #####
+##################
+### /etc/doas.conf
+doasconf="$(cat <<'EOF'
+permit persist :wheel
+permit nopass :wheel as root cmd /sbin/poweroff
+permit nopass :wheel as root cmd /sbin/reboot
+EOF
+)"
+
+### Hardrive Label
+labelroot="VOID_LINUX"
+labelfat="EFI"
+
+### /etc/rc.conf
+KEYMAP="us"
+TIMEZONE="Australia/Adelaide"
+HARDWARECLOCK="UTC"
+FONT="Tamsyn8x16r"
+TTYS="2"
+
+###################
+##### Network #####
+###################
+### For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
+ipstaticeth0="192.168.1.X"
+### For dhcp leave ipstaticwlan0 empty (iwd includes dhcp)
+ipstaticwlan0=""
+routerssid=""
+gateway="192.168.1.1"
+wifipassword=""
+### use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
+openresolv="YES" # any other value if not used
+### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
+nameserver0="127.0.0.1"
+nameserver1="1.0.0.1"
+nameserver2="1.1.1.1"
+
+######################
+##### Repository #####
+######################
+### Use this if packages have already been downloaded
+# xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
+# xbps-install --repository $repopath 
+repopath="/opt"
   
-  ### Use this if packages have already been downloaded ###
-  # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
-  # xbps-install --repository $repopath 
-  repopath="/opt"
+### Use this to save packages to somewhere other then live disk
+# xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
+# xbps-install --repository $cachedir
+cachedir=""
   
-  ### Use this to save packages to somewhere other then live disk ###
-  # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
-  # xbps-install --repository $cachedir
-  cachedir=""
-  
-  ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
-  # xbps-install --repository $repo0
-  repo0="http://alpha.de.repo.voidlinux.org/current/musl"
-  repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
-  repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
-  # Desktop Services
-  services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
-  # Server Services
-  srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
-  HOSTNAME="void"
-  KEYMAP="us"
-  TIMEZONE="Australia/Adelaide"
-  HARDWARECLOCK="UTC"
-  FONT="Tamsyn8x16r"
-  TTYS="2"
-  # Create $HOME directories
-  dirs="exclusions scripts"
-  # Create $HOME/.config/xxx 
-  dirsub="fontconfig" 
- # Download scripts to /home/$USER/scripts
-  # urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
- # Add font(.tar.gz) to /usr/share/kbd/consolefonts
-  urlfont=""
-  # Install to ~/.local/bin
-  # bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
+### Leave repopath & cachedir empty to use default repository /var/cache/xbps
+# xbps-install --repository $repo0
+repo0="http://alpha.de.repo.voidlinux.org/current/musl"
+repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
+repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
+
+
+# Create $HOME directories
+dirs="exclusions scripts"
+# Create $HOME/.config/xxx 
+dirsub="fontconfig" 
+# Download scripts to /home/$USER/scripts
+urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
+# Add font(.tar.gz) to /usr/share/kbd/consolefonts
+urlfont=""
+# Install to ~/.local/bin
+bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -1067,14 +1100,18 @@ do
 case $opt in
     'Desktop')
       pkg_list="$pkg_list"
+      username="$username"
       services="$services"
       groups="$groups"
+      hostname="$hostname"
       break
       ;;
     'Server')
       pkg_list="$pkg_listsrv"
+      username="$usernamesrv"
       services="$srv-services"
       groups="$groupsrv"
+      hostname="$hostnamesrv"
       break
       ;;
     *)
@@ -1193,7 +1230,7 @@ xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk || xbps-
 xbps-install -R $cachedir -y gptfdisk
 fi
 
-if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
+if [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
 # xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
 xbps-install -R -y $repo1 gptfdisk || xbps-install -S -y -R $repo2 gptfdisk || xbps-install -S -y -R $repo0 gptfdisk
@@ -1284,7 +1321,7 @@ clear
 
 # Format filesystems
 # fat-32
-if [[ $UEFI ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
      mkfs.vfat -F 32 -n EFI ${device}p1
    
    elif [[ $device != /dev/mmcblk0 ]]; then
@@ -1295,19 +1332,19 @@ fi
 # btrfs
 # xfs
 # nilfs2
-if [[ $fsys1 ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}p2
    
-   elif [[ $fsys1 ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
 
 # ${fsys2} -F -L
 # ext4 
-if [[ $fsys2 ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys2 && $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}p2
    
-   elif [[ $fsys2 ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys2 && $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
@@ -1350,10 +1387,10 @@ fi
 
 # ${fsys3} -f -l
 # f2fs  
-if [[ $fsys3 ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $fsys3 && $device = /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}p2
    
-   elif [[ $fsys3 ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
      mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
 
@@ -1481,9 +1518,9 @@ EOF
 fi
 
 # Add fstab entries
-if [[ $UEFI ]] && [[ $device = /dev/mmcblk0 ]]; then
+if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
      echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
-   elif [[ $UEFI ]] && [[ $device != /dev/mmcblk0 ]]; then
+   elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
      echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
 fi
 # echo "LABEL=root  /       ext4    rw,relatime,data=ordered,discard    0 0" > /mnt/etc/fstab
@@ -1562,7 +1599,7 @@ fi
 # Overwrite LIVE ISO hostname
 # [!] Not changing hostname will fail at boot with the following error:
 # [!] Kernel Panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
-echo $HOSTNAME > /mnt/etc/hostname
+echo $hostname > /mnt/etc/hostname
 
 # hosts
 cp /mnt/etc/hosts /mnt/etc/hosts.bak
