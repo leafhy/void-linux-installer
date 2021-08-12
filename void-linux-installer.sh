@@ -1080,13 +1080,13 @@ repo2="https://ftp.swin.edu.au/voidlinux/current/musl"
 
 # Create $HOME directories
 dirs="exclusions scripts"
-# Create $HOME/.config/xxx 
+# Create $HOME/.config/xxx (for Desktop)
 dirsub="fontconfig" 
 # Download scripts to /home/$USER/scripts
 urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
 # Add font(.tar.gz) to /usr/share/kbd/consolefonts
 urlfont=""
-# Install to ~/.local/bin
+# Install to ~/.local/bin (for Desktop)
 bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
 ###########################################
