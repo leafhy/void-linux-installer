@@ -1257,7 +1257,7 @@ fi
 # fi
 # parted /dev/${devname} set 1 boot on
 
-# CREATE PARTITIONS
+# Create partitions
 # sgdisk creates GPT by default
 echo
 sgdisk --zap-all $device
