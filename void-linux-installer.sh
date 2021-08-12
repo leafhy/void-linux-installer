@@ -192,7 +192,7 @@
 # intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
 # Firefox tends to lose audio output if VLC has been in use - need to restart Firefox
 #################################################################
-######### SSHFS
+# SSHFS
 # xbps-install fuse-sshfs
 # sshfs user@server:/ /mnt/server
 # /etc/fstab
@@ -1066,7 +1066,7 @@ nameserver2="1.1.1.1"
 # xbps-install --repository $repopath 
 repopath="/opt"
   
-### Use this to save packages to somewhere other then live disk
+### Save packages to somewhere other then live disk
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
 # xbps-install --repository $cachedir
 cachedir=""
@@ -1077,7 +1077,9 @@ repo0="http://alpha.de.repo.voidlinux.org/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
 repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
 
-
+#######################
+##### $HOME Setup #####
+#######################
 # Create $HOME directories
 dirs="exclusions scripts"
 # Create $HOME/.config/xxx (for Desktop)
@@ -1121,7 +1123,7 @@ esac
 done
 
 # Create ramfs for repository as xbps errors as usb not writable
-if [[ -d /run/initramfs/live/voidrepo ]] && [[ $repopath != "" ]]; then
+if [[ -d /run/initramfs/live/voidrepo && $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
@@ -1129,7 +1131,7 @@ fi
 
 # Mount live usb
 usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
-if [[ $usbrepo ]] && [[ $repopath != "" ]]; then
+if [[ $usbrepo && $repopath != "" ]]; then
 mount $usbrepo /media
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
