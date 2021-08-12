@@ -237,7 +237,7 @@
 #                           >>> lan-nic enp0s25 192.168.1.XX
 #             >>> Vuurmuur Config >>> Interfaces >>> uncheck dynamic interfaces for changes
 ###########################################################################################
-############################# Bitwarden - Bitwarden_rs ####################################
+############################# Bitwarden - Vaultwarden(Bitwarden_rs) ####################################
 ###########################################################################################
 # https://bitwarden.com
 # ---------- Extract Vaultwarden binary and Web-vault from docker image ------------------
@@ -252,7 +252,7 @@
 # rm -r output
 # wget https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/.env.template --output-document=/path/to/vaultwarden/.env
 # Add to fcron
-# &bootrun,first(2) * * * * * cd /home/$username/src/vaultwarden ./vaultwarden >> /var/log/vaultwarden.log 2>&1
+# &bootrun,first(2) * * * * * cd /home/$USER/src/vaultwarden ./vaultwarden >> /var/log/vaultwarden.log 2>&1
 # --------------------- Build ----------------------------
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 # select (1)
@@ -298,11 +298,11 @@
 # create certificates
 # openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /path/to/cert.key -out /path/to/cert.crt
 #
-# /home/user/.config/caddy/Caddyfile
+# /home/$USER/.config/caddy/Caddyfile
 # ---------------------------
 # #$HOSTNAME
 # :2016 {
-# tls /home/$username/PATH/TO/cert.crt /home/$username/PATH/TO/cert.key
+# tls /home/$USER/PATH/TO/cert.crt /home/$USER/PATH/TO/cert.key
 #
 # reverse_proxy 127.0.0.1:8000
 #             
@@ -488,13 +488,13 @@
 # ----------------------------------------
 # doas fcrontab -e
 # Borg Backup - Hourly 
-# 0 * * * * /home/$username/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
+# 0 * * * * /home/$USER/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m cd /etc/unbound/unbound-updater && ./unbound-update-blocklist.sh 2>&1
 # Caddy2
-# &bootrun,first(1) * * * * * /sbin/caddy start --config /home/user/.config/caddy/Caddyfile 2>&1
+# &bootrun,first(1) * * * * * /sbin/caddy start --config /home/$USER/.config/caddy/Caddyfile 2>&1
 # Bitwarden_rs - 2m after boot
-# &bootrun,first(2) * * * * * cd /home/$username/src/bitwarden_rs/target/release ./bitwarden_rs >> /var/log/bitwarden_rs.log 2>&1
+# &bootrun,first(2) * * * * * cd /home/$USER/src/bitwarden_rs/target/release ./bitwarden_rs >> /var/log/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
 # &bootrun,first(1) * * * * * vuurmuur -D && vuurmuur_log 2>&1
 # Osync 2m after boot
@@ -533,7 +533,7 @@
 # ---------------------
 # openresolv
 # /etc/resolvconf.conf
-# name_servers=127.0.0.1
+# name_servers=127.0.0.1 # default
 # resolv_conf_options=edns0
 # ---------------
 # resolvconf -u
@@ -546,7 +546,7 @@
 # /path/here 'ip of OSX'(insecure,rw,sync,no_root_squash)
 # --------------------
 # exportfs -a
-# mount -t nfs 192.168.1.4:/path /Users/name/mountpoint # OSX
+# mount -t nfs 192.168.1.4:/path /Users/$USER/mountpoint # OSX
 # Note: make sure permissions are correct or 'finder' will not not write
 # ---------------------
 # mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
@@ -651,7 +651,7 @@
 # make uninstall - will delete symbolic link /usr/sbin and not femtomail
 #### email-test.sh
 # #!/bin/bash
-# (echo Subject: testING; echo) | sendmail $username
+# (echo Subject: testING; echo) | sendmail $USER
 ##########################################################
 # Nvidia
 # https://nouveau.freedesktop.org/wiki/VideoAcceleration/
@@ -965,12 +965,10 @@ bashrc="$(cat <<'EOF'
 # scripts/buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
-# Rust can use ".local/bin"
-# Python3 pkgs need "~/.local/bin"
+# Rust pkg path ".local/bin"
+# Python3 pkg path "~/.local/bin"
 export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
-export RUSTUP_HOME=".local/share/rustup"
-export CARGO_HOME=".local/share/cargo"
 # Weather Check
 alias weather='curl wttr.in/?0'
 alias w="curl wttr.in/~Adelaide"
@@ -1008,17 +1006,17 @@ EOF
 
 # For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
   ipstaticeth0="192.168.1.X"
-  # For dhcp leave ipstaticwlan0 empty, iwd includes dhcp
+  # For dhcp leave ipstaticwlan0 empty (iwd includes dhcp)
   ipstaticwlan0=""
   routerssid=""
   gateway="192.168.1.1"
   wifipassword=""
   # use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
-  openresolv="YES"
-  # nameserver0 is for unbound & dnscrypt-proxy
+  openresolv="YES" # any other value if not used
+# nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
   nameserver0="127.0.0.1"
-  #nameserver1="1.0.0.1"
-  #nameserver2="1.1.1.1"
+  nameserver1="1.0.0.1"
+  nameserver2="1.1.1.1"
   labelroot="VOID_LINUX"
   labelfat="EFI"
   
@@ -1040,7 +1038,7 @@ EOF
   # Desktop Services
   services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
   # Server Services
-  # srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
+  srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
   HOSTNAME="void"
   KEYMAP="us"
   TIMEZONE="Australia/Adelaide"
@@ -1056,7 +1054,7 @@ EOF
  # Add font(.tar.gz) to /usr/share/kbd/consolefonts
   urlfont=""
   # Install to ~/.local/bin
-  bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
+  # bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -1069,10 +1067,14 @@ do
 case $opt in
     'Desktop')
       pkg_list="$pkg_list"
+      services="$services"
+      groups="$groups"
       break
       ;;
     'Server')
       pkg_list="$pkg_listsrv"
+      services="$srv-services"
+      groups="$groupsrv"
       break
       ;;
     *)
@@ -1443,7 +1445,7 @@ xbps-install -R $cachedir -r /mnt $pkg_list -y
 xbps-install -R $cachedir -r /mnt intel-ucode -y
 fi
 
-if [[ $cachedir = "" ]] && [[ $repopath = "" ]]; then
+if [[ $cachedir = "" && $repopath = "" ]]; then
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
@@ -1509,36 +1511,25 @@ echo "repository=$repo2" >> /mnt/etc/xbps.d/00-repository-main.conf
 echo "repository=$repo0" >> /mnt/etc/xbps.d/00-repository-main.conf
 
 # Packages to ignore
-tee /mnt/etc/xbps.d/10-ignore.conf <<EOF
-ignorepkg=sudo
-EOF
+cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 
 # Networking
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
 # resolvconf -u # update /etc/resolv.conf
 if [[ -f /mnt/etc/resolvconf.conf && $openresolv = YES ]]; then
-echo "name_servers=$nameserver0" >> /mnt/etc/resolvconf.conf
 echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
 else
 cp /etc/resolv.conf /mnt/etc
 fi
 
-if [[ $nameserver0 ]]; then
-echo "#nameserver $nameserver0" >> /mnt/etc/resolv.conf
-# Options for dnscrypt-proxy
-echo "#options edns0" >> /mnt/etc/resolv.conf
+if [[ ! -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
+echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
+echo "options edns0" >> /mnt/etc/resolv.conf
 fi
 
-if [[ $nameserver1 ]]; then
+if [[ ! -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
-fi
-
-if [[ $nameserver2 ]]; then
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
-fi
-
-if [[ $gateway ]]; then
-echo "nameserver $gateway" >> /mnt/etc/resolv.conf
 fi
 
 cp /etc/rc.local /mnt/etc
@@ -1604,11 +1595,7 @@ while true; do
   echo ''
 done
 
-if [[ pkg_list = $pkg_list ]]; then
-chroot /mnt useradd -g users -G $groups $username
-else
-chroot /mnt useradd -g users -G $groupsrv $username
-fi
+chroot /mnt useradd -g users -G $groups $groupsrv $username
 
 # [Bug?] useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
