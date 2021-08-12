@@ -1662,7 +1662,7 @@ echo '********************************************'
 echo ''
 
 # Activate services
-for srv in $services $srv-services; do
+for srv in $services; do
 chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
   
@@ -1684,7 +1684,7 @@ if [[ $urlfont ]]; then
      sleep 3s
 fi 
 
-if [[ $bin ]]; then
+if [[ $bin && pkg_list = $pkg_list ]]; then
      echo '**** Installing "$bin" ****'
      for file in "${bin[@]}"; do
      chroot  --userspec=$username:users /mnt wget "$bin" -d home/$username/.local/bin
@@ -1693,9 +1693,9 @@ fi
 
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
-echo "$bashprofile" > /mnt/home/$username/.bash_profile
 
-if [[ pkg_list != $pkg_listsrv ]]; then
+if [[ pkg_list = $pkg_list ]]; then
+echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 
 # Audio Configuration
@@ -1739,9 +1739,11 @@ for dire in $dirs; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
 done
 
+if [[ $dirsub && pkg_list = $pkg_list ]]; then
 for dire in $dirsub; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/$dire
 done
+fi
 
 clear
  
