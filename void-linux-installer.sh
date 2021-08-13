@@ -817,6 +817,7 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' aucatctl'\
 ' sox'\
 ' unzip'\
+' unrar'\
 ' polybar'\
 ' ranger'\
 ' font-tamsyn'\
@@ -931,6 +932,7 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' curl'\
 ' gptfdisk'\
 ' unzip'\
+' unrar'\
 ' ranger'\
 ' font-tamsyn'\
 ' starship'\
@@ -1080,6 +1082,7 @@ repo2="https://ftp.swin.edu.au/voidlinux/current/musl"
 #######################
 ##### $HOME Setup #####
 #######################
+### This part may be better as an post-install script
 # Create $HOME directories
 dirs="exclusions scripts"
 # Create $HOME/.config/xxx (for Desktop)
@@ -1146,7 +1149,7 @@ fi
 
 # Detect if we're on an Intel system
 cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
-if [[ "$cpu_vendor" = "GenuineIntel" ]]; then
+if [[ $cpu_vendor = GenuineIntel ]]; then
   pkg_list="$pkg_list intel-ucode"
 fi
  
@@ -1667,7 +1670,7 @@ echo ''
 for srv in $services; do
 chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
-  
+ 
 if [[ $urlscripts ]]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
