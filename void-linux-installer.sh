@@ -881,7 +881,8 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' ncdu'\
 ' lsscsi'\
 ' autocutsel'\
-' shellcheck'
+' shellcheck'\
+' caddy'
 
 # Server Packages
   pkg_listsrv='base-minimal'\
@@ -1089,8 +1090,6 @@ dirs="exclusions scripts"
 dirsub="fontconfig" 
 # Download scripts to /home/$USER/scripts
 urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
-# Add font(.tar.gz) to /usr/share/kbd/consolefonts
-urlfont=""
 # Install to ~/.local/bin (for Desktop)
 bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
@@ -1679,15 +1678,6 @@ if [[ $urlscripts ]]; then
      echo "**** Scripts have been installed to /home/$username/scripts ****"
      sleep 3s
 fi
-
-if [[ $urlfont ]]; then
-     echo '**** Installing Font ****'
-     wget "$urlfont" -d /mnt/usr/local/src
-     cd /mnt/usr/local/src && tar zxf $(echo $urlfont | cut -d d -f 3 | tr -d /)
-     cp $(echo $urlfont | cut -d d -f 3 | tr -d / | sed 's/.tar.gz$//')/*gz /mnt/usr/share/kbd/consolefonts
-     echo "**** $FONT has been installed to /usr/share/kbd/consolefonts ****"
-     sleep 3s
-fi 
 
 if [[ $bin && pkg_list = $pkg_list ]]; then
      echo '**** Installing "$bin" ****'
