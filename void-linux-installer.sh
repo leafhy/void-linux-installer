@@ -956,7 +956,7 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ###################
 username="vade"
 groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
-services="dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
+services="caddy dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
 hostname="void"
 
 ### /home/$USER/.bashrc
@@ -1673,7 +1673,7 @@ done
 if [[ $urlscripts ]]; then
      echo '**** Installing Scripts ****'
      for file in "${urlscripts[@]}"; do
-     chroot  --userspec=$username:users /mnt wget "$file" -d home/$username/scripts
+     chroot  --userspec=$username:users /mnt wget "$file" --directory-prefix home/$username/scripts
      done
      echo "**** Scripts have been installed to /home/$username/scripts ****"
      sleep 3s
@@ -1682,7 +1682,7 @@ fi
 if [[ $bin && pkg_list = $pkg_list ]]; then
      echo '**** Installing "$bin" ****'
      for file in "${bin[@]}"; do
-     chroot  --userspec=$username:users /mnt wget "$bin" -d home/$username/.local/bin
+     chroot  --userspec=$username:users /mnt wget "$bin" --directory-prefix home/$username/.local/bin
      done
 fi
 
