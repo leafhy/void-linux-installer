@@ -1633,7 +1633,7 @@ while true; do
   echo ''
 done
 
-chroot /mnt useradd -g users -G $groups $groupsrv $username
+chroot /mnt useradd -g users -G $groups $username
 
 # [Bug?] useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
