@@ -1088,10 +1088,6 @@ repo2="https://ftp.swin.edu.au/voidlinux/current/musl"
 dirs="exclusions scripts"
 # Create $HOME/.config/xxx (for Desktop)
 dirsub="fontconfig" 
-# Download scripts to /home/$USER/scripts
-urlscripts=('http://plasmasturm.org/code/rename/rename' 'https://raw.githubusercontent.com/leafhy/buffquote/master/buffquote')
-# Install to ~/.local/bin (for Desktop)
-bin="('https://github.com/erebe/greenclip/releases/download/3.3/greenclip' 'https://raw.githubusercontent.com/mrichar1/clipster/master/clipster')"
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
@@ -1116,6 +1112,7 @@ case $opt in
       services="$srv-services"
       groups="$groupsrv"
       hostname="$hostnamesrv"
+      bashrc="$bashrcsrv"
       break
       ;;
     *)
@@ -1669,27 +1666,11 @@ echo ''
 for srv in $services; do
 chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
- 
-if [[ $urlscripts ]]; then
-     echo '**** Installing Scripts ****'
-     for file in "${urlscripts[@]}"; do
-     chroot  --userspec=$username:users /mnt wget "$file" --directory-prefix home/$username/scripts
-     done
-     echo "**** Scripts have been installed to /home/$username/scripts ****"
-     sleep 3s
-fi
-
-if [[ $bin && pkg_list = $pkg_list ]]; then
-     echo '**** Installing "$bin" ****'
-     for file in "${bin[@]}"; do
-     chroot  --userspec=$username:users /mnt wget "$bin" --directory-prefix home/$username/.local/bin
-     done
-fi
 
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
-if [[ pkg_list = $pkg_list ]]; then
+if [[ username = $username ]]; then
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 
@@ -1738,7 +1719,6 @@ if [[ $dirsub && pkg_list = $pkg_list ]]; then
 for dire in $dirsub; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/$dire
 done
-fi
 
 clear
  
