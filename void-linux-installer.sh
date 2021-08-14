@@ -251,12 +251,13 @@
 # mv output/web-vault /path/to/vaultwarden
 # rm -r output
 # wget https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/.env.template --output-document=/path/to/vaultwarden/.env
-# Add to fcron
+# fcrontab -e
 # &bootrun,first(2) * * * * * cd /home/$USER/src/vaultwarden ./vaultwarden >> /var/log/vaultwarden.log 2>&1
 # --------------------- Build ----------------------------
 # curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 # select (1)
-# -------------
+# rustup self uninstall
+# -----------------
 # .bashrc
 # export RUSTUP_HOME=".local/share/rustup"
 # export CARGO_HOME=".local/share/cargo"
@@ -276,9 +277,6 @@
 # WEBSOCKET_ADDRESS=0.0.0.0
 # WEBSOCKET_PORT=3012
 # -------------------------------------------------------
-# ln -s  bitwarden_rs/target/release/bitwarden_rs /home/USER/.local/bin/
-# rustup self uninstall
-# ---------------------
 # Bitwarden CLI
 # xbps-install gcompat
 # https://github.com/bitwarden/cli/releases/download/v1.11.0/bw-linux-1.11.0.zip
@@ -294,9 +292,7 @@
 # https://github.com/caddyserver/caddy/releases/download/v2.2.0-rc.1/caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # tar xf caddy_2.2.0-rc.1_linux_amd64.tar.gz
 # mv caddy /usr/bin/
-# 
-# create certificates
-# openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /path/to/cert.key -out /path/to/cert.crt
+# Start Caddy with fcron or /etc/rc.local (displays caddy startup messages)
 #
 # /home/$USER/.config/caddy/Caddyfile
 # ---------------------------
@@ -312,16 +308,19 @@
 # :2015 {
 # root * /path/to/blog/
 # file_server
+# log {
+#     output file /var/log/caddy.log
+#    }
 # }
 # ----------------------------
-#
+# create certificates
+# openssl req -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /path/to/cert.key -out /path/to/cert.crt
+# ----------------------------
 # Note: Do not install cargo/rust with xbps-install # Bitwarden_rs will not build
 #       rustup & cargo install size >1GB & ~3GB packages for vaultwarden
 #       0.0.0.0:8000 # connection is not secure
 #       127.0.0.1:8000 # this page is stored on your computer
 #       http://192.168.1.4:8000, https://$HOSTNAME:2016, https://$HOSTNAME # Lan access
-#       xbps-install caddy # caddy v2 not available
-#       Start Caddy with fcron or via /etc/rc.local (displays caddy startup messages)
 #
 # Caddy Log (Errors occured when using $HOSTNAME in Caddyfile - missing braces?)
 # ---------------------------------------
@@ -457,7 +456,7 @@
 #     : scan notification appears to never end
 #
 #######################################
-# nohang - prevent out of memory 
+# Nohang - prevent out of memory 
 # git clone https://github.com/hakavlad/nohang.git
 # nohang --monitor -c /usr/local/etc/nohang/nohang-desktop.conf
 #                     /usr/local/etc/nohang/nohang.conf
@@ -486,7 +485,7 @@
 # Note: see /etc/fstab for borg mounts  
 # borg init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
-# doas fcrontab -e
+# fcrontab -e
 # Borg Backup - Hourly 
 # 0 * * * * /home/$USER/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
@@ -536,7 +535,7 @@
 # name_servers=127.0.0.1 # default
 # resolv_conf_options=edns0
 # ---------------
-# resolvconf -u
+# resolvconf -u # updates /etc/resolv.conf
 # ---------------------
 # ip link set wlp1s0 up/down
 # ifup/down enp0s00 
@@ -1076,6 +1075,9 @@ HARDWARECLOCK="UTC"
 FONT="Tamsyn8x16r"
 TTYS="2"
 
+### Create directories /home/$USER/
+dirs="exclusions scripts"
+
 ###################
 ##### Network #####
 ###################
@@ -1112,20 +1114,12 @@ repo0="http://alpha.de.repo.voidlinux.org/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
 repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
 
-#######################
-##### $HOME Setup #####
-#######################
-### This part may be better as an post-install script
-# Create $HOME directories
-dirs="exclusions scripts"
-# Create $HOME/.config/xxx (for Desktop)
-dirsub="fontconfig" 
 ###########################################
 ###########################################
 #### [!] END OF USER CONFIGURATION [!] ####
 ###########################################
 ###########################################
-PS3="Select Server/Desktop for installation : "
+PS3="Select installation type : "
 options=('Desktop' 'Server')
 select opt in "${options[@]}"
 do
@@ -1254,12 +1248,12 @@ xbps-install -R $repopath -y gptfdisk pam
 fi
 
 if [[ $cachedir != "" ]]; then
-xbps-install -S -R $repo0 --download-only --cachedir $cachedir || xbps-install -S -R $repo1 --download-only --cachedir $cachedir || xbps-install -S -R $repo2 --download-only --cachedir $cachedir
+xbps-install -S -R $repo1 --download-only --cachedir $cachedir || xbps-install -S -R $repo2 --download-only --cachedir $cachedir || xbps-install -S -R $repo0 --download-only --cachedir $cachedir
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
 # xbps-install -uy -R $cachedir
-xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk
+xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk
 xbps-install -R $cachedir -y gptfdisk
 fi
 
@@ -1522,7 +1516,15 @@ if [[ $cachedir = "" && $repopath = "" ]]; then
  # Make sure everything was installed
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
 fi
-  
+
+# Create list of installed packages
+xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log  
+
+# Activate services
+for srv in $services; do
+chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
+done
+
 # Get / UUID
 rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 | grep - | tr -d '"')
 
@@ -1574,6 +1576,7 @@ echo "/mnt/void-backup/borg /mnt/backup fuse.borgfs defaults,noauto,user,uid=100
 xbps-reconfigure -fa -r /mnt ${kernel}
 cp /mnt/boot/initramfs* /mnt/boot/efi
 cp /mnt/boot/vmlinuz* /mnt/boot/efi
+
 # Add repositories
 cp -a /usr/share/xbps.d/* /mnt/etc/xbps.d
 echo "repository=$repo1" > /mnt/etc/xbps.d/00-repository-main.conf
@@ -1585,7 +1588,7 @@ cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 
 # Networking
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
-# resolvconf -u # update /etc/resolv.conf
+# resolvconf -u # updates /etc/resolv.conf
 if [[ -f /mnt/etc/resolvconf.conf && $openresolv = YES ]]; then
 echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
 else
@@ -1635,7 +1638,7 @@ fi
 echo $hostname > /mnt/etc/hostname
 
 # hosts
-cp /mnt/etc/hosts /mnt/etc/hosts.bak
+# cp /mnt/etc/hosts /mnt/etc/hosts.bak
 # Apparenty adding hostname to hosts is unnecessary
 # echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
 
@@ -1655,11 +1658,21 @@ echo "$doasconf" > /mnt/etc/doas.conf
 # Configure user accounts
 echo ''
 # Add ansi colour codes
-echo -e "[!] Setting \x1B[1;31m root \x1B[0m password [!]"
+echo -e "[!] Create \x1B[1;31m root \x1B[0m password [!]"
 echo ''
 
 while true; do
   passwd -R /mnt root && break
+  echo 'Password did not match. Please try again'
+  sleep 3s
+  echo ''
+done
+
+echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
+echo ''
+
+while true; do
+  passwd -R /mnt $username && break
   echo 'Password did not match. Please try again'
   sleep 3s
   echo ''
@@ -1674,30 +1687,6 @@ chroot /mnt useradd -g users -G $groups $username
 # groups: cdrom=CD
 #         optical=DVD/CD-RW # optical is not used by other distros
 #         storage=removeable
-echo ''
-echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
-echo ''
-
-while true; do
-  passwd -R /mnt $username && break
-  echo 'Password did not match. Please try again'
-  sleep 3s
-  echo ''
-done
-
-# Create list of installed packages
-xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
-
-echo '********************************************'
-echo -e "**** \x1B[1;32m See /home/$username/void-pkgs.log \x1B[0m ****"
-echo -e "**** \x1B[1;32m for a list of installed packages \x1B[0m  ****"
-echo '********************************************'
-echo ''
-
-# Activate services
-for srv in $services; do
-chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
-done
 
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
@@ -1745,11 +1734,6 @@ fi
 # Create $HOME directories
 for dire in $dirs; do
 chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
-done
-
-if [[ $dirsub && pkg_list = $pkg_list ]]; then
-for dire in $dirsub; do
-chroot --userspec=$username:users /mnt mkdir -p home/$username/.config/$dire
 done
 
 clear
