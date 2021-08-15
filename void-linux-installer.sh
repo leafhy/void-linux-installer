@@ -1501,16 +1501,14 @@ xbps-install -R $repopath -r /mnt void-repo-nonfree -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
 xbps-install -R $repopath -r /mnt intel-ucode -y
-fi
 
-if [[ $cachedir != "" ]]; then
+elif [[ $cachedir != "" ]]; then
 xbps-install -R $cachedir -r /mnt void-repo-nonfree -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
 xbps-install -R $cachedir -r /mnt intel-ucode -y
-fi
 
-if [[ $cachedir = "" && $repopath = "" ]]; then
+elif [[ $cachedir = "" && $repopath = "" ]]; then
 # Run second/third command if first one fails
  xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
  xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
@@ -1599,9 +1597,8 @@ fi
 if [[ ! -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
 echo "options edns0" >> /mnt/etc/resolv.conf
-fi
 
-if [[ ! -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
+elif [[ ! -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
 fi
