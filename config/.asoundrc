@@ -1,0 +1,27 @@
+pcm.sndio {
+type asym
+playback.pcm "sndio-play"
+
+hint {
+	    show on description "OpenBSD sndio"
+	    }
+	    }
+	    
+	    pcm.sndio-play {
+	    type plug
+	    slave {
+	    pcm "sndio-raw"
+	    rate 48000
+	    format s16_le
+	    channels 2
+}
+}
+	    
+ pcm.sndio-raw {
+ type file
+ slave.pcm null
+	    
+ format raw
+ file "| aucat -f snd/0 -i -"
+}
+pcm.default sndio
