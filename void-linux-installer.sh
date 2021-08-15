@@ -881,7 +881,8 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' lsscsi'\
 ' autocutsel'\
 ' shellcheck'\
-' caddy'
+' caddy'\
+' void-repo-nonfree'
 
 # Server Packages
   pkg_listsrv='base-minimal'\
@@ -948,7 +949,9 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' lsof'\
 ' lsscsi'\
 ' borg'\
-' ncdu'
+' ncdu'\
+' pam'\
+' void-repo-nonfree'
 
 ###################
 ##### Desktop #####
@@ -1237,9 +1240,6 @@ echo
 # done
 # clear
 
-############################
-#### FORMAT & PARTITION ####
-############################
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
@@ -1248,12 +1248,11 @@ xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S -R $repo1 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo2 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo0 --download-only --cachedir $cachedir $pkg_list
+xbps-install -S -R $repo1 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo2 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo0 --download-only --cachedir $cachedir $pkg_list 
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
 # xbps-install -uy -R $cachedir
-xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk pam || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk pam || xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk pam
 xbps-install -R $cachedir -y gptfdisk pam
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
@@ -1498,13 +1497,13 @@ if [[ $repopath != "" ]]; then
 xbps-install -R $repopath -r /mnt void-repo-nonfree -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
-xbps-install -R $repopath -r /mnt intel-ucode -y
+# xbps-install -R $repopath -r /mnt intel-ucode -y
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -R $cachedir -r /mnt void-repo-nonfree -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 # make sure intel-ucode is installed
-xbps-install -R $cachedir -r /mnt intel-ucode -y
+# xbps-install -R $cachedir -r /mnt intel-ucode -y
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
 # Run second/third command if first one fails
@@ -1529,13 +1528,13 @@ rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 |
 # efibootmgr -c -d /dev/sda -p 1 -l '\vmlinuz-5.7.7_1' -L 'Void' initrd=\initramfs-5.7.7_1.img root=/dev/sda2
 cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.bak
 
+# Note: Pressure Stall Information (PSI) not tested
+#       Add "psi=1" to enable
+# OPTIONS=root="${device}2" >> boot will fail if OS is on /dev/sdb and /dev/sda is removed
 if [[ $device != /dev/mmcblk0 ]]; then
 tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
 MODIFY_EFI_ENTRIES=1
-# OPTIONS=root="${device}2 loglevel=4 Page_Poison=1"
-# Note: Pressure Stall Information (PSI) not tested
-#       Add "psi=1" to enable
-OPTIONS=root=UUID="$rootuuid loglevel=4 Page_Poison=1"
+OPTIONS=root=UUID="$rootuuid loglevel=4 Page_Poison=1 psi=1"
 DISK="$device"
 PART=1
 EOF
