@@ -1695,37 +1695,6 @@ echo "$bashrc" > /mnt/home/$username/.bashrc
 if [[ username = $username ]]; then
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
-
-# Audio Configuration
-chroot --userspec=$username:users /mnt tee home/$username/.asoundrc <<EOF
-pcm.sndio {
-type asym
-playback.pcm "sndio-play"
-
-hint {
-	    show on description "OpenBSD sndio"
-	    }
-	    }
-	    
-	    pcm.sndio-play {
-	    type plug
-	    slave {
-	    pcm "sndio-raw"
-	    rate 48000
-	    format s16_le
-	    channels 2
-}
-}
-	    
- pcm.sndio-raw {
- type file
- slave.pcm null
-	    
- format raw
- file "| aucat -f snd/0 -i -"
-}
-pcm.default sndio
-EOF
 fi
 
 # Herbstluftwm
