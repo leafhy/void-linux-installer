@@ -1246,22 +1246,20 @@ xbps-install -S -R $repopath
 # xbps-install -uy -R $repopath
 # pam needed for setting of password
 xbps-install -R $repopath -y gptfdisk pam
-fi
 
-if [[ $cachedir != "" ]]; then
-xbps-install -S -R $repo1 --download-only --cachedir $cachedir || xbps-install -S -R $repo2 --download-only --cachedir $cachedir || xbps-install -S -R $repo0 --download-only --cachedir $cachedir
+elif [[ $cachedir != "" ]]; then
+xbps-install -S -R $repo1 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo2 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo0 --download-only --cachedir $cachedir $pkg_list
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
 # xbps-install -uy -R $cachedir
-xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk || xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk
-xbps-install -R $cachedir -y gptfdisk
-fi
+xbps-install -y -R $repo1 --download-only --cachedir $cachedir gptfdisk pam || xbps-install -y -R $repo2 --download-only --cachedir $cachedir gptfdisk pam || xbps-install -y -R $repo0 --download-only --cachedir $cachedir gptfdisk pam
+xbps-install -R $cachedir -y gptfdisk pam
 
-if [[ $cachedir = "" && $repopath = "" ]]; then
+elif [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
 # xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
-xbps-install -R -y $repo1 gptfdisk || xbps-install -S -y -R $repo2 gptfdisk || xbps-install -S -y -R $repo0 gptfdisk
+xbps-install -R -y $repo1 gptfdisk pam || xbps-install -S -y -R $repo2 gptfdisk pam || xbps-install -S -y -R $repo0 gptfdisk pam
 fi
 
 # xbps-install -y -S -f parted
