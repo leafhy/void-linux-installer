@@ -1456,8 +1456,8 @@ xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -y -S -r /mnt $pkg_listsys
-xbps-install -y -S -r /mnt $pkg_list
+xbps-install -S -r /mnt $pkg_listsys -y
+xbps-install -S -r /mnt $pkg_list -y
 fi
 
 # Create list of installed packages
