@@ -719,9 +719,12 @@ setfont Lat2-Terminus16
 # Ignored Packages
 echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 
+# System Packages
+pkg_listsys='base-minimal'\
+' void-repo-nonfree'
+
 # Common Packages
-  pkg_listc='base-minimal'\
-' aria2'\
+  pkg_listc='aria2'\
 ' atool'\
 ' bash'\
 ' bwm-ng'\
@@ -783,8 +786,7 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' lsscsi'\
 ' lsof'\
 ' pam'\
-' detox'\
-' void-repo-nonfree'
+' detox'
 
 # Desktop Packages
   pkg_list='chromium'\
@@ -1058,9 +1060,9 @@ cachedir=""
   
 ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
 # xbps-install --repository $repo0
-repo0="http://alpha.de.repo.voidlinux.org/current/musl"
-repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
-repo2="https://ftp.swin.edu.au/voidlinux/current/musl" 
+repo0="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
+repo1="https://ftp.swin.edu.au/voidlinux/current/musl"
+repo2="http://alpha.de.repo.voidlinux.org/current/musl"
 
 ###########################################
 ###########################################
@@ -1185,6 +1187,13 @@ echo
 # done
 # clear
 
+# Add repo to live
+tee /etc/xbps.d/00-repository-main.conf <<EOF
+repository=$repo0 
+repository=$repo1
+repository=$repo2
+EOF
+
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
@@ -1193,7 +1202,7 @@ xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S -R $repo1 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo2 --download-only --cachedir $cachedir $pkg_list || xbps-install -S -R $repo0 --download-only --cachedir $cachedir $pkg_list 
+xbps-install -S --download-only --cachedir $cachedir $pkg_list
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
@@ -1201,9 +1210,9 @@ xbps-install -S -R $cachedir
 xbps-install -R $cachedir -y gptfdisk pam
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S -R $repo1 || xbps-install -S -R $repo2 || xbps-install -S -R $repo0
+xbps-install -S
 # xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
-xbps-install -R -y $repo1 gptfdisk pam || xbps-install -S -y -R $repo2 gptfdisk pam || xbps-install -S -y -R $repo0 gptfdisk pam
+xbps-install -y gptfdisk pam
 fi
 
 # xbps-install -y -S -f parted
@@ -1439,27 +1448,31 @@ cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 # Package Installation
 if [[ $repopath != "" ]]; then
-xbps-install -R $repopath -r /mnt void-repo-nonfree -y
+xbps-install -R $repopath -r /mnt $pkg_listsys -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
-# make sure intel-ucode is installed
-# xbps-install -R $repopath -r /mnt intel-ucode -y
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -R $cachedir -r /mnt void-repo-nonfree -y
+xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
-# make sure intel-ucode is installed
-# xbps-install -R $cachedir -r /mnt intel-ucode -y
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
-# Run second/third command if first one fails
- xbps-install -y -S -R $repo1 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo2 -r /mnt void-repo-nonfree || xbps-install -y -S -R $repo0 -r /mnt void-repo-nonfree
- xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
- # Make sure everything was installed
- xbps-install -y -S -R $repo1 -r /mnt $pkg_list || xbps-install -y -S -R $repo2 -r /mnt $pkg_list || xbps-install -y -S -R $repo0 -r /mnt $pkg_list
+xbps-install -y -S -r /mnt $pkg_listsys
+xbps-install -y -S -r /mnt $pkg_list
 fi
 
 # Create list of installed packages
-xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log  
+xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
+
+# Add repositories
+# cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
+
+tee /mnt/etc/xbps.d/10-repository-nonfree.conf <<EOF
+repository=$repo0/nonfree
+repository=$repo1/nonfree
+repository=$repo2/nonfree
+EOF
 
 # Activate services
 for srv in $services; do
@@ -1517,15 +1530,6 @@ echo "/mnt/void-backup/borg /mnt/backup fuse.borgfs defaults,noauto,user,uid=100
 xbps-reconfigure -fa -r /mnt ${kernel}
 cp /mnt/boot/initramfs* /mnt/boot/efi
 cp /mnt/boot/vmlinuz* /mnt/boot/efi
-
-# Add repositories
-cp -a /usr/share/xbps.d/* /mnt/etc/xbps.d
-echo "repository=$repo1" > /mnt/etc/xbps.d/00-repository-main.conf
-echo "repository=$repo2" >> /mnt/etc/xbps.d/00-repository-main.conf
-echo "repository=$repo0" >> /mnt/etc/xbps.d/00-repository-main.conf
-
-# Packages to ignore
-cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 
 # Networking
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
