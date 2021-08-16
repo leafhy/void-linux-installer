@@ -719,13 +719,12 @@ setfont Lat2-Terminus16
 # Ignored Packages
 echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 
-# Desktop Packages
-  pkg_list='base-minimal'\
+# Common Packages
+  pkg_listc='base-minimal'\
 ' aria2'\
 ' atool'\
 ' bash'\
 ' bwm-ng'\
-' chromium'\
 ' chrony'\
 ' dosfstools'\
 ' dracut'\
@@ -734,26 +733,17 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' fcron'\
 ' fd'\
 ' ffmpeg'\
-' filezilla'\
-' firefox'\
 ' glances'\
 ' hddtemp'\
-' herbstluftwm'\
 ' inetutils'\
 ' inxi'\
 ' iproute2'\
-' iwd'\
-' openresolv'\
 ' kbd'\
-' kid3'\
-' libinput-gestures'\
 ' linux-firmware'\
-' linux-firmware-nvidia'\
 ' linux-firmware-intel'\
 ' lm_sensors'\
 ' lnav'\
 ' lr'\
-' micro'\
 ' mle'\
 ' nano'\
 ' ncurses'\
@@ -766,18 +756,53 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' PopCorn'\
 ' rsnapshot'\
 ' smartmontools'\
-' smplayer'\
-' sndio'\
 ' socklog-void'\
-' tlp'\
 ' tree'\
 ' vsv'\
 ' wget'\
+' xterm'\
+' gcc'\
+' dtach'\
+' make'\
+' git'\
+' pkg-config'\
+' man-pages'\
+' mdocml'\
+' curl'\
+' gptfdisk'\
+' unzip'\
+' unrar'\
+' ranger'\
+' font-tamsyn'\
+' starship'\
+' xz'\
+' lshw'\
+' fuse-sshfs'\
+' borg'\
+' ncdu'\
+' lsscsi'\
+' lsof'\
+' pam'\
+' detox'\
+' void-repo-nonfree'
+
+# Desktop Packages
+  pkg_list='chromium'\
+' filezilla'\
+' firefox'\
+' herbstluftwm'\
+' iwd'\
+' openresolv'\
+' kid3'\
+' libinput-gestures'\
+' linux-firmware-nvidia'\
+' micro'\
+' smplayer'\
+' sndio'\
+' tlp'\
 ' xf86-input-wacom'\
 ' xorg-minimal'\
 ' sakura'\
-' man-pages'\
-' mdocml'\
 ' mesa'\
 ' mesa-demos'\
 ' mesa-vulkan-intel'\
@@ -786,21 +811,15 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' mesa-dri'\
 ' mesa-vaapi'\
 ' mesa-vdpau'\
-' xterm'\
 ' autorandr'\
-' gcc'\
 ' w3m-img'\
 ' sxiv'\
 ' xwallpaper'\
-' dtach'\
-' make'\
-' git'\
 ' mupdf'\
 ' aerc'\
 ' bind-utils'\
 ' unbound'\
 ' dnscrypt-proxy'\
-' pkg-config'\
 ' wavpack-devel'\
 ' libmp4v2-devel'\
 ' libflac-devel'\
@@ -811,15 +830,9 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' sndio-devel'\
 ' opusfile-devel'\
 ' papirus-icon-theme'\
-' curl'\
-' gptfdisk'\
 ' aucatctl'\
 ' sox'\
-' unzip'\
-' unrar'\
 ' polybar'\
-' ranger'\
-' font-tamsyn'\
 ' vlc'\
 ' w_scan'\
 ' xset'\
@@ -841,9 +854,6 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
 ' gconf-editor'\
-' starship'\
-' xz'\
-' lshw'\
 ' mpv'\
 ' alsa-utils'\
 ' libopenal'\
@@ -870,88 +880,23 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 ' elogind'\
 ' dbus-elogind-x11'\
 ' asciiquarium'\
-' pam'\
 ' astroid'\
-' lsof'\
 ' google-fonts-ttf'\
 ' emacs-x11'\
-' fuse-sshfs'\
-' borg'\
-' ncdu'\
-' lsscsi'\
 ' autocutsel'\
 ' shellcheck'\
-' caddy'\
-' void-repo-nonfree'
+' caddy'
 
 # Server Packages
-  pkg_listsrv='base-minimal'\
-' aria2'\
-' atool'\
-' bash'\
-' bwm-ng'\
-' chrony'\
-' dosfstools'\
-' dracut'\
-' exfat-utils'\
-' ntfs-3g'\
-' fcron'\
-' fd'\
-' glances'\
-' hddtemp'\
-' inetutils'\
-' inxi'\
-' kbd'\
-' linux-firmware'\
-' linux-firmware-intel'\
-' lm_sensors'\
-' lnav'\
-' lr'\
-' micro'\
-' mle'\
-' nano'\
-' ncurses'\
-' rsync'\
-' lftp'\
-' iproute2'\
-' opendoas'\
-' openssh'\
-' p7zip'\
-' pciutils'\
-' PopCorn'\
-' smartmontools'\
-' socklog-void'\
-' tree'\
-' vsv'\
-' wget'\
-' man-pages'\
-' mdocml'\
-' xterm'\
-' dtach'\
+  pkg_listsrv='lftp'\
 ' xfsprogs'\
 ' e2fsprogs'\
-' curl'\
-' gptfdisk'\
-' unzip'\
-' unrar'\
-' ranger'\
-' font-tamsyn'\
-' starship'\
-' xz'\
-' lshw'\
 ' snapraid'\
 ' mergerfs'\
 ' castget'\
 ' newsboat'\
 ' minidlna'\
-' ipmitool'\
-' detox'\
-' lsof'\
-' lsscsi'\
-' borg'\
-' ncdu'\
-' pam'\
-' void-repo-nonfree'
+' ipmitool'
 
 ###################
 ##### Desktop #####
@@ -1128,7 +1073,7 @@ select opt in "${options[@]}"
 do
 case $opt in
     'Desktop')
-      pkg_list="$pkg_list"
+      pkg_list="$pkg_list $pkg_listc"
       username="$username"
       services="$services"
       groups="$groups"
@@ -1137,7 +1082,7 @@ case $opt in
       break
       ;;
     'Server')
-      pkg_list="$pkg_listsrv"
+      pkg_list="$pkg_listsrv $pkg_listc"
       username="$usernamesrv"
       services="$srv-services"
       groups="$groupsrv"
@@ -1310,31 +1255,31 @@ do
     'btrfs')
       fsys1='btrfs'
       pkg_list="$pkg_list btrfs-progs"
-      xbps-install -R $repopath -y btrfs-progs
+      xbps-install -R $repopath $cachedir -y btrfs-progs
       break
       ;;
     'xfs')
       fsys1='xfs'
       pkg_list="$pkg_list xfsprogs"
-      xbps-install -R $repopath -y xfsprogs
+      xbps-install -R $repopath $cachedir -y xfsprogs
       break
       ;;
     'nilfs2')
       fsys1='nilfs2'
       pkg_list="$pkg_list nilfs-utils"
-      xbps-install -R $repopath -y nilfs-utils
+      xbps-install -R $repopath $cachedir -y nilfs-utils
       break
       ;;
     'ext4')
       fsys2='ext4'
       pkg_list="$pkg_list e2fsprogs"
-      xbps-install -R $repopath -y e2fsprogs
+      xbps-install -R $repopath $cachedir -y e2fsprogs
       break
       ;;
       'f2fs')
       fsys3='f2fs'
       pkg_list="$pkg_list f2fs-tools"
-      xbps-install -R $repopath -y f2fs-tools
+      xbps-install -R $repopath $cachedir -y f2fs-tools
       break
       ;;
     *)
