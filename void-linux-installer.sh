@@ -1105,7 +1105,7 @@ mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
 fi
 
-# Mount live usb
+# Mount live usb via live Cd
 usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
 if [[ $usbrepo && $repopath != "" ]]; then
 mount $usbrepo /media
