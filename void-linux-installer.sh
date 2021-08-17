@@ -1194,6 +1194,12 @@ repository=$repo1
 repository=$repo2
 EOF
 
+tee /etc/xbps.d/10-repository-nonfree.conf <<EOF
+repository=$repo0/nonfree
+repository=$repo1/nonfree
+repository=$repo2/nonfree
+EOF
+
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
@@ -1452,6 +1458,7 @@ xbps-install -R $repopath -r /mnt $pkg_listsys -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
+xbps-install -S --download-only --cachedir $cachedir $pkg_list
 xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
@@ -1467,12 +1474,8 @@ xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 # cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/10-repository-nonfree.conf /mnt//etc/xbps.d
 
-tee /mnt/etc/xbps.d/10-repository-nonfree.conf <<EOF
-repository=$repo0/nonfree
-repository=$repo1/nonfree
-repository=$repo2/nonfree
-EOF
 
 # Activate services
 for srv in $services; do
