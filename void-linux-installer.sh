@@ -1100,7 +1100,7 @@ case $opt in
 esac
 done
 
-# Add repo to live
+# Add repositories to live USB/Cd
 tee /etc/xbps.d/00-repository-main.conf <<EOF
 repository=$repo0 
 repository=$repo1
@@ -1161,7 +1161,60 @@ break
 done
 
 pkg_list="$pkg_list $kernel"
- 
+
+# Option to select the file system type to format partitions
+echo ''
+echo '************************************'
+echo '**** FILE SYSTEM TYPE SELECTION ****'
+echo '************************************'
+echo ''
+echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
+echo 'Nilfs2 on '/' will error on every boot'
+echo 'Need to 'exit' twice to continue'
+echo '**************************************'
+echo ''
+echo '[!] Retry if valid selection fails [!]'
+echo ''
+PS3='Select file system to format partition: '
+filesystems=('btrfs' 'ext4' 'xfs' 'f2fs' 'nilfs2')
+select filesysformat in "${filesystems[@]}"
+do
+  case $filesysformat in
+    'btrfs')
+      fsys1='btrfs'
+      pkg_list="$pkg_list btrfs-progs"
+      fstype="btrfs-progs"
+      break
+      ;;
+    'xfs')
+      fsys1='xfs'
+      pkg_list="$pkg_list xfsprogs"
+      fstype="xfsprogs"
+      break
+      ;;
+    'nilfs2')
+      fsys1='nilfs2'
+      pkg_list="$pkg_list nilfs-utils"
+      fstype="nilfs-utils"
+      break
+      ;;
+    'ext4')
+      fsys2='ext4'
+      pkg_list="$pkg_list e2fsprogs"
+      fstype="e2fsprogs"
+      break
+      ;;
+      'f2fs')
+      fsys3='f2fs'
+      pkg_list="$pkg_list f2fs-tools"
+      fstype="f2fs-tools"
+      break
+      ;;
+    *)
+      echo 'This option is invalid.'
+      
+  esac
+done
  
 # /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
 echo ''
@@ -1172,14 +1225,14 @@ echo '**** Script is preconfigured for UEFI & GPT ****'
 echo '****                                        ****'
 echo '**** Partition Layout : Fat-32 EFI of 500MB ****'
 echo '****                  : / 100%              ****'
-echo '****                                        ****'
 echo '************************************************'
 echo ''
 echo '******************************************'
 echo '[!] Rerun script if xbps-install fails [!]'
 echo '******************************************'
-echo ''
+
 lsblk -f -l | grep -e sd -e mmcblk
+
 echo ''
 echo '****************************************'
 echo '[!] Verify Connected Drive Is Listed [!]'
@@ -1188,8 +1241,8 @@ echo '****************************************'
 PS3="Select drive to format: "
 echo ''
 # use sed to remove 'p' and the single partition number: 
-# mmcblk0p1 >>> mmcblk01 >>> mmcblk0
-# sda1 >>> sda
+# mmcblk0p1 >> mmcblk01 >> mmcblk0
+# sda1 >> sda
 select device in $(blkid | grep -e sd -e mmcblk0 | cut -d : -f 1 | sed -e 's/\p//g' -e 's/[1-9]\+$//' | uniq | sort)
 do
 if [[ $device = "" ]]; then
@@ -1224,27 +1277,25 @@ echo
 # done
 # clear
 
-
-
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
 # xbps-install -uy -R $repopath
 # pam needed for setting of password
-xbps-install -R $repopath -y gptfdisk pam
+xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S --download-only --cachedir $cachedir $pkg_list
+xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex *xbps
 xbps-install -S -R $cachedir
 # xbps-install -uy -R $cachedir
-xbps-install -R $cachedir -y gptfdisk pam
+xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S
 # xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
-xbps-install -y gptfdisk pam
+xbps-install -y gptfdisk pam $fstype dosfstools
 fi
 
 # xbps-install -y -S -f parted
@@ -1275,59 +1326,6 @@ sgdisk -n 2:0:0 -t 2:8300 $device
 sgdisk --verify $device
 echo
 
-# Option to select the file system type to format partitions
-echo ''
-echo '************************************'
-echo '**** FILE SYSTEM TYPE SELECTION ****'
-echo '************************************'
-echo ''
-echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
-echo 'Nilfs2 on '/' will error on every boot'
-echo 'Need to 'exit' twice to continue'
-echo '**************************************'
-echo ''
-echo '[!] Retry if valid selection fails [!]'
-echo ''
-PS3='Select file system to format partition: '
-filesystems=('btrfs' 'ext4' 'xfs' 'f2fs' 'nilfs2')
-select filesysformat in "${filesystems[@]}"
-do
-  case $filesysformat in
-    'btrfs')
-      fsys1='btrfs'
-      pkg_list="$pkg_list btrfs-progs"
-      xbps-install -R $repopath $cachedir -y btrfs-progs
-      break
-      ;;
-    'xfs')
-      fsys1='xfs'
-      pkg_list="$pkg_list xfsprogs"
-      xbps-install -R $repopath $cachedir -y xfsprogs
-      break
-      ;;
-    'nilfs2')
-      fsys1='nilfs2'
-      pkg_list="$pkg_list nilfs-utils"
-      xbps-install -R $repopath $cachedir -y nilfs-utils
-      break
-      ;;
-    'ext4')
-      fsys2='ext4'
-      pkg_list="$pkg_list e2fsprogs"
-      xbps-install -R $repopath $cachedir -y e2fsprogs
-      break
-      ;;
-      'f2fs')
-      fsys3='f2fs'
-      pkg_list="$pkg_list f2fs-tools"
-      xbps-install -R $repopath $cachedir -y f2fs-tools
-      break
-      ;;
-    *)
-      echo 'This option is invalid.'
-      
-  esac
-done
 clear
 
 # Format filesystems
@@ -1449,9 +1447,6 @@ done
 # mount --rbind /dev /mnt/dev && mount --make-rslave /mnt/dev
 # mount --rbind /proc /mnt/proc && mount --make-rslave /mnt/proc
 
-
-
-
 # Import keys from live image to prevent prompt for key confirmation
 mkdir -p /mnt/var/db/xbps/keys/
 cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
@@ -1479,7 +1474,6 @@ xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-repository-nonfree.conf /mnt//etc/xbps.d
-
 
 # Activate services
 for srv in $services; do
