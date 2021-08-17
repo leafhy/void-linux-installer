@@ -1471,9 +1471,9 @@ xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 # Add repositories
 # cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
-cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
-cp /etc/xbps.d/10-repository-nonfree.conf /mnt//etc/xbps.d
+cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
 
 # Activate services
 for srv in $services; do
