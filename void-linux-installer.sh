@@ -943,6 +943,8 @@ alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview
 alias clipsr="clipster --delete"
 alias clipsc="clipster --erase-entire-board"
 alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -theme ~/.config/rofi/hlwm.rasi"
+# Firefox has a habit of not responding and 'killall' doesn't always work
+alias kf="pgrep -f firefox | xargs kill -9"
 EOF
 )"
 
@@ -1098,6 +1100,19 @@ case $opt in
 esac
 done
 
+# Add repo to live
+tee /etc/xbps.d/00-repository-main.conf <<EOF
+repository=$repo0 
+repository=$repo1
+repository=$repo2
+EOF
+
+tee /etc/xbps.d/10-repository-nonfree.conf <<EOF
+repository=$repo0/nonfree
+repository=$repo1/nonfree
+repository=$repo2/nonfree
+EOF
+
 # Create ramfs for repository as xbps errors as usb not writable
 if [[ -d /run/initramfs/live/voidrepo && $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
@@ -1125,6 +1140,28 @@ cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
 if [[ $cpu_vendor = GenuineIntel ]]; then
   pkg_list="$pkg_list intel-ucode"
 fi
+ 
+echo '**********************************'
+echo '**** CHECKING KERNEL VERSIONS ****'
+echo '**********************************'
+# Get currently running kernel version
+kver=$(xbps-query linux | awk '$1 == "pkgver:" { print $2 }' | sed -e 's/linux-//' -e 's/_.*$//')
+echo 'Live CD kernel version $kver'
+echo '**************************'
+echo 'Choose a kernel to install'
+echo '**************************'
+PS3="Select kernel: " 
+select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1)
+do
+if [[ $kernel = "" ]]; then
+echo "$REPLY is not valid"
+continue
+fi
+break
+done
+
+pkg_list="$pkg_list $kernel"
+ 
  
 # /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
 echo ''
@@ -1187,18 +1224,7 @@ echo
 # done
 # clear
 
-# Add repo to live
-tee /etc/xbps.d/00-repository-main.conf <<EOF
-repository=$repo0 
-repository=$repo1
-repository=$repo2
-EOF
 
-tee /etc/xbps.d/10-repository-nonfree.conf <<EOF
-repository=$repo0/nonfree
-repository=$repo1/nonfree
-repository=$repo2/nonfree
-EOF
 
 # Install Prerequisites
 if [[ $repopath != "" ]]; then
@@ -1423,30 +1449,8 @@ done
 # mount --rbind /dev /mnt/dev && mount --make-rslave /mnt/dev
 # mount --rbind /proc /mnt/proc && mount --make-rslave /mnt/proc
 
-echo ''
-echo '**********************************'
-echo '**** CHECKING KERNEL VERSIONS ****'
-echo '**********************************'
-echo ''
-# Get currently running kernel version
-echo 'Live CD kernel version'
-xbps-query linux | awk '$1 == "pkgver:" { print $2 }' | sed -e 's/linux-//' -e 's/_.*$//'
-echo ''
-echo '**************************'
-echo 'Choose a kernel to install'
-echo '**************************'
-echo '' 
-PS3="Select kernel: " 
-select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1)
-do
-if [[ $kernel = "" ]]; then
-echo "$REPLY is not valid"
-continue
-fi
-break
-done
 
-pkg_list="$pkg_list $kernel"
+
 
 # Import keys from live image to prevent prompt for key confirmation
 mkdir -p /mnt/var/db/xbps/keys/
