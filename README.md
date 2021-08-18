@@ -1,8 +1,16 @@
 # **Caution Ahead**
 I know next to nothing about bash so there could be dragons and possibly a few trolls so use at your own risk.  
 
-# void-linux-installer.sh
-This partially interarctive bash script is setup to *install Void Linux for Desktop or Server (headless).
+This repo is my complete? setup for Void Linux.
+
+### Includes:
+* unbound
+* rofi
+* herbstluftwm
+* polybar        
+
+## void-linux-installer.sh
+This partially interarctive bash script is setup to install Void Linux for Desktop or Server (headless).
 
 ### Requirement (glibc version not tested)
 [void-live-x86_64-musl-20191109.iso](https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso)
@@ -15,7 +23,5 @@ chmod +x summon/summon.sh
 ```
 git clone https://github.com/leafhy/void-linux-installer.git
 cd void-linux-installer
-/path/to/summon.sh i3
+/path/to/summon.sh config
 ```
-
-\*rice not included
