@@ -103,9 +103,10 @@ tray-padding =
 ;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
 ;font-2  = siji:pixelsize=10;1
 font-0  = "Iosevka Term SS10:style=Regular:size=10;3"
-font-1 = icomoon\-feather:size=10;3
-font-2 = IcoMoon\-Free:size=10;3
-font-3 = "NotoEmoji Nerd Font Mono:size=10;3"
+;NotoEmoji Nerd Font Mono overrides icomoon - feather in terminal & text editor 
+;font-1 = icomoon\-feather:size=10;3
+font-1 = IcoMoon\-Free:size=10;3
+font-2 = "NotoEmoji Nerd Font Mono:size=10;3"
 
 #################
 #### Modules ####
@@ -401,11 +402,13 @@ format-connected = <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
 format-connected-prefix =  "直"
+;
 format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
 format-connected-underline = ${colors.underline2}
 
 label-disconnected = "直"
+;
 label-disconnected-foreground = ${colors.foreground-1}
 label-disconnected-background = ${colors.background}
 format-disconnected = <label-disconnected>
@@ -574,14 +577,14 @@ menu-0-0-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /
 menu-0-0-foreground = ${colors.foreground}
 
 ;; logoff
-menu-0-2 = ""
+menu-0-2 = ""
 ;; Using pkill on Void Linux results in blank screen - Need to reboot
 ; pkill -KILL -u $USER
 menu-0-2-exec = /sbin/herbstclient quit
 menu-0-2-foreground = ${colors.foreground}
 
 ;; lock screen
-menu-0-3 = ""
+menu-0-3 = ""
 menu-0-3-exec = ~/.local/bin/lockscreen.sh
 menu-0-3-foreground = ${colors.foreground}
 
