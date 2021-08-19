@@ -578,6 +578,7 @@ menu-0-0-foreground = ${colors.foreground}
 
 ;; logoff
 menu-0-2 = ""
+;
 ;; Using pkill on Void Linux results in blank screen - Need to reboot
 ; pkill -KILL -u $USER
 menu-0-2-exec = /sbin/herbstclient quit
