@@ -14,6 +14,7 @@ configuration {
   columns:            1;
   fullscreen:         false;
   lines:              20;
+  terminal:          "sakura";
 }
 /* @import "/usr/share/rofi/themes/Arc-Dark.rasi" */
 @import "~/.config/rofi/Arc-Dark.rasi"
