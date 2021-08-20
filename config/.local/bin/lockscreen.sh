@@ -1,7 +1,7 @@
 #!/bin/bash
 ##################### WARNING ######################
 # i3 lock allows notifications
-# Sometimes underlying text is shown on asciiquarium
+# Underlying text may show on asciiquarium (xorg related?)
 ####################################################
 set -e
 
