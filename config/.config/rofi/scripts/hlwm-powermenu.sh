@@ -14,7 +14,7 @@ list_icons() {
 
 
 
-     SELECTION="$(list_icons | rofi -dmenu -theme ~/.config/rofi/hlwm-menu.rasi)"
+     SELECTION="$(list_icons | rofi -dmenu -theme ~/.config/rofi/hlwm-powermenu.rasi)"
 
 
 case "$SELECTION" in
@@ -28,7 +28,7 @@ case "$SELECTION" in
         ;;
 
     "$LOCK")
-        ~/.config/rofi/scripts/rofi-confirm.sh 'Lock?' && ~/.local/bin/lockscreen.sh
+        ~/.config/rofi/scripts/rofi-confirm.sh 'Lock Screen?' && ~/.local/bin/lockscreen.sh
         ;;
 
     "$SLEEP")
