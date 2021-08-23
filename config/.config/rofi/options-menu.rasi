@@ -2,7 +2,7 @@ onfiguration {
 /*    show-icons:                     true;*/
     font:                           "Iosevka Term SS10 25";
 }
-@import "config"
+@import "colour/berry"
 window {
     children:                       [mainbox];
     /*height:                        calc( 100% - 40px);*/
