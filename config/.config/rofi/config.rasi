@@ -6,7 +6,7 @@ configuration {
  /* icon-theme:        "Papirus-Dark"; */
   icon-theme:         "Arc";
   cycle:              true;
-  hide-scrollbar:     true;
+  /* hide-scrollbar:     true; */
   disable-history:    false;
   modi:              "drun,run,window,ssh,calc,clipboard:greenclip print,keys";
   sidebar-mode:       true;
