@@ -10,7 +10,7 @@ configuration {
     click-to-exit: 					true;
 }
 
-@import "colour/berry.rasi"
+@import "colour/berry"
 
 * {
     background-color:             	@bg;
