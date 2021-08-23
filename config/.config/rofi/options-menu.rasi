@@ -3,6 +3,8 @@ onfiguration {
     font:                           "Iosevka Term SS10 25";
 }
 @import "colour/berry"
+/*@import "colour/arc-blue"*/
+
 window {
     children:                       [mainbox];
     /*height:                        calc( 100% - 40px);*/
