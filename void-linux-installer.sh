@@ -30,6 +30,8 @@
 # https://github.com/alejandroliu/0ink.net/blob/master/snippets/void-installation/install.sh
 # https://github.com/addy-dclxvi/almighty-dotfiles
 # https://github.com/adi1090x/polybar-themes
+# https://github.com/adi1090x/rofi
+# https://github.com/ntcarlson/dotfiles
 # https://github.com/sdothum/dotfiles
 # http://thedarnedestthing.com/colophon
 # https://www.kernel.org/doc/Documentation/filesystems/f2fs.txt
