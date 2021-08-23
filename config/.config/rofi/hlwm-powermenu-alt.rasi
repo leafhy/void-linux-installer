@@ -10,7 +10,7 @@ configuration {
 	sidebar-mode: 					false;
 }
 
-@import "colour/arc-blue"
+@import "Arc-Dark"
 
 window {
     transparency:                   "real";
