@@ -15,6 +15,7 @@ configuration {
   fullscreen:         false;
   lines:              20;
   terminal:          "sakura";
+  font:              "Overpass SemiBold 16";
 }
 /* @import "/usr/share/rofi/themes/Arc-Dark.rasi" */
-@import "~/.config/rofi/Arc-Dark.rasi"
+@import "Arc-Dark"
