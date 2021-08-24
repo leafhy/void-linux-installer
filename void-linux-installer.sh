@@ -33,6 +33,8 @@
 # https://github.com/adi1090x/rofi
 # https://github.com/ntcarlson/dotfiles
 # https://github.com/sdothum/dotfiles
+# https://github.com/denysdovhan/bash-handbook
+# https://gitlab.com/vahnrr/rofi-menus
 # http://thedarnedestthing.com/colophon
 # https://www.kernel.org/doc/Documentation/filesystems/f2fs.txt
 # https://www.kernel.org/doc/Documentation/filesystems/xfs.txt
@@ -43,17 +45,16 @@
 # https://wiki.archlinux.org/index.php/unbound
 # https://nlnetlabs.nl/documentation/unbound
 # https://www.funtoo.org/Keychain
-# https://github.com/denysdovhan/bash-handbook
 # http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, Ubuntu Linux
 #
 # ### symlink managers ###
 # https://github.com/anishathalye/dotbot
-# https://www.gnu.org/software/stow
+# https://github.com/lra/mackup
+# https://github.com/kairichard/lace
 # https://github.com/andsens/homeshick
 # https://gitlab.com/grm-grm/ck
 # https://gitlab.com/semente/summon
-# https://github.com/lra/mackup
-# https://github.com/kairichard/lace
+# https://www.gnu.org/software/stow
 # https://www.chezmoi.io
 # ***************************
 # Hide/Unhide Terminal Cursor 
