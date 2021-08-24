@@ -1408,6 +1408,7 @@ fi
 # Mount them
 if [[ $device = /dev/mmcblk0 ]]; then
      mount ${device}p2 /mnt
+   
    elif [[ $device != /dev/mmcblk0 ]]; then 
    mount ${device}2 /mnt
 fi
