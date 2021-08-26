@@ -57,7 +57,8 @@ hc keybind $Mod-Shift-c close
 
 # Applications
 hc keybind $Mod-Return spawn sakura -m --title sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
-
+# polybar-msg cmd {hide,show,toggle,quit}
+hc keybind $Mod-Control-t spawn polybar-msg cmd restart
 hc keybind $Mod-n spawn nemo
 hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
