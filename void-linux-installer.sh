@@ -1640,7 +1640,7 @@ chroot /mnt useradd -g users -G $groups $username
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
 if [[ username = $username ]]; then
-echo "$bashprofile" > /mnt/home/$username/.bash_profile
+# echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 fi
 
