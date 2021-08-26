@@ -882,7 +882,6 @@ pkg_listsys='base-minimal'\
 ' recoll'\
 ' overpass-otf'\
 ' i3lock-color'\
-' elogind'\
 ' dbus-elogind-x11'\
 ' asciiquarium'\
 ' astroid'\
@@ -908,7 +907,7 @@ pkg_listsys='base-minimal'\
 ###################
 username="vade"
 groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
-services="caddy dnscrypt-proxy unbound cupsd cups-browsed sshd acpid chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
+services="caddy dnscrypt-proxy unbound cupsd cups-browsed sshd chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
 hostname="void"
 
 ### /home/$USER/.bashrc
