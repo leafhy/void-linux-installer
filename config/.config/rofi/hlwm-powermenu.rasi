@@ -7,6 +7,7 @@ configuration {
     fullscreen: 					false;
     fake-transparency: 				false;
     click-to-exit: 					true;
+    show-icons:                     false;
 }
 
 @import "colour/berry"
