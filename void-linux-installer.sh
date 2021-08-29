@@ -797,7 +797,6 @@ pkg_listsys='base-minimal'\
 ' firefox'\
 ' herbstluftwm'\
 ' iwd'\
-' openresolv'\
 ' kid3'\
 ' libinput-gestures'\
 ' linux-firmware-nvidia'\
@@ -1046,8 +1045,8 @@ wifipassword=""
 openresolv="YES" # any other value if not used
 ### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
-nameserver1="1.0.0.1"
-nameserver2="1.1.1.1"
+nameserver1="1.0.0.1" # Cloudflare # Google 8.8.4.4
+nameserver2="1.1.1.1" # Cloudflare # Google 8.8.8.8
 
 ######################
 ##### Repository #####
@@ -1142,7 +1141,11 @@ cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
 if [[ $cpu_vendor = GenuineIntel ]]; then
   pkg_list="$pkg_list intel-ucode"
 fi
- 
+
+if [[ $openresolv = YES ]]; then
+  pkg_list="$pkg_list openresolv"
+fi
+
 echo '**********************************'
 echo '**** CHECKING KERNEL VERSIONS ****'
 echo '**********************************'
@@ -1225,7 +1228,7 @@ echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
 echo '************************************************'
 echo '**** Script is preconfigured for UEFI & GPT ****'
 echo '****                                        ****'
-echo '**** Partition Layout : Fat-32 EFI of 500MB ****'
+echo '**** Partition Layout : Fat-32 EFI of 550MB ****'
 echo '****                  : / 100%              ****'
 echo '************************************************'
 echo ''
@@ -1279,12 +1282,12 @@ echo
 # done
 # clear
 
-# Install Prerequisites
+# Install Prerequisites to Live USB/Cd
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
 # xbps-install -uy -R $repopath
-# pam needed for setting of password
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
+# setting password requires pam
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
@@ -1319,11 +1322,10 @@ fi
 # fi
 # parted /dev/${devname} set 1 boot on
 
-# Create partitions
-# sgdisk creates GPT by default
+# Create GPT partition table
 echo
 sgdisk --zap-all $device
-sgdisk -n 1:2048:500M -t 1:ef00 $device
+sgdisk -n 1:2048:550M -t 1:ef00 $device
 sgdisk -n 2:0:0 -t 2:8300 $device
 sgdisk --verify $device
 echo
@@ -1538,13 +1540,10 @@ cp /mnt/boot/vmlinuz* /mnt/boot/efi
 # Networking
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
 # resolvconf -u # updates /etc/resolv.conf
-if [[ -f /mnt/etc/resolvconf.conf && $openresolv = YES ]]; then
+if [[ -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
-else
-cp /etc/resolv.conf /mnt/etc
-fi
 
-if [[ ! -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
+elif [[ ! -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
 echo "options edns0" >> /mnt/etc/resolv.conf
 
@@ -1553,7 +1552,6 @@ echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
 fi
 
-cp /etc/rc.local /mnt/etc
 # Static IP configuration via iproute2
 eth=$(ip link | grep enp | cut -d : -f 2)
 echo "ip link set dev $eth up" >> /mnt/etc/rc.local
@@ -1632,8 +1630,9 @@ chroot /mnt useradd -g users -G $groups $username
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
 # home directory is still created
 #
+# group names can vary with distros
 # groups: cdrom=CD
-#         optical=DVD/CD-RW # optical is not used by other distros
+#         optical=DVD/CD-RW 
 #         storage=removeable
 
 # Setup $HOME
