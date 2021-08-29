@@ -75,7 +75,7 @@
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
 #           : eSATA (powered enclosure - usb not needed) on T420 - place the folowing in bash script (rescan-scsi-bus.sh didn't work)
 #             "for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done"
-#           : 'doas' is used instead of 'sudo'(was installed as depedancy) 
+#           : 'doas' is used instead of 'sudo'(can install as dependency) 
 #
 # void ncurses installer is problematic - it may work or fail trying to format
 # Updating Live CD kernel will result in "[*]" as an option to install
@@ -879,12 +879,13 @@ pkg_listsys='base-minimal'\
 ' nerd-fonts'\
 ' xsetroot'\
 ' recoll'\
-' overpass-otf'\
 ' i3lock-color'\
 ' dbus-elogind-x11'\
 ' asciiquarium'\
 ' astroid'\
+' overpass-otf'\
 ' google-fonts-ttf'\
+' font-iosevka'\
 ' emacs-x11'\
 ' autocutsel'\
 ' shellcheck'\
