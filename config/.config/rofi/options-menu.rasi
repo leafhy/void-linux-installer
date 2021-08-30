@@ -1,19 +1,21 @@
-onfiguration {
-/*    show-icons:                     true;*/
-    font:                           "Iosevka Term SS10 25";
+configuration {
+    /*show-icons:                        true;*/
+    font:                "Iosevka Term SS10 25";
 }
-@import "colour/berry"
-/*@import "colour/arc-blue"*/
+
+@import "colour/berry.rasi"
+/*@import "colour/arc-blue.rasi"*/
+
 
 window {
     children:                       [mainbox];
-    /*height:                        calc( 100% - 40px);*/
+    /*height:                         calc(100% - 40px);*/
     location:                       0;
-   /* anchor:                         southeast;*/
+    /*anchor:                         southeast;*/
     width:                          450;
     transparency:                   "real";
     background-color:               @background-transparent;
-    border:                         5px 0px 0px 5px;
+    /*border:                         5px 0px 0px 5px;*/
     border-color:                   @primary;
 }
 
@@ -21,8 +23,8 @@ mainbox {
     children:                       [message, listview];
     expand:                         false;
     background-color:               @primary;
-    border:                         0px 5px 5px 0px;
-    border-color:                  @primary;
+    border:                         0px 0px 0px 0px;
+    border-color:                   @primary;
 }
 
 textbox {
@@ -40,14 +42,16 @@ listview {
     border-color:                   @background;
     border-radius:                  0px;
     expand:                         false;
+    scrollbar:                      false;
 }
 
 element {
-    children:                       [dummy, element-text, dummy];
-    padding:                        0px;
-    orientation:                    horizontal;
-    border:                         0;
-    border-color:                   transparent;
+    /*children:                      [dummy, element-text, dummy];*/
+    children:                     [ element-text ];
+    padding:                        0;
+    orientation:                    vertical;
+    border:                         0px;
+    /*border-color:                 transparent;*/
 }
 
 element-text {
@@ -55,13 +59,13 @@ element-text {
     vertical-align:                 0.5;
     padding:                        6px 6px;
     border:                         0px;
-    border-radius:                  5;
-    width:                          125px;
-    /*background-color:               @background-alt;*/
-    expand:                         false;
+    border-radius:                  0px;
+    width:                          115px;
+    background-color:               rgba ( 29, 31, 40, 80% ); /*@background;*/
 }
 
 element-text selected {
-    background-color:              @primary;
+    background-color:               @primary;
     text-color:                     @text-color;
+    border:                         0px;
 }
