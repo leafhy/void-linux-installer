@@ -1,3 +1,5 @@
+#!/bin/bash
+
 LOCK=" Lock"
 SLEEP="鈴 Suspend"
 LOGOUT="  Logout"
