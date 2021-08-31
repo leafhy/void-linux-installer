@@ -390,10 +390,12 @@
 ##################################################################
 # Fonts
 # fc-list # /usr/share/fonts
-# https://github.com/be5invis/Iosevka/releases
+# https://github.com/be5invis/Iosevka
 # https://overpassfont.org
-# https://mplus-fonts.osdn.jp/about-en.html
+# https://mplus-fonts.osdn.jp
 # http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz
+# Firefox requires: "noto-fonts-cjk" (Not required for Chromium)
+#                 : ~/.config/fontconfig/fonts.conf
 ##################################################################
 ##################### Encrypt $USERS $HOME #######################
 ##################################################################
@@ -584,8 +586,7 @@
 #        simple-scan >> 2400dpi
 #        skanlite >> 9600dpi
 # ----------------------------
-# Firefox
-# ~/.config/fontconfig/fonts.conf is needed to display fonts correctly
+
 ########################################
 ################ Email #################
 ########################################
@@ -876,13 +877,14 @@ pkg_listsys='base-minimal'\
 ' arc-icon-theme'\
 ' faience-icon-theme'\
 ' faenza-icon-theme'\
-' nerd-fonts'\
 ' xsetroot'\
 ' recoll'\
 ' i3lock-color'\
 ' dbus-elogind-x11'\
 ' asciiquarium'\
 ' astroid'\
+' nerd-fonts'\
+' noto-fonts-cjk'\
 ' overpass-otf'\
 ' google-fonts-ttf'\
 ' font-iosevka'\
@@ -1046,9 +1048,9 @@ wifipassword=""
 openresolv="YES" # any other value if not used
 ### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
-nameserver1="1.0.0.1" # Cloudflare # Google 8.8.4.4
-nameserver2="1.1.1.1" # Cloudflare # Google 8.8.8.8
-
+# Cloudflare # Google "8.8.4.4" "8.8.8.8"
+nameserver1="1.0.0.1"
+nameserver2="1.1.1.1"   
 ######################
 ##### Repository #####
 ######################
@@ -1438,7 +1440,7 @@ for fs in dev proc sys; do
   mount -o bind /$fs /mnt/$fs
 done
 
-# Alternative mount options
+# Alternative mount options 
 # Conflicting information abounds
 # mount -t proc proc /mnt/proc
 # mount -t sysfs sys /mnt/sys
