@@ -193,7 +193,7 @@
 # intel-ucode - dracut default is to include
 # early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf seems redundant
 # intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
-# Firefox tends to lose audio output if VLC has been in use - need to restart Firefox
+# if audio stops working in VLC/Firefox restart Firefox
 #################################################################
 # SSHFS
 # xbps-install fuse-sshfs
