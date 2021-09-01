@@ -177,14 +177,6 @@
 # imgcat - https://github.com/danielgatis/imgcat/releases/download/v1.0.8/imgcat_1.0.8_Linux_x86_64.tar.gz # Binary works
 #        - https://github.com/eddieantonio/imgcat # failed to compile
 # ----------
-# grafana - failed to start due to no permission to mkdir /var/log/grafana
-# Create /var/log/grafana manually
-# login admin/admin
-# ----------
-# Turn off screen
-# xrandr --output LVDS-1 --off
-# Turn on screen
-# xrandr --output LVDS-1 --auto
 # Blank screen 1m turn off 2m
 # setterm --blank 1 --powerdown 2
 # -------------------------------
@@ -1048,6 +1040,7 @@ wifipassword=""
 openresolv="YES" # any other value if not used
 ### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
+### nameserver1..2 is for /etc/resolv.conf
 # Cloudflare # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
 nameserver2="1.1.1.1"   
