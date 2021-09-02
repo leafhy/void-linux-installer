@@ -504,7 +504,6 @@
 # ---------------------
 # Network - WIFI
 # xbps-install iwd openresolv iproute2 
-# use ifupdown/iproute2
 # sv start iwd
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
 # password file >> /var/lib/iwd/routerssid
@@ -517,25 +516,12 @@
 # [Network]
 # NameResolvingService=resolvconf
 # ------------
-# ifupdown
-# /etc/network/interfaces.d/ifcfg-eth0
-# auto enp0s00
-# allow-hotplug enp0s00
-# iface enp0s00 inet static
-# address 192.168.1.XX
-# netmask 255.255.255.0
-# gateway 192.168.1.X
-# dns-nameservers 127.0.0.1
-# ---------------------
 # openresolv
 # /etc/resolvconf.conf
 # name_servers=127.0.0.1 # default
 # resolv_conf_options=edns0
 # ---------------
 # resolvconf -u # updates /etc/resolv.conf
-# ---------------------
-# ip link set wlp1s0 up/down
-# ifup/down enp0s00 
 # --------------------
 # NFS Mount
 # /etc/exports
@@ -1546,6 +1532,10 @@ echo "options edns0" >> /mnt/etc/resolv.conf
 elif [[ ! -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
 echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
 echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
+
+elif [[ -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
+echo "nameserver $nameserver1" >> /mnt/etc/resolvconf.conf
+echo "nameserver $nameserver2" >> /mnt/etc/resolvconf.conf
 fi
 
 # Static IP configuration via iproute2
