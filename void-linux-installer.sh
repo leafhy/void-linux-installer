@@ -1580,7 +1580,7 @@ echo "KEYMAP=$KEYMAP" >> /mnt/etc/rc.conf
 echo "FONT=$FONT" >> /mnt/etc/rc.conf
 echo "TTYS=$TTYS" >> /mnt/etc/rc.conf
 
-# set "doas(root)" privileges
+# set "root" privileges
 # test doas.conf
 # $ doas -C /etc/doas.conf
 # check permission of command
@@ -1612,7 +1612,7 @@ done
 
 chroot /mnt useradd -g users -G $groups $username
 
-# [Bug?] useradd -R /mnt 
+# Bug? useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
 # home directory is still created
 #
@@ -1625,7 +1625,7 @@ chroot /mnt useradd -g users -G $groups $username
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
 if [[ username = $username ]]; then
-# echo "$bashprofile" > /mnt/home/$username/.bash_profile
+echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 fi
 
