@@ -9,9 +9,8 @@
 ########################################################################
 ############################## WARNING #################################
 ########################################################################
-## Do Not install Grub if theres another operating system installed   
-## even if it's on a separate hard drive as it will overwrite the mbr 
-## necessitating a re-install at least with Windows 10
+## Grub will overwrite the mbr of an aleady installed operating system 
+## even if it's on a separate hard drive requiring Windows 10 to be re-installed
 ##
 ## Windows 10 will install efi and recovery data onto secondary (efi) hardrive (includes mSata) 
 ## 
