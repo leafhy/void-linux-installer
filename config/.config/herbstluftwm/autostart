@@ -21,7 +21,6 @@ killall -q clipster
 killall -q greenclip
 Killall -q autocutsel
 killall -q udiskie
-killall -q dunst
 pgrep -f nohang | xargs kill -9 >/dev/null 2>&1
 
 # Wait until the processes have been shut down
