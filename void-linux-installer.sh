@@ -443,8 +443,6 @@
 # 0 * * * * /home/$USER/scripts/borg-backup.sh >> /var/log/borg-backup.log 2>&1
 # Unbound - Monthly
 # @ 1m cd /etc/unbound/unbound-updater && ./unbound-update-blocklist.sh 2>&1
-# Caddy2
-# &bootrun,first(1) * * * * * /sbin/caddy start --config /home/$USER/.config/caddy/Caddyfile 2>&1
 # Bitwarden_rs - 2m after boot
 # &bootrun,first(2) * * * * * cd /home/$USER/src/bitwarden_rs/target/release ./bitwarden_rs >> /var/log/bitwarden_rs.log 2>&1
 # Vuurmuur - start as daemon
