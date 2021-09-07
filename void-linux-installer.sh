@@ -88,14 +88,10 @@
 # void-live-x86_64-musl-20191109.iso: OK                                                                                       
 #                                                                                        
 # Install void-live-x86_64-musl-20191109.iso to CD/usb                                   
-#                                                                                                                                                                               #
+#
 # Note: fdisk can format iso9660/HYBRID USB                                              
 #     : rufus - creates one partition -> /run/initramfs/live/data-is-here                
-#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)
-#                                                                                                                                                                              #
-# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  
-# create ramfs: mount -t ramfs ramfs /opt                                                
-#               cp -R /run/initramfs/live/data-is-here /opt                              
+#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)                              
 ##########################################################################################
 # base-voidstrap
 # base-files ncurses coreutils findutils diffutils
