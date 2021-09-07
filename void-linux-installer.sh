@@ -1,26 +1,7 @@
 #!/bin/bash
-########################################################################
-############################# CAUTION ##################################
-# After partially updating, void linux was no longer useable due to what appeared to be corruption
-# Most files became inaccessible, permissions were all '?' filenames were ok.
-# After using ddrescue to create image - files still had corrupted? permissions
-# The strange part is after mounting the image again at a later date all files are accessible.
-#
-########################################################################
-############################## WARNING #################################
-########################################################################
-## Grub will overwrite the mbr of an aleady installed operating system 
-## even if it's on a separate hard drive requiring Windows 10 to be re-installed
-##
-## Windows 10 will install efi and recovery data onto secondary (efi) hardrive (includes mSata) 
-## 
-## OSX 'finder' can truncate filenames (fat-32) , renaming will error filename already exists
-## Need to rename with 'Terminal.app'
-##
-## Using 'mv' with mergerfs mountpoint may fail to move all files (use rsync to clean up) 
-########################################################################
-########################################################################
-# References
+##################################
+########### References ###########
+##################################
 # https://voidlinux.org
 # http://www.troubleshooters.com/linux/void/index.htm
 # https://alkusin.net/voidlinux/
@@ -45,8 +26,9 @@
 # https://nlnetlabs.nl/documentation/unbound
 # https://www.funtoo.org/Keychain
 # http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, Ubuntu Linux
-#
-# ### symlink managers ###
+##############################
+###### Symlink Managers ######
+##############################
 # https://github.com/anishathalye/dotbot
 # https://github.com/lra/mackup
 # https://github.com/kairichard/lace
@@ -55,78 +37,65 @@
 # https://gitlab.com/semente/summon
 # https://www.gnu.org/software/stow
 # https://www.chezmoi.io
-# ***************************
-# Hide/Unhide Terminal Cursor 
+###################################
+### Hide/Unhide Terminal Cursor ###
+###################################
 # echo -en "\e[?25h" # unhide
 # tput civis # hide
 # tput cnorm # unhide
-# ***************************
+###################################
 #
-#
-# Notes:
-# Tested on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
-# void-live-x86_64-musl-20191109.iso burnt to CD & USB
-#
-# IMPORTANT : Microsoft Windows switches to Nvidia Optimus mode if enabled
+#      Notes: Void Linux is running on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
+#           : Microsoft Windows switches to Nvidia Optimus mode if enabled
 #           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
 #           : Firefox is slow (10s) to start if /etc/hosts is incorrect (default hosts starts firefox ~5sec)
+#           : if audio stops working restart Firefox
 #           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
 #           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
-#           : eSATA (powered enclosure - usb not needed) on T420 - place the folowing in bash script (rescan-scsi-bus.sh didn't work)
+#           : For eSATA to work on T420 (tested with powered enclosure - usb not needed) place the folowing in bash script (rescan-scsi-bus.sh didn't work)
 #             "for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done"
-#           : 'doas' is used instead of 'sudo'(can install as dependency) 
-#
-# void ncurses installer is problematic - it may work or fail trying to format
-# Updating Live CD kernel will result in "[*]" as an option to install
-# /home/$user/.asoundrc - increases volume
-# efibootmgr default label "Void Linux With Kernel 5.7"
-# ATAPI CD0 = HL-DT-STDVDRAM GT33N
-# efifb: mode is 640x480x32
-# Not Required : kernel .efi extension
-#              : efivarfs  /sys/firmware/efi/efivars efivarfs  0 0 >> /mnt/etc/fstab
-# 
-# Nilfs bug - tries to mount / partition twice >> drops to emergency shell
-# Need to 'exit' twice to continue booting and 'enter' to display login prompt
-#
-# Bash script buffquote initially only showed the first quote in bash (RANDOM couldn't be found)
-# due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
-##########################################################################################
-##########################################################################################
-####                      Preparatory Instructions                                    ####
-##########################################################################################
-# Void Linux repository = ~1TB                                                           #
-#                                                                                        #
-# #### Verify image ####                                                                 #
-# https://alpha.de.repo.voidlinux.org/live/current                                       #
-# xbps-install void-release-keys signify                                                 #
-#                                                                                        #
-# sha256sum -c --ignore-missing sha256.txt                                               #
-# void-live-x86_64-musl-20191109.iso: OK                                                 #
-#                                                                                        #
-# signify -C -p /etc/signify/void-release-20191109.pub -x sha256.sig void-live-x86_64-musl-20191109.iso #
-# Signature Verified                                                                     #
-# void-live-x86_64-musl-20191109.iso: OK                                                 #                                      #
-#                                                                                        #
-#                                                                                        #
-# Install void-live-x86_64-musl-20191109.iso to usb drive                                #
-#                                                                                        #                                                                                       #
-# Note: fdisk can format iso9660/HYBRID USB                                              #
-#     : rufus - creates one partition -> /run/initramfs/live/data-is-here                #
-#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition) #
-#                                                                                        #                                                                                      #
-# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  #
-# create ramfs: mount -t ramfs ramfs /opt                                                #
-#               cp -R /run/initramfs/live/data-is-here /opt                              #
-##########################################################################################
-#################### WARNING #############################################################
-##########################################################################################
-# Use UUID if using multiple drives - SATA has priority over USB 
-# efibootmgr --disk defaults to /dev/sda
-# efibootmgr-kernel-hook
-# Replace OPTIONS=root="/dev/sda"
-# with 
-# OPTIONS=root="UUID=$rootuuid" 
-##########################################################################################
+#           : 'doas' is used instead of 'sudo'(can install as dependency)
+#           : Using 'mv' via mergerfs mountpoint may fail to move all files (use rsync to clean up)
+#           : Grub will overwrite the mbr of an aleady installed operating system even if it's on a separate hard drive
+#           : Windows 10 will install efi and recovery data onto secondary hardrive
+#           : Updating Live CD kernel will result in "[*]" as an option to install
+#           : OSX 'finder' can truncate filenames on fat-32, trying to rename will error filename already exists. Need to rename via Terminal
+#           : void ncurses installer is problematic - it may work or fail trying to format
+#           : /home/$user/.asoundrc - increases volume
+#           : efibootmgr default label "Void Linux With Kernel 5.7"
+#           : ATAPI CD0 = HL-DT-STDVDRAM GT33N
+#           : efifb: mode is 640x480x32
+#           : alsa-utils >>> alsamixer is required to un-mute
+#           : intel-ucode - dracut default is to include which makes early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf redundant
+#           : Not Required : kernel .efi extension
+#                          : efivarfs  /sys/firmware/efi/efivars efivarfs  0 0 >> /mnt/etc/fstab
+#           : Nilfs causes '/' to mount twice >> drops to emergency shell Need to 'exit' twice to continue booting and 'enter' to display login prompt
+#           : Bash script buffquote initially only showed the first quote in bash as RANDOM couldn't be found due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
+######################################################################################
+############################## Preparatory Instructions ##############################
+######################################################################################
+# Void Linux repository = ~1TB                                                           
+#                                                                                        
+# #### Verify image ####                                                                 
+# https://alpha.de.repo.voidlinux.org/live/current                                       
+# xbps-install void-release-keys signify                                                 
+#                                                                                        
+# sha256sum -c --ignore-missing sha256.txt                                               
+# void-live-x86_64-musl-20191109.iso: OK                                                 
+#                                                                                         
+# signify -C -p /etc/signify/void-release-20191109.pub -x sha256.sig void-live-x86_64-musl-20191109.iso
+# Signature Verified                                                                     
+# void-live-x86_64-musl-20191109.iso: OK                                                                                       
+#                                                                                        
+# Install void-live-x86_64-musl-20191109.iso to CD/usb                                   
+#                                                                                                                                                                               #
+# Note: fdisk can format iso9660/HYBRID USB                                              
+#     : rufus - creates one partition -> /run/initramfs/live/data-is-here                
+#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)
+#                                                                                                                                                                              #
+# Use ram to store repo (xbps errors /run/initramfs/live/ not writable)                  
+# create ramfs: mount -t ramfs ramfs /opt                                                
+#               cp -R /run/initramfs/live/data-is-here /opt                              
 ##########################################################################################
 # base-voidstrap
 # base-files ncurses coreutils findutils diffutils
@@ -175,26 +144,9 @@
 # attr-progs - Extended attributes # getfattr,setfattr
 # imgcat - https://github.com/danielgatis/imgcat/releases/download/v1.0.8/imgcat_1.0.8_Linux_x86_64.tar.gz # Binary works
 #        - https://github.com/eddieantonio/imgcat # failed to compile
-# ----------
-# Blank screen 1m turn off 2m
-# setterm --blank 1 --powerdown 2
-# -------------------------------
-# [!] IMPORTANT [!] alsa-utils >>> alsamixer is required to un-mute 
-# alsamixer - changes volume in drivers - gui AlsaMixer.app  
-# intel-ucode - dracut default is to include
-# early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf seems redundant
-# intel-ucode failed to install (efibootmgr was installed, strangely no pkg in cache)
-# if audio stops working in VLC/Firefox restart Firefox
-#################################################################
-# SSHFS
-# xbps-install fuse-sshfs
-# sshfs user@server:/ /mnt/server
-# /etc/fstab
-# sshfs#$USER@$SERVER:/mnt/storage /home/user/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
-# Note: unable to get nfs or autofs to work (void client > void server)
-#################################################################
-##################  Siren Music Player ##########################
-#################################################################
+##################################################################
+####################### Siren Music Player #######################
+##################################################################
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
 # git clone https://github.com/tbvdm/siren.git
@@ -212,9 +164,9 @@
 #
 # ~/.siren/config
 # set active-fg blue # foreground
-##################################################################
-############ Vuurmuur Firewall ###################################
-##################################################################
+#################################################################
+####################### Vuurmuur Firewall #######################
+#################################################################
 # https://www.vuurmuur.org
 # https://github.com/inliniac/vuurmuur/releases/download/0.8/vuurmuur-0.8.tar.gz
 # ./configure && make && make install 
@@ -231,7 +183,7 @@
 #                           >>> lan-nic enp0s25 192.168.1.XX
 #             >>> Vuurmuur Config >>> Interfaces >>> uncheck dynamic interfaces for changes
 ###########################################################################################
-############################# Bitwarden - Vaultwarden(Bitwarden_rs) ####################################
+########################## Bitwarden - Vaultwarden(Bitwarden_rs) ##########################
 ###########################################################################################
 # https://bitwarden.com
 # ---------- Extract Vaultwarden binary and Web-vault from docker image ------------------
@@ -328,6 +280,13 @@
 # 2021/07/25 22:28:56.270    WARN    failed using API to stop instance    {"error": "performing request: Post \"http://localhost:2019/stop\": dial tcp [::1]:2019: connect: connection refused"}
 # stop: performing request: Post "http://localhost:2019/stop": dial tcp [::1]:2019: connect: connection refused
 ##############################################################################
+# SSHFS
+# xbps-install fuse-sshfs
+# sshfs user@server:/ /mnt/server
+# /etc/fstab
+# sshfs#$USER@$SERVER:/mnt/storage /home/user/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
+# Note: unable to get nfs or autofs to work (void client > void server)
+#################################################################
 # Alock (Pauses dunst notifications)
 # xbps-install automake imlib2-devel pam-devel libgcrypt-devel libXrender-devel
 # git clone https://github.com/Arkq/alock.git
@@ -387,9 +346,9 @@
 # http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz
 # Firefox requires: "noto-fonts-cjk" (Not required for Chromium)
 #                 : ~/.config/fontconfig/fonts.conf
-##################################################################
-##################### Encrypt $USERS $HOME #######################
-##################################################################
+###################################################################
+####################### Encrypt USERS $HOME #######################
+###################################################################
 # xbps-install gocryptfs pam-mount
 # Stop $USER processess & logout then login as root
 # mv /home/$USER /home/$USER.old
@@ -450,7 +409,6 @@
 # ---------------
 # Note: mopidy needs output server mpd,snapcast 
 #     : scan notification appears to never end
-#
 #######################################
 # Nohang - prevent out of memory 
 # git clone https://github.com/hakavlad/nohang.git
@@ -460,7 +418,6 @@
 # Spacemacs
 # xbps-install emacs-x11
 # git clone -b develop https://github.com/syl20bnr/spacemacs ~/.emacs.d
-#######################################
 #######################################
 # =====================================
 # [!] IMPORTANT - POST INSTALLATION [!]
@@ -563,10 +520,12 @@
 #        simple-scan >> 2400dpi
 #        skanlite >> 9600dpi
 # ----------------------------
-
-########################################
-################ Email #################
-########################################
+# Blank screen 1m turn off 2m
+# setterm --blank 1 --powerdown 2
+# -------------------------------
+#########################################
+################# Email #################
+#########################################
 # xbps-install isync notmuch afew astroid aerc
 # ----------------------
 # Mbsync
@@ -674,6 +633,7 @@
 # xhost -si:localuser:root # remove user
 # -------------
 # doas env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY gparted
+##################################################################
 ##################################################################
 # exit on error 
 set -e
