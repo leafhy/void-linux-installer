@@ -1025,7 +1025,7 @@ wifipassword=""
 openresolv="YES" # any other value if not used
 ### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
-### nameserver1..2 is for /etc/resolv.conf
+### nameserver1..2 is for /etc/resolv.conf..resolvconf.conf
 # Cloudflare # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
 nameserver2="1.1.1.1"   
@@ -1035,12 +1035,12 @@ nameserver2="1.1.1.1"
 ### Use this if packages have already been downloaded
 # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
 # xbps-install --repository $repopath 
-repopath="/opt"
+repopath=""
   
 ### Save packages to somewhere other then live disk
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
 # xbps-install --repository $cachedir
-cachedir=""
+cachedir="/opt"
   
 ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
 # xbps-install --repository $repo0
@@ -1226,7 +1226,7 @@ echo '****************************************'
 # Generate drive options dynamically
 PS3="Select drive to format: "
 echo ''
-# use sed to remove 'p' and the single partition number: 
+# sed removes 'p' and the single partition number: 
 # mmcblk0p1 >> mmcblk01 >> mmcblk0
 # sda1 >> sda
 select device in $(blkid | grep -e sd -e mmcblk0 | cut -d : -f 1 | sed -e 's/\p//g' -e 's/[1-9]\+$//' | uniq | sort)
@@ -1396,10 +1396,6 @@ if [[ $device = /dev/mmcblk0 ]]; then
    mount ${device}2 /mnt
 fi
 
-for dir in dev proc sys boot; do
-  mkdir /mnt/${dir}
-done
-
 if [[ $UEFI ]]; then
      mkdir -p /mnt/boot/efi
      else
@@ -1414,6 +1410,10 @@ if [[ $device = /dev/mmcblk0 ]]; then
 fi
 
 # Create Chroot Gaol
+for dir in dev proc sys boot; do
+  mkdir /mnt/${dir}
+done
+
 for fs in dev proc sys; do
   mount -o bind /$fs /mnt/$fs
 done
