@@ -1108,16 +1108,10 @@ done
 
 pkg_list="$pkg_list $kernel"
 
-# Option to select the file system type to format partitions
 echo ''
 echo '************************************'
 echo '**** FILE SYSTEM TYPE SELECTION ****'
 echo '************************************'
-echo ''
-echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
-echo 'Nilfs2 on '/' will error on every boot'
-echo 'Need to 'exit' twice to continue'
-echo '**************************************'
 echo ''
 echo '[!] Retry if valid selection fails [!]'
 echo ''
