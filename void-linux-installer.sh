@@ -45,32 +45,32 @@
 # tput cnorm # unhide
 ###################################
 #
-#      Notes: Void Linux is running on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
-#           : Microsoft Windows switches to Nvidia Optimus mode if enabled
-#           : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
-#           : Firefox is slow (10s) to start if /etc/hosts is incorrect (default hosts starts firefox ~5sec)
-#           : if audio stops working restart Firefox
-#           : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
-#           : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
-#           : For eSATA to work on T420 (tested with powered enclosure - usb not needed) place the folowing in bash script (rescan-scsi-bus.sh didn't work)
-#             "for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done"
-#           : 'doas' is used instead of 'sudo'(can install as dependency)
-#           : Using 'mv' via mergerfs mountpoint may fail to move all files (use rsync to clean up)
-#           : Grub will overwrite the mbr of an aleady installed operating system even if it's on a separate hard drive
-#           : Windows 10 will install efi and recovery data onto secondary hardrive
-#           : Updating Live CD kernel will result in "[*]" as an option to install
-#           : OSX 'finder' can truncate filenames on fat-32, trying to rename will error filename already exists. Need to rename via Terminal
-#           : void ncurses installer is problematic - it may work or fail trying to format
-#           : /home/$user/.asoundrc - increases volume
-#           : efibootmgr default label "Void Linux With Kernel 5.7"
-#           : ATAPI CD0 = HL-DT-STDVDRAM GT33N
-#           : efifb: mode is 640x480x32
-#           : alsa-utils >>> alsamixer is required to un-mute
-#           : intel-ucode - dracut default is to include which makes early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf redundant
-#           : Not Required : kernel .efi extension
-#                          : efivarfs  /sys/firmware/efi/efivars efivarfs  0 0 >> /mnt/etc/fstab
-#           : Nilfs causes '/' to mount twice >> drops to emergency shell Need to 'exit' twice to continue booting and 'enter' to display login prompt
-#           : Bash script buffquote initially only showed the first quote in bash as RANDOM couldn't be found due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
+#    Notes: Void Linux is running on Lenovo Thinkpad T420 in EFI only mode with "Dogfish 128GB" mSATA
+#         : Microsoft Windows switches to Nvidia Optimus mode if enabled
+#         : Nvidia Optimus prevents external monitor (display port) from working, Need to set bios to use "discrete"
+#         : Firefox is slow (10s) to start if /etc/hosts is incorrect (default hosts starts firefox ~5sec)
+#         : if audio stops working restart Firefox
+#         : Need to disable bitmap fonts "ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/" or create ~/.config/fonts.conf so Firefox can use other fonts
+#         : Bluetooth(bluez) - Can be slow to detect device - pairs ok - connects and imediately disconnects - bluetooth audio not tested
+#         : For eSATA to work on T420 (tested with powered enclosure - usb not needed) place the folowing in bash script (rescan-scsi-bus.sh didn't work)
+#           "for i in `ls /sys/class/scsi_host/`; do echo "- - -" > /sys/class/scsi_host/$i/scan; done"
+#         : 'doas' is used instead of 'sudo'(can install as dependency)
+#         : Using 'mv' via mergerfs mountpoint may fail to move all files (use rsync to clean up)
+#         : Grub will overwrite the mbr of an aleady installed operating system even if it's on a separate hard drive
+#         : Windows 10 will install efi and recovery data onto secondary hardrive
+#         : Updating Live CD kernel will result in "[*]" as an option to install
+#         : OSX 'finder' can truncate filenames on fat-32, trying to rename will error filename already exists. Need to rename via Terminal
+#         : void ncurses installer is problematic - it may work or fail trying to format
+#         : /home/$user/.asoundrc - increases volume
+#         : efibootmgr default label "Void Linux With Kernel 5.7"
+#         : ATAPI CD0 = HL-DT-STDVDRAM GT33N
+#         : efifb: mode is 640x480x32
+#         : alsa-utils >>> alsamixer is required to un-mute
+#         : intel-ucode - dracut default is to include which makes early_microcode=yes >> /etc/dracut.conf.d/intel_ucode.conf redundant
+#         : Not Required : kernel .efi extension
+#                        : efivarfs  /sys/firmware/efi/efivars efivarfs  0 0 >> /mnt/etc/fstab
+#         : Nilfs causes '/' to mount twice >> drops to emergency shell Need to 'exit' twice to continue booting and 'enter' to display login prompt
+#         : Bash script buffquote initially only showed the first quote in bash as RANDOM couldn't be found due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
 ######################################################################################
 ############################## Preparatory Instructions ##############################
 ######################################################################################
