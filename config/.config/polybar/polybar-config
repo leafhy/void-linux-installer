@@ -563,7 +563,8 @@ format-background = ${colors.background}
 label-open = "襤 "
 label-close = "| " 
 label-close-foreground = ${colors.foreground}
-label-separator = " | "
+; "space" allows icons to fit display of 1366x768
+label-separator = "  "
 label-separator-foreground = ${colors.foreground}
 
 ;; reboot
