@@ -118,7 +118,6 @@
 # thinkfan - set fan temp thresholds
 # mdocml=mandoc outputs man pages
 # autox - caused login to loop switching monitor off & on (herbstluftwm)
-# adom - installs ARM on x86_64 - has been removed from repo
 # iwd - includes dhcp
 # unbound - will not start if interface is wrong
 # zathura - mupdf,poppler,djvu,epub (mupdf stand alone is faster)
@@ -281,7 +280,14 @@
 # sshfs user@server:/ /mnt/server
 # /etc/fstab
 # sshfs#$USER@$SERVER:/mnt/storage /home/user/server fuse reconnect,_netdev,idmap=user,delay_connect,defaults,allow_other 0 0
-# Note: unable to get nfs or autofs to work (void client > void server)
+#################################################################
+# NFS Mount
+# /etc/exports
+# /path/here 'ip of OSX'(insecure,rw,sync,no_root_squash)
+# exportfs -a
+# mount -t nfs 192.168.1.4:/path /Users/$USER/mountpoint # OSX
+# Note: make sure permissions are correct or 'finder' will not not write
+#     : unable to get nfs or autofs to work (void client > void server)
 #################################################################
 # Alock (Pauses dunst notifications)
 # xbps-install automake imlib2-devel pam-devel libgcrypt-devel libXrender-devel
@@ -466,26 +472,19 @@
 # [Network]
 # NameResolvingService=resolvconf
 # ------------
-# openresolv
+# Openresolv
 # /etc/resolvconf.conf
 # name_servers=127.0.0.1 # default
 # resolv_conf_options=edns0
 # ---------------
 # resolvconf -u # updates /etc/resolv.conf
 # --------------------
-# NFS Mount
-# /etc/exports
-# /path/here 'ip of OSX'(insecure,rw,sync,no_root_squash)
-# --------------------
-# exportfs -a
-# mount -t nfs 192.168.1.4:/path /Users/$USER/mountpoint # OSX
-# Note: make sure permissions are correct or 'finder' will not not write
-# ---------------------
-# mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
+# Mpv
 # mpv --audio-device=sndio video.mkv
 # .config/mpv/mpv.conf
 # audio-device=sndio
-# IMPORTANT: mpv will run slowly if mpv.conf is missing
+# Notes: mpv will run slowly if mpv.conf is missing
+#      : mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
 # ---------------------------
 # OpenAL
 # cp /usr/share/examples/libopenal/alsoftrc.sample ~/.alsoftrc
