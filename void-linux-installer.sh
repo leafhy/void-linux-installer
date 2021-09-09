@@ -709,6 +709,7 @@ pkg_listsys='base-minimal'\
 ' gptfdisk'\
 ' unzip'\
 ' unrar'\
+' zstd'\
 ' ranger'\
 ' font-tamsyn'\
 ' starship'\
