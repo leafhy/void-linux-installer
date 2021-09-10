@@ -73,23 +73,30 @@
 #         : Bash script buffquote initially only showed the first quote in bash as RANDOM couldn't be found due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
 ######################################################################################
 ############################## Preparatory Instructions ##############################
-######################################################################################
-# Void Linux repository = ~1TB                                                           
-#                                                                                        
-# #### Verify image ####                                                                 
-# https://alpha.de.repo.voidlinux.org/live/current                                       
-# xbps-install void-release-keys signify                                                 
-#                                                                                        
-# sha256sum -c --ignore-missing sha256.txt                                               
-# void-live-x86_64-musl-20191109.iso: OK                                                 
-#                                                                                         
-# signify -C -p /etc/signify/void-release-20191109.pub -x sha256.sig void-live-x86_64-musl-20191109.iso
-# Signature Verified                                                                     
-# void-live-x86_64-musl-20191109.iso: OK                                                                                       
-#                                                                                        
-# Install void-live-x86_64-musl-20191109.iso to CD/usb                                   
+######################################################################################                                                            
+### Download ###
+# wget https://ftp.swin.edu.au/voidlinux/live/current/sha256sum.sig
+#      https://alpha.de.repo.voidlinux.org/live/current/sha256sum.sig
 #
-# Note: fdisk can format iso9660/HYBRID USB                                              
+# wget https://ftp.swin.edu.au/voidlinux/live/current/sha256sum.txt
+#      https://alpha.de.repo.voidlinux.org/live/current/sha256sum.txt
+#
+# wget https://ftp.swin.edu.au/voidlinux/live/current/void-live-x86_64-musl-20210218.iso
+#      https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20210218.iso
+#
+### Verify image ###                                                                 
+# xbps-install void-release-keys signify                                                 
+# sha256sum -c --ignore-missing sha256sum.txt                                               
+# void-live-x86_64-musl-20210218.iso: OK                                                 
+#                                                                                         
+# signify -C -p /etc/signify/void-release-20210218.pub -x sha256sum.sig void-live-x86_64-musl-20210218.iso
+# Signature Verified                                                                     
+# void-live-x86_64-musl-20210218.iso: OK                                                                                       
+#                                                                                        
+# Install void-live-x86_64-musl-20210218.iso to CD/usb                                   
+#
+# Note: Void Linux repository = ~1TB
+#     : fdisk can format iso9660/HYBRID USB                                              
 #     : rufus - creates one partition -> /run/initramfs/live/data-is-here                
 #     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)                              
 ##########################################################################################
@@ -655,7 +662,9 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 
 # System Packages
 pkg_listsys='base-minimal'\
-' void-repo-nonfree'
+' void-repo-nonfree'\
+' void-release-keys'\
+' signify'
 
 # Common Packages
   pkg_listc='aria2'\
@@ -998,8 +1007,8 @@ cachedir="/opt"
   
 ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
 # xbps-install --repository $repo0
-repo0="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl"
-repo1="https://ftp.swin.edu.au/voidlinux/current/musl"
+repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
+repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl" # connection tends to be flaky
 repo2="http://alpha.de.repo.voidlinux.org/current/musl"
 
 ###########################################
