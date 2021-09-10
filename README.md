@@ -13,7 +13,7 @@ This repo is my complete? setup for Void Linux.
 This partially interarctive bash script is setup to install Void Linux for Desktop or Server (headless).
 
 ### Requirement (glibc version not tested)
-[void-live-x86_64-musl-20191109.iso](https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20191109.iso)
+[void-live-x86_64-musl-20210218.iso](https://ftp.swin.edu.au/voidlinux/live/current/void-live-x86_64-musl-20210218.iso)
 
 ### Install dotfiles manually or use [summon](https://gitlab.com/semente/summon)
 ```
