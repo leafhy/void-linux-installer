@@ -986,7 +986,7 @@ gateway="192.168.1.1"
 wifipassword=""
 ### use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
 openresolv="YES" # any other value if not used
-### nameserver0 is for unbound & dnscrypt-proxy (not needed if using openresolv)		
+### nameserver0 is for dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
 ### nameserver1..2 is for /etc/resolv.conf..resolvconf.conf
 # Cloudflare # Google "8.8.4.4" "8.8.8.8"
