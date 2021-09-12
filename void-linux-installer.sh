@@ -992,6 +992,7 @@ nameserver0="127.0.0.1"
 # Cloudflare # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
 nameserver2="1.1.1.1"   
+
 ######################
 ##### Repository #####
 ######################
@@ -1077,17 +1078,17 @@ fi
 # Detect if we're in UEFI or legacy mode
 [[ -d /sys/firmware/efi ]] && UEFI=1
 if [[ $UEFI ]]; then
-  pkg_list="$pkg_list efibootmgr"
+pkg_list="$pkg_list efibootmgr"
 fi
 
 # Detect if we're on an Intel system
 cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
 if [[ $cpu_vendor = GenuineIntel ]]; then
-  pkg_list="$pkg_list intel-ucode"
+pkg_list="$pkg_list intel-ucode"
 fi
 
 if [[ $openresolv = YES ]]; then
-  pkg_list="$pkg_list openresolv"
+pkg_list="$pkg_list openresolv"
 fi
 
 echo '**********************************'
@@ -1273,10 +1274,10 @@ clear
 # Format filesystems
 # fat-32
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
-     mkfs.vfat -F 32 -n EFI ${device}p1
+mkfs.vfat -F 32 -n EFI ${device}p1
    
-   elif [[ $device != /dev/mmcblk0 ]]; then
-     mkfs.vfat -F 32 -n $labelfat ${device}1
+elif [[ $device != /dev/mmcblk0 ]]; then
+mkfs.vfat -F 32 -n $labelfat ${device}1
 fi
 
 # ${fsys1} -f -L
@@ -1284,19 +1285,19 @@ fi
 # xfs
 # nilfs2
 if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
-     mkfs.$fsys1 -f -L $labelroot ${device}p2
+mkfs.$fsys1 -f -L $labelroot ${device}p2
    
-   elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
-     mkfs.$fsys1 -f -L $labelroot ${device}2
+elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
+mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
 
 # ${fsys2} -F -L
 # ext4 
 if [[ $fsys2 && $device = /dev/mmcblk0 ]]; then
-     mkfs.$fsys2 -F -L $labelroot ${device}p2
+mkfs.$fsys2 -F -L $labelroot ${device}p2
    
-   elif [[ $fsys2 && $device != /dev/mmcblk0 ]]; then
-     mkfs.$fsys2 -F -L $labelroot ${device}2
+elif [[ $fsys2 && $device != /dev/mmcblk0 ]]; then
+mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
 if [[ $fsys3 ]]; then
@@ -1312,7 +1313,7 @@ echo "       | compression unknown option"
 echo "       | keyboard momentarily stopped working (casefold was used)"
 
 PS3='Select f2fs options to use: '
- select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
+select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
     case $opts in
     'Encrypt')
       fsys3="$fsys3 -O encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
@@ -1339,40 +1340,40 @@ fi
 # ${fsys3} -f -l
 # f2fs  
 if [[ $fsys3 && $device = /dev/mmcblk0 ]]; then
-     mkfs.$fsys3 -f -l $labelroot ${device}p2
+mkfs.$fsys3 -f -l $labelroot ${device}p2
    
-   elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
-     mkfs.$fsys3 -f -l $labelroot ${device}2
+elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
+mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
 
 # Mount them
 if [[ $device = /dev/mmcblk0 ]]; then
-     mount ${device}p2 /mnt
-   
-   elif [[ $device != /dev/mmcblk0 ]]; then 
-   mount ${device}2 /mnt
+mount ${device}p2 /mnt
+
+elif [[ $device != /dev/mmcblk0 ]]; then 
+mount ${device}2 /mnt
 fi
 
 if [[ $UEFI ]]; then
-     mkdir -p /mnt/boot/efi
-     else
-     echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"  
+mkdir -p /mnt/boot/efi
+else
+echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"  
 fi
 
 if [[ $device = /dev/mmcblk0 ]]; then
-     mount ${device}p1 /mnt/boot/efi
-  
-  elif [[ $device != /dev/mmcblk0 ]]; then
-     mount ${device}1 /mnt/boot/efi
+mount ${device}p1 /mnt/boot/efi
+
+elif [[ $device != /dev/mmcblk0 ]]; then
+mount ${device}1 /mnt/boot/efi
 fi
 
 # Create Chroot Gaol
 for dir in dev proc sys boot; do
-  mkdir /mnt/${dir}
+ mkdir /mnt/${dir}
 done
 
 for fs in dev proc sys; do
-  mount -o bind /$fs /mnt/$fs
+ mount -o bind /$fs /mnt/$fs
 done
 
 # Alternative mount options 
@@ -1420,7 +1421,7 @@ cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
 
 # Activate services
 for srv in $services; do
-chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
+ chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
 # Get / UUID
@@ -1452,9 +1453,10 @@ fi
 
 # Add fstab entries
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
-     echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
-   elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
-     echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
+echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
+
+elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
+echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
 fi
 # echo "LABEL=root  /       ext4    rw,relatime,data=ordered,discard    0 0" > /mnt/etc/fstab
 # echo "LABEL=boot  /boot   ext4    rw,relatime,data=ordered,discard    0 0" >> /mnt/etc/fstab
@@ -1591,7 +1593,7 @@ fi
 
 # Create $HOME directories
 for dire in $dirs; do
-chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
+ chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
 done
 
 clear
@@ -1618,14 +1620,14 @@ echo ''
 read -n 1 -p "[ U \ E \ R \ P ]: " ans
 # Chroot may fail to unmount hence -l
 case $ans in
-    r|R)
-        umount -l -R /mnt && reboot;;
-    p|P)
-        umount -l -R /mnt && poweroff;;
-    e|E)
-        exit;;
-    u|U)
-       umount -l -R /mnt && exit  
+   r|R)
+      umount -l -R /mnt && reboot;;
+   p|P)
+      umount -l -R /mnt && poweroff;;
+   e|E)
+      exit;;
+   u|U)
+      umount -l -R /mnt && exit  
 esac
 
 #########################
