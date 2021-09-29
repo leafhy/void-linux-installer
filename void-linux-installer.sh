@@ -1462,12 +1462,17 @@ fi
 # echo "LABEL=boot  /boot   ext4    rw,relatime,data=ordered,discard    0 0" >> /mnt/etc/fstab
 
 if [[ $fsys3 ]]; then
-# disable fsck.f2fs otherwise boot fails
+echo "# disable fsck.f2fs otherwise boot fails" >> /mnt/etc/fstab
 echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
 else
 echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab 
 fi
 # echo "tmpfs           /tmp    tmpfs   size=1G,noexec,nodev,nosuid     0 0" >> /mnt/etc/fstab
+
+if [[ username = $usernamesrv ]]; then
+echo "/mnt/data/* /mnt/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0"
+echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0"
+fi
 
 # Add borg backup to /etc/fstab
 echo "/mnt/void-backup/borg /mnt/backup fuse.borgfs defaults,noauto,user,uid=1000,allow_other 0 0" >> /mnt/etc/fstab
