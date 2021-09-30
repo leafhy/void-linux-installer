@@ -26,6 +26,9 @@
 # https://nlnetlabs.nl/documentation/unbound
 # https://www.funtoo.org/Keychain
 # http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, Ubuntu Linux
+# http://www.secfs.net/winfsp # mount remote folder on windows # root "\\sshfs.r\user@host/" # home '\\sshfs\user@host"
+# https://github.com/billziss-gh/winfsp
+# https://github.com/billziss-gh/sshfs-win
 ##############################
 ###### Symlink Managers ######
 ##############################
