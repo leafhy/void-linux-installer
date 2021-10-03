@@ -76,7 +76,7 @@
 #         : Bash script buffquote initially only showed the first quote in bash as RANDOM couldn't be found due to /bin/sh -> dash (works in dash) - need to run buffquote with /bin/bash
 ######################################################################################
 ############################## Preparatory Instructions ##############################
-######################################################################################                                                            
+######################################################################################
 ### Download ###
 # wget https://ftp.swin.edu.au/voidlinux/live/current/sha256sum.sig
 #      https://alpha.de.repo.voidlinux.org/live/current/sha256sum.sig
@@ -87,21 +87,21 @@
 # wget https://ftp.swin.edu.au/voidlinux/live/current/void-live-x86_64-musl-20210218.iso
 #      https://alpha.de.repo.voidlinux.org/live/current/void-live-x86_64-musl-20210218.iso
 #
-### Verify image ###                                                                 
-# xbps-install void-release-keys signify                                                 
-# sha256sum -c --ignore-missing sha256sum.txt                                               
-# void-live-x86_64-musl-20210218.iso: OK                                                 
-#                                                                                         
+### Verify image ###
+# xbps-install void-release-keys signify
+# sha256sum -c --ignore-missing sha256sum.txt
+# void-live-x86_64-musl-20210218.iso: OK
+#
 # signify -C -p /etc/signify/void-release-20210218.pub -x sha256sum.sig void-live-x86_64-musl-20210218.iso
-# Signature Verified                                                                     
-# void-live-x86_64-musl-20210218.iso: OK                                                                                       
-#                                                                                        
-# Install void-live-x86_64-musl-20210218.iso to CD/usb                                   
+# Signature Verified
+# void-live-x86_64-musl-20210218.iso: OK
+#
+# Install void-live-x86_64-musl-20210218.iso to CD/usb
 #
 # Note: Void Linux repository = ~1TB
-#     : fdisk can format iso9660/HYBRID USB                                              
-#     : rufus - creates one partition -> /run/initramfs/live/data-is-here                
-#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)                              
+#     : fdisk can format iso9660/HYBRID USB
+#     : rufus - creates one partition -> /run/initramfs/live/data-is-here
+#     : passmark imgUSB - formating free space is not reliable (blkid sometimes fails to detect partition)
 ##########################################################################################
 # base-voidstrap
 # base-files ncurses coreutils findutils diffutils
@@ -252,9 +252,9 @@
 # tls /home/$USER/PATH/TO/cert.crt /home/$USER/PATH/TO/cert.key
 #
 # reverse_proxy 127.0.0.1:8000
-#             
-# log {                              
-#     output file /var/log/caddy.log                                                                                                                                                                                                         
+# 
+# log {
+#     output file /var/log/caddy.log 
 # }
 # :2015 {
 # root * /path/to/blog/
@@ -447,7 +447,7 @@
 # unbound-control-setup # certificates
 # ----------------------------------------
 # Borg Backup
-# Note: see /etc/fstab for borg mounts  
+# Note: see /etc/fstab for borg mounts
 # borg init --encryption=none /mnt/borg-backup::borg
 # ----------------------------------------
 # fcrontab -e
@@ -628,7 +628,7 @@
 # ---------------------
 # Gparted
 # xbps-install gparted polkit-gnome
-# Note: polkit-gnome allows gparted to be started by $USER via icon  
+# Note: polkit-gnome allows gparted to be started by $USER via icon
 #       xhost allows ROOT to open display
 # -------------
 # xhost +si:localuser:root # add user
@@ -994,7 +994,7 @@ nameserver0="127.0.0.1"
 ### nameserver1..2 is for /etc/resolv.conf..resolvconf.conf
 # Cloudflare # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
-nameserver2="1.1.1.1"   
+nameserver2="1.1.1.1" 
 
 ######################
 ##### Repository #####
@@ -1003,12 +1003,12 @@ nameserver2="1.1.1.1"
 # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
 # xbps-install --repository $repopath 
 repopath=""
-  
+
 ### Save packages to somewhere other then live disk
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
 # xbps-install --repository $cachedir
 cachedir="/opt"
-  
+
 ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
 # xbps-install --repository $repo0
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
@@ -1159,8 +1159,8 @@ do
       ;;
     *)
       echo 'This option is invalid.'
-      
-  esac
+
+esac
 done
  
 # /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
@@ -1256,7 +1256,7 @@ fi
   # parted /dev/${DEVNAME} mklabel gpt
   # parted -a optimal /dev/${devname} mkpart primary 2048s 100M
   # parted -a optimal /dev/${devname} mkpart primary 100M 100%
-  
+
 # else
   # parted /dev/${devname} mklabel msdos
   # parted -a optimal /dev/${devname} mkpart primary 2048s 512M
@@ -1278,7 +1278,7 @@ clear
 # fat-32
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
 mkfs.vfat -F 32 -n EFI ${device}p1
-   
+ 
 elif [[ $device != /dev/mmcblk0 ]]; then
 mkfs.vfat -F 32 -n $labelfat ${device}1
 fi
@@ -1289,7 +1289,7 @@ fi
 # nilfs2
 if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
 mkfs.$fsys1 -f -L $labelroot ${device}p2
-   
+
 elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
 mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
@@ -1298,7 +1298,7 @@ fi
 # ext4 
 if [[ $fsys2 && $device = /dev/mmcblk0 ]]; then
 mkfs.$fsys2 -F -L $labelroot ${device}p2
-   
+
 elif [[ $fsys2 && $device != /dev/mmcblk0 ]]; then
 mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
@@ -1335,16 +1335,16 @@ select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
       break
       ;;
 *) echo Try again
-  
+
 esac
 done
 fi
 
 # ${fsys3} -f -l
-# f2fs  
+# f2fs
 if [[ $fsys3 && $device = /dev/mmcblk0 ]]; then
 mkfs.$fsys3 -f -l $labelroot ${device}p2
-   
+ 
 elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
 mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
@@ -1360,7 +1360,7 @@ fi
 if [[ $UEFI ]]; then
 mkdir -p /mnt/boot/efi
 else
-echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"  
+echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
 fi
 
 if [[ $device = /dev/mmcblk0 ]]; then
@@ -1468,9 +1468,9 @@ if [[ $fsys3 ]]; then
 echo "# disable fsck.f2fs otherwise boot fails" >> /mnt/etc/fstab
 echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
 else
-echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab 
+echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab
 fi
-# echo "tmpfs           /tmp    tmpfs   size=1G,noexec,nodev,nosuid     0 0" >> /mnt/etc/fstab
+echo "# tmpfs           /tmp    tmpfs   size=1G,noexec,nodev,nosuid     0 0" >> /mnt/etc/fstab
 
 if [[ username = $usernamesrv ]]; then
 echo "/mnt/data/* /mnt/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0"
@@ -1607,13 +1607,13 @@ done
 clear
  
 echo '**********************************************************'
-echo -e "**** [!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!] ****"
+echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
 echo '**********************************************************'
-echo '**** Resetting BIOS will restore default boot order   ****'
+echo 'Resetting BIOS will restore default boot order'
 echo '**********************************************************'
 efibootmgr -v
 echo '**********************************************************'
-echo -e "************* \x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m *************"
+echo -e "\x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m"
 echo '**********************************************************'
 echo '**********************************************************'
 echo ''
@@ -1635,7 +1635,7 @@ case $ans in
    e|E)
       exit;;
    u|U)
-      umount -l -R /mnt && exit  
+      umount -l -R /mnt && exit
 esac
 
 #########################
