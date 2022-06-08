@@ -19,7 +19,7 @@ killall -q polybar
 killall -q redshift-gtk
 killall -q clipster
 killall -q greenclip
-Killall -q autocutsel
+killall -q autocutsel
 killall -q udiskie
 pgrep -f nohang | xargs kill -9 >/dev/null 2>&1
 
