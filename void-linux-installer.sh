@@ -921,7 +921,7 @@ EOF
 ##################
 usernamesrv="void"
 groupsrv="wheel,storage,cdrom,optical,socklog"
-srv-services="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
+srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
 hostnamesrv="void2"
 
 ### /home/$USER/.bashrc
@@ -1026,7 +1026,7 @@ select opt in "${options[@]}"
 do
 case $opt in
     'Desktop')
-      pkg_list="$pkg_list $pkg_listc"
+      pkg_list="$pkg_list $pkg_listc $pkg_listsys"
       username="$username"
       services="$services"
       groups="$groups"
@@ -1035,9 +1035,9 @@ case $opt in
       break
       ;;
     'Server')
-      pkg_list="$pkg_listsrv $pkg_listc"
+      pkg_list="$pkg_listsrv $pkg_listc $pkg_listsys"
       username="$usernamesrv"
-      services="$srv-services"
+      services="$srvservices"
       groups="$groupsrv"
       hostname="$hostnamesrv"
       bashrc="$bashrcsrv"
@@ -1099,7 +1099,7 @@ echo '**** CHECKING KERNEL VERSIONS ****'
 echo '**********************************'
 # Get currently running kernel version
 kver=$(xbps-query linux | awk '$1 == "pkgver:" { print $2 }' | sed -e 's/linux-//' -e 's/_.*$//')
-echo 'Live CD kernel version $kver'
+echo "Live CD kernel version $kver"
 echo '**************************'
 echo 'Choose a kernel to install'
 echo '**************************'
@@ -1227,6 +1227,8 @@ echo
 # Install Prerequisites to Live USB/Cd
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
+xbps-install -u xbps -R $repopath
+xbps-install -S -R $repopath
 # xbps-install -uy -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 # setting password requires pam
@@ -1234,12 +1236,15 @@ xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
-xbps-rindex *xbps
+xbps-rindex -a *xbps
 xbps-install -S -R $cachedir
 # xbps-install -uy -R $cachedir
+xbps-install -u xbps
 xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
+xbps-install -S
+xbps-install -u xbps
 xbps-install -S
 # xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
 xbps-install -y gptfdisk pam $fstype dosfstools
@@ -1371,7 +1376,7 @@ mount ${device}1 /mnt/boot/efi
 fi
 
 # Create Chroot Gaol
-for dir in dev proc sys boot; do
+for dir in dev proc sys; do
  mkdir /mnt/${dir}
 done
 
@@ -1405,6 +1410,7 @@ xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list
+xbps-install -S
 xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
@@ -1440,7 +1446,7 @@ cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.b
 if [[ $device != /dev/mmcblk0 ]]; then
 tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
 MODIFY_EFI_ENTRIES=1
-OPTIONS=root=UUID="$rootuuid loglevel=4 Page_Poison=1 psi=1"
+OPTIONS="root=UUID=$rootuuid loglevel=4 Page_Poison=1 psi=1"
 DISK="$device"
 PART=1
 EOF
@@ -1569,6 +1575,11 @@ done
 echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
 echo ''
 
+chroot /mnt useradd -g users -G $groups $username
+# Bug? useradd -R /mnt 
+# error: configuration error unknown item 'HOME_MODE' (notify administrator)
+# home directory is still created
+
 while true; do
   passwd -R /mnt $username && break
   echo 'Password did not match. Please try again'
@@ -1576,16 +1587,8 @@ while true; do
   echo ''
 done
 
-chroot /mnt useradd -g users -G $groups $username
-
-# Bug? useradd -R /mnt 
-# error: configuration error unknown item 'HOME_MODE' (notify administrator)
-# home directory is still created
-#
-# group names can vary with distros
-# groups: cdrom=CD
-#         optical=DVD/CD-RW 
-#         storage=removeable
+# Create list of installed packages
+xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
@@ -1608,12 +1611,14 @@ clear
  
 echo '**********************************************************'
 echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
+echo ' Boot entry needs to be towards the top of list otherwise '
+echo '       it will not appear in the boot menu                '
 echo '**********************************************************'
-echo 'Resetting BIOS will restore default boot order'
+echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
 efibootmgr -v
 echo '**********************************************************'
-echo -e "\x1B[1;32m VOID LINUX INSTALL IS COMPLETE \x1B[0m"
+echo -e "\x1B[1;32m [!] VOID LINUX INSTALL IS COMPLETE [!] \x1B[0m"
 echo '**********************************************************'
 echo '**********************************************************'
 echo ''
