@@ -16,7 +16,7 @@ xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --ou
 
 # Terminate already running processes
 killall -q polybar
-killall -q redshift-gtk
+killall -q redshift-gtk && redshift -x
 killall -q clipster
 killall -q greenclip
 killall -q autocutsel
