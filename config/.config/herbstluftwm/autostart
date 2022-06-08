@@ -41,7 +41,7 @@ autocutsel -fork
 autocutsel -selection PRIMARY -fork
 clipster --daemon &
 greenclip daemon &
-nohang --monitor --config /usr/local/etc/nohang/nohang-desktop.conf &
+nohang --monitor --config /usr/local/share/nohang/nohang-desktop.conf &
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -55,17 +55,18 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 
 # Applications
-hc keybind $Mod-Return spawn sakura -m --title sakura "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
+# sakura "Unknown option --title"
+hc keybind $Mod-Return spawn "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 # polybar-msg cmd {hide,show,toggle,quit}
 hc keybind $Mod-Control-t spawn polybar-msg cmd restart
 hc keybind $Mod-n spawn nemo
 hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
-hc keybind $Mod-Control-m spawn sakura --title micro -x micro # rofi opens micro with xterm
-hc keybind $Mod-Control-s spawn sakura --title siren -x "siren -c "$HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
-hc keybind $Mod-Control-g spawn sakura --title glances -x /bin/glances
-hc keybind $Mod-Control-a spawn sakura --title aerc -x aerc
+hc keybind $Mod-Control-m spawn sakura -x micro
+hc keybind $Mod-Control-s spawn sakura -x "siren -c "$HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
+hc keybind $Mod-Control-g spawn sakura -x glances
+hc keybind $Mod-Control-a spawn sakura -x aerc
 
 # herbstluftwm extras > /usr/share/doc/herbstluftwm/examples/
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
