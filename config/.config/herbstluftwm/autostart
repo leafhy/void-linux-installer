@@ -36,9 +36,9 @@ while pgrep -u $UID -x udiskie >/dev/null; do sleep 1; done
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 redshift-gtk &
 udiskie --tray &
-# autocutsel - synchronize CLIPBOARD[default] PRIMARY (-fork Run as a daemon program in the background)
+# autocutsel - synchronize CLIPBOARD[default] with PRIMARY
 autocutsel -fork
-autocutsel -selection PRIMARY -fork
+autocutsel -selection PRIMARY -fork # Run as a daemon program in the background
 clipster --daemon &
 greenclip daemon &
 nohang --monitor --config /usr/local/share/nohang/nohang-desktop.conf &
@@ -55,7 +55,6 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 
 # Applications
-# sakura "Unknown option --title"
 hc keybind $Mod-Return spawn "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 # polybar-msg cmd {hide,show,toggle,quit}
 hc keybind $Mod-Control-t spawn polybar-msg cmd restart
@@ -64,7 +63,7 @@ hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
 hc keybind $Mod-Control-m spawn sakura -x micro
-hc keybind $Mod-Control-s spawn sakura -x "siren -c "$HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
+hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
 hc keybind $Mod-Control-g spawn sakura -x glances
 hc keybind $Mod-Control-a spawn sakura -x aerc
 
@@ -80,7 +79,7 @@ hc keybind $Mod-Control-r spawn rofi -show
 # hc keybind $Mod-Control-r spawn dmenu_extended_run
 # hc keybind $Mod-Control-c spawn rofi -show calc -modi calc -no-show-match -no-sort > /dev/null
 
-# basic movement in tiling and floating mode# focusing clients
+# basic movement in tiling and floating mode # focusing clients
 hc keybind $Mod-Left  focus left
 hc keybind $Mod-Down  focus down
 hc keybind $Mod-Up    focus up
