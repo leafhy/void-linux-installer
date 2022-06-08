@@ -15,7 +15,7 @@
     # anudeepND https://github.com/anudeepND/whitelist
 
 # Add to root fcrontab                                                                        
-# @ 1m cd /etc/unbound/unbound-updater ./unbound-update-blocklist.sh 2>&1
+# @ 1m cd /etc/unbound ./unbound-update-blocklist.sh 2>&1
 # wget --timestamping prevents file renaming ie filename filename.1 filename.2
 
     # Check for sudo
@@ -48,10 +48,10 @@ fi
 
     cat hosts | grep '^0\.0\.0\.0' | awk '{print $2}' > block
     sed '/#/d; /*/d; /^$/d; /^\./d' mybase.txt > mybase
-    touch -a /etc/unbound/blacklist.txt
-    cat block mybase /etc/unbound/blacklist.txt | sort -u > merged
-    touch -a /etc/unbound/whitelist.txt
-    cat whitelist.txt /etc/unbound/whitelist.txt | sort -u > whitelist
+    touch -a blacklist.txt
+    cat block mybase blacklist.txt | sort -u > merged
+    touch -a whitelist.txt
+    cat whitelist.txt whitelist.txt | sort -u > whitelist
     comm -23 merged whitelist > merged_corrected
     
     # Change "/etc/unbound/unbound-blocked.conf" to match the include setting in unbound.conf file
