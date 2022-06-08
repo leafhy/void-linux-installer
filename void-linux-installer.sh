@@ -879,6 +879,7 @@ eval "$(starship init bash)"
 # Python3 pkg path "~/.local/bin"
 # export PATH=".local/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
+export TERMINAL=sakura
 # Weather Check
 alias weather='curl wttr.in/?0'
 alias w="curl wttr.in/~Adelaide"
