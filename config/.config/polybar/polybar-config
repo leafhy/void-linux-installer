@@ -103,8 +103,8 @@ tray-padding =
 ;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
 ;font-2  = siji:pixelsize=10;1
 font-0  = "Iosevka Term SS10:style=Regular:size=10;3" 
-;font-1 = icomoon\-feather:size=10;3
-font-1 = IcoMoon\-Free:size=10;3
+;font-1 = icomoon\\-feather:size=10;3
+font-1 = IcoMoon\\-Free:size=10;3
 font-2 = "NotoEmoji Nerd Font Mono:size=10;2"
 
 #################
