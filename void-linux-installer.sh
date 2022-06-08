@@ -471,6 +471,7 @@
 # Network - WIFI
 # xbps-install iwd openresolv iproute2 
 # sv start iwd
+# iw dev wlan0 scan | grep SSID
 # iwctl --passphrase="password-goes-here" station wlan0 connect "$routerssid"
 # password file >> /var/lib/iwd/routerssid
 # -------------
