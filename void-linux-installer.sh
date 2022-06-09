@@ -1086,7 +1086,10 @@ fi
 # Detect if we're in UEFI or legacy mode
 [[ -d /sys/firmware/efi ]] && UEFI=1
 if [[ $UEFI ]]; then
+echo -e "\x1B[1;92m [!] Found UEFI [!] \x1B[0m"
 pkg_list="$pkg_list efibootmgr"
+else
+echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
 fi
 
 # Detect if we're on an Intel system
@@ -1276,10 +1279,12 @@ fi
 
 # Create GPT partition table
 echo ''
+if [[ $UEFI ]]; then
 sgdisk --zap-all $device
 sgdisk -n 1:2048:550M -t 1:ef00 $device
 sgdisk -n 2:0:0 -t 2:8300 $device
 sgdisk --verify $device
+fi
 echo ''
 
 clear
@@ -1289,7 +1294,7 @@ clear
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
 mkfs.vfat -F 32 -n EFI ${device}p1
  
-elif [[ $device != /dev/mmcblk0 ]]; then
+elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
 mkfs.vfat -F 32 -n $labelfat ${device}1
 fi
 
