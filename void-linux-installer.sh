@@ -730,6 +730,7 @@ pkg_listsys='base-minimal'\
 ' lshw'\
 ' fuse-sshfs'\
 ' borg'\
+' restic'\
 ' ncdu'\
 ' lsscsi'\
 ' lsof'\
