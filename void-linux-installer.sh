@@ -989,30 +989,33 @@ ipstaticwlan0=""
 routerssid=""
 gateway="192.168.1.1"
 wifipassword=""
-### use /etc/resolvconf.conf instead of /etc/resolv.conf - required for iwd (wifi) to access internet
+### openresolv is required for iwd (wifi) to access internet
+# and uses /etc/resolvconf.conf with optional /etc/resolv.conf
 openresolv="YES" # any other value if not used
 ### nameserver0 is for dnscrypt-proxy (not needed if using openresolv)		
 nameserver0="127.0.0.1"
-### nameserver1..2 is for /etc/resolv.conf..resolvconf.conf
-# Cloudflare # Google "8.8.4.4" "8.8.8.8"
+### nameserver{1,2} is for /etc/resolv.conf or resolvconf.conf
+# Cloudflare "1.0.0.1" "1.1.1.1" # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
 nameserver2="1.1.1.1" 
 
 ######################
 ##### Repository #####
 ######################
-### Use this if packages have already been downloaded
-# xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex *xbps
+### Path to packages that have already been downloaded
+# xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps
 # xbps-install --repository $repopath 
 repopath=""
 
-### Save packages to somewhere other then live disk
-# xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex *xbps
+### Save packages to somewhere other then /var/cache/xbps
+# xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
 # xbps-install --repository $cachedir
 cachedir="/opt"
 
 ### Leave repopath & cachedir empty to use default repository /var/cache/xbps
 # xbps-install --repository $repo0
+
+### Repository Urls
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl" # connection tends to be flaky
 repo2="http://alpha.de.repo.voidlinux.org/current/musl"
@@ -1272,12 +1275,12 @@ fi
 # parted /dev/${devname} set 1 boot on
 
 # Create GPT partition table
-echo
+echo ''
 sgdisk --zap-all $device
 sgdisk -n 1:2048:550M -t 1:ef00 $device
 sgdisk -n 2:0:0 -t 2:8300 $device
 sgdisk --verify $device
-echo
+echo ''
 
 clear
 
@@ -1365,6 +1368,7 @@ mount ${device}2 /mnt
 fi
 
 if [[ $UEFI ]]; then
+echo -e "\x1B[1;33m [!] Found UEFI [!] \x1B[0m"
 mkdir -p /mnt/boot/efi
 else
 echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
@@ -1380,10 +1384,7 @@ fi
 # Create Chroot Gaol
 for dir in dev proc sys; do
  mkdir /mnt/${dir}
-done
-
-for fs in dev proc sys; do
- mount -o bind /$fs /mnt/$fs
+ mount -o bind /$dir /mnt/$dir
 done
 
 # Alternative mount options 
@@ -1442,7 +1443,7 @@ rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 |
 # efibootmgr -c -d /dev/sda -p 1 -l '\vmlinuz-5.7.7_1' -L 'Void' initrd=\initramfs-5.7.7_1.img root=/dev/sda2
 cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.bak
 
-# Note: Pressure Stall Information (PSI) not tested
+# Pressure Stall Information (PSI)
 #       Add "psi=1" to enable
 # OPTIONS=root="${device}2" >> boot will fail if OS is on /dev/sdb and /dev/sda is removed
 if [[ $device != /dev/mmcblk0 ]]; then
@@ -1473,7 +1474,7 @@ fi
 # echo "LABEL=boot  /boot   ext4    rw,relatime,data=ordered,discard    0 0" >> /mnt/etc/fstab
 
 if [[ $fsys3 ]]; then
-echo "# disable fsck.f2fs otherwise boot fails" >> /mnt/etc/fstab
+echo "# Boot fails if fsck.f2fs <pass> is enabled" >> /mnt/etc/fstab
 echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
 else
 echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab
@@ -1576,7 +1577,6 @@ done
 
 echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
 echo ''
-
 chroot /mnt useradd -g users -G $groups $username
 # Bug? useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
@@ -1588,9 +1588,6 @@ while true; do
   sleep 3s
   echo ''
 done
-
-# Create list of installed packages
-xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
@@ -1605,8 +1602,8 @@ fi
 # chroot --userspec=$username:users /mnt cp etc/xdg/herbstluftwm/autostart home/$username/.config/herbstluftwm
 
 # Create $HOME directories
-for dire in $dirs; do
- chroot --userspec=$username:users /mnt mkdir -p home/$username/$dire
+for dir in $dirs; do
+ chroot --userspec=$username:users /mnt mkdir -p home/$username/$dir
 done
 
 clear
