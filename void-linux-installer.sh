@@ -1397,7 +1397,6 @@ xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list
-xbps-install -S
 xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
