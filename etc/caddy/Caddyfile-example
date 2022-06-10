@@ -1,6 +1,6 @@
 #$HOSTNAME
-:2016
-tls /home/$USER/.local/certificates/cert.crt /home/$USER/.local/certificates/cert.key
+:2016 {
+tls /etc/caddy/cert.crt /etc/caddy/cert.key
 
 # The negotiation endpoint is also proxied to Rocket
 reverse_proxy /notifications/hub/negotiate 127.0.0.1:2016
@@ -12,4 +12,5 @@ reverse_proxy 127.0.0.1:8000
 
 log {
      output file /var/log/caddy.log
+ }
  }
