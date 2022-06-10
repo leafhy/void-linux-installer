@@ -880,15 +880,12 @@ eval "$(starship init bash)"
 # Rust pkg path ".local/bin"
 # Python3 pkg path "~/.local/bin"
 # export PATH=".local/bin:$PATH"
-export MANPATH="/usr/local/man:$MANPATH"
 export TERMINAL=sakura
 # Weather Check
 alias weather='curl wttr.in/?0'
 alias w="curl wttr.in/~Adelaide"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
-alias bmount='doas /sbin/mount /mnt/backup'
-alias bumount='doas /sbin/umount /mnt/backup'
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
 alias clipsr="clipster --delete"
 alias clipsc="clipster --erase-entire-board"
@@ -947,11 +944,8 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 scripts/buffquote
 eval "$(starship init bash)"
 export PATH="~/.local/bin:$PATH"
-export MANPATH="/usr/local/man:$MANPATH"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
-alias bmount='doas /sbin/mount /mnt/backup'
-alias bumount='doas /sbin/umount /mnt/backup
 EOF
 )"
 
@@ -1038,12 +1032,7 @@ echo '**** Partition Layout : Fat-32 EFI of 550MB ****'
 echo '****                  : / 100%              ****'
 echo '************************************************'
 echo ''
-echo '******************************************'
-echo '[!] Rerun script if xbps-install fails [!]'
-echo '******************************************'
-
 lsblk -f -l | grep -e sd -e mmcblk
-
 echo ''
 echo '****************************************'
 echo '[!] Verify Connected Drive Is Listed [!]'
@@ -1173,13 +1162,13 @@ elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex -a *xbps
-xbps-install -u xbps -R $cachedir
+xbps-install -u -y xbps -R $cachedir
 xbps-install -S -R $cachedir
 xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S
-xbps-install -u xbps
+xbps-install -u -y xbps
 xbps-install -S
 xbps-install -y gptfdisk pam $fstype dosfstools
 fi
@@ -1476,10 +1465,6 @@ if [[ username = $usernamesrv ]]; then
 echo "/Volumes/data* /Volumes/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0" >> /mnt/etc/fstab
 echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0" >> /mnt/etc/fstab
 fi
-
-# Add borg backup to /etc/fstab
-echo "# /Volumes/borg-backup /mnt/backup fuse.borgfs defaults,noauto,user,uid=1000,allow_other 0 0" >> /mnt/etc/fstab
-echo "# tmpfs           /tmp    tmpfs   size=1G,noexec,nodev,nosuid     0 0" >> /mnt/etc/fstab
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
 xbps-reconfigure -fa -r /mnt ${kernel}
