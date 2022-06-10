@@ -1026,6 +1026,64 @@ repo2="http://alpha.de.repo.voidlinux.org/current/musl"
 #### [!] END OF USER CONFIGURATION [!] ####
 ###########################################
 ###########################################
+
+# /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
+echo ''
+echo '************************************************'
+echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
+echo '************************************************'
+echo '**** Script is preconfigured for UEFI & GPT ****'
+echo '****                                        ****'
+echo '**** Partition Layout : Fat-32 EFI of 550MB ****'
+echo '****                  : / 100%              ****'
+echo '************************************************'
+echo ''
+echo '******************************************'
+echo '[!] Rerun script if xbps-install fails [!]'
+echo '******************************************'
+
+lsblk -f -l | grep -e sd -e mmcblk
+
+echo ''
+echo '****************************************'
+echo '[!] Verify Connected Drive Is Listed [!]'
+echo '****************************************'
+# Generate drive options dynamically
+PS3="Select drive to format: "
+echo ''
+select device in $(blkid | grep -e sd -e mmcblk0 | cut -d : -f 1 | sed -e 's/\p//g' -e 's/[1-9]\+$//' | uniq | sort)
+do
+if [[ $device = "" ]]; then
+echo "try again"
+continue
+fi
+break
+done
+echo "$device has been selected"
+echo
+# PS3='Select your device: '
+# options=('sda' 'sdb' 'sdc')
+# select opt in "${options[@]}"
+# do
+# case $opt in
+#    'sda')
+#      devname='/dev/sda'
+#      break
+#      ;;
+#    'sdb')
+#      devname='/dev/sdb'
+#      break
+#      ;;
+#    'sdc')
+#      devname='/dev/sdc'
+#      break
+#      ;;
+#    *)
+#      echo 'This option is invalid.'
+#      ;;
+#  esac
+# done
+
 PS3="Select installation type : "
 options=('Desktop' 'Server')
 select opt in "${options[@]}"
@@ -1103,26 +1161,31 @@ if [[ $openresolv = YES ]]; then
 pkg_list="$pkg_list openresolv"
 fi
 
-echo '**********************************'
-echo '**** CHECKING KERNEL VERSIONS ****'
-echo '**********************************'
-# Get currently running kernel version
-kver=$(xbps-query linux | awk '$1 == "pkgver:" { print $2 }' | sed -e 's/linux-//' -e 's/_.*$//')
-echo "Live CD kernel version $kver"
-echo '**************************'
-echo 'Choose a kernel to install'
-echo '**************************'
-PS3="Select kernel: " 
-select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
-do
-if [[ $kernel = "" ]]; then
-echo "$REPLY is not valid"
-continue
-fi
-break
-done
+# Install Prerequisites to Live USB/Cd
+if [[ $repopath != "" ]]; then
+xbps-install -S -R $repopath
+xbps-install -u xbps -R $repopath
+xbps-install -S -R $repopath
+# xbps-install -uy -R $repopath
+xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
+# setting password requires pam
 
-pkg_list="$pkg_list $kernel"
+elif [[ $cachedir != "" ]]; then
+xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
+cd $cachedir
+xbps-rindex -a *xbps
+xbps-install -S -R $cachedir
+# xbps-install -uy -R $cachedir
+xbps-install -u xbps
+xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
+
+elif [[ $cachedir = "" && $repopath = "" ]]; then
+xbps-install -S
+xbps-install -u xbps
+xbps-install -S
+# xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
+xbps-install -y gptfdisk pam $fstype dosfstools
+fi
 
 echo ''
 echo '************************************'
@@ -1171,106 +1234,17 @@ do
 
 esac
 done
- 
-# /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
-echo ''
-echo '************************************************'
-echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
-echo '************************************************'
-echo '**** Script is preconfigured for UEFI & GPT ****'
-echo '****                                        ****'
-echo '**** Partition Layout : Fat-32 EFI of 550MB ****'
-echo '****                  : / 100%              ****'
-echo '************************************************'
-echo ''
-echo '******************************************'
-echo '[!] Rerun script if xbps-install fails [!]'
-echo '******************************************'
-
-lsblk -f -l | grep -e sd -e mmcblk
-
-echo ''
-echo '****************************************'
-echo '[!] Verify Connected Drive Is Listed [!]'
-echo '****************************************'
-# Generate drive options dynamically
-PS3="Select drive to format: "
-echo ''
-# sed removes 'p' and the single partition number: 
-# mmcblk0p1 >> mmcblk01 >> mmcblk0
-# sda1 >> sda
-select device in $(blkid | grep -e sd -e mmcblk0 | cut -d : -f 1 | sed -e 's/\p//g' -e 's/[1-9]\+$//' | uniq | sort)
-do
-if [[ $device = "" ]]; then
-echo "try again"
-continue
-fi
-break
-done
-echo "$device has been selected"
-echo
-# PS3='Select your device: '
-# options=('sda' 'sdb' 'sdc')
-# select opt in "${options[@]}"
-# do
-# case $opt in
-#    'sda')
-#      devname='/dev/sda'
-#      break
-#      ;;
-#    'sdb')
-#      devname='/dev/sdb'
-#      break
-#      ;;
-#    'sdc')
-#      devname='/dev/sdc'
-#      break
-#      ;;
-#    *)
-#      echo 'This option is invalid.'
-#      ;;
-#  esac
-# done
-# clear
-
-# Install Prerequisites to Live USB/Cd
-if [[ $repopath != "" ]]; then
-xbps-install -S -R $repopath
-xbps-install -u xbps -R $repopath
-xbps-install -S -R $repopath
-# xbps-install -uy -R $repopath
-xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
-# setting password requires pam
-
-elif [[ $cachedir != "" ]]; then
-xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
-cd $cachedir
-xbps-rindex -a *xbps
-xbps-install -S -R $cachedir
-# xbps-install -uy -R $cachedir
-xbps-install -u xbps
-xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S
-xbps-install -u xbps
-xbps-install -S
-# xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
-xbps-install -y gptfdisk pam $fstype dosfstools
-fi
-
-# xbps-install -y -S -f parted
 
 # Erase partition table
 # wipefs -a /dev/$devname
 # dd if=/dev/zero of=/dev/$devname bs=1M count=100
 
 # Create partitions
+# xbps-install -y -S -f parted
 # if [[ $UEFI ]]; then
   # parted /dev/${DEVNAME} mklabel gpt
   # parted -a optimal /dev/${devname} mkpart primary 2048s 100M
   # parted -a optimal /dev/${devname} mkpart primary 100M 100%
-
 # else
   # parted /dev/${devname} mklabel msdos
   # parted -a optimal /dev/${devname} mkpart primary 2048s 512M
@@ -1408,6 +1382,27 @@ done
 # Import keys from live image to prevent prompt for key confirmation
 mkdir -p /mnt/var/db/xbps/keys/
 cp -a /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
+
+echo '**********************************'
+echo '**** CHECKING KERNEL VERSIONS ****'
+echo '**********************************'
+# Get currently running kernel version
+kver=$(xbps-query linux | awk '$1 == "pkgver:" { print $2 }' | sed -e 's/linux-//' -e 's/_.*$//')
+echo "Live CD kernel version $kver"
+echo '**************************'
+echo 'Choose a kernel to install'
+echo '**************************'
+PS3="Select kernel: " 
+select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
+do
+if [[ $kernel = "" ]]; then
+echo "$REPLY is not valid"
+continue
+fi
+break
+done
+
+pkg_list="$pkg_list $kernel"
 
 # Package Installation
 if [[ $repopath != "" ]]; then
@@ -1618,6 +1613,7 @@ echo '**********************************************************'
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
 efibootmgr -v
+echo '**********************************************************'
 echo '**********************************************************'
 echo -e "\x1B[1;32m [!] VOID LINUX INSTALL IS COMPLETE [!] \x1B[0m"
 echo '**********************************************************'
