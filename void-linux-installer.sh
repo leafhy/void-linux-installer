@@ -978,7 +978,7 @@ FONT="Tamsyn8x16r"
 TTYS="2"
 
 ### Create directories /home/$USER/
-dirs="exclusions scripts"
+dirs="exclusions scripts src"
 
 ###################
 ##### Network #####
@@ -1374,10 +1374,7 @@ mount ${device}2 /mnt
 fi
 
 if [[ $UEFI ]]; then
-echo -e "\x1B[1;33m [!] Found UEFI [!] \x1B[0m"
 mkdir -p /mnt/boot/efi
-else
-echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
 fi
 
 if [[ $device = /dev/mmcblk0 ]]; then
@@ -1427,9 +1424,6 @@ elif [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S -r /mnt $pkg_listsys -y
 xbps-install -S -r /mnt $pkg_list -y
 fi
-
-# Create list of installed packages
-xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 # Add repositories
 # cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
@@ -1612,6 +1606,8 @@ for dir in $dirs; do
  chroot --userspec=$username:users /mnt mkdir -p home/$username/$dir
 done
 
+# Create list of installed packages
+xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 clear
  
 echo '**********************************************************'
