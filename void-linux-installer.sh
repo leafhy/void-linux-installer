@@ -496,6 +496,7 @@
 # audio-device=sndio
 # Notes: mpv will run slowly if mpv.conf is missing
 #      : mpv,smplayer will have video/audio desynchronization errors if Audio output driver is not set to sndio
+#      : sndio no longer supported
 # ---------------------------
 # OpenAL
 # cp /usr/share/examples/libopenal/alsoftrc.sample ~/.alsoftrc
@@ -804,7 +805,6 @@ pkg_listsys='base-minimal'\
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
 ' gconf-editor'\
-' mpv'\
 ' alsa-utils'\
 ' libopenal'\
 ' upower'\
