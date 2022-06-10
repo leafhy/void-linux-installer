@@ -997,6 +997,9 @@ nameserver2="1.1.1.1"
 ######################
 ##### Repository #####
 ######################
+
+### [!] Leave repopath & cachedir empty to use default repository /var/cache/xbps [!]
+
 ### Path to packages that have already been downloaded
 # xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps
 # xbps-install --repository $repopath 
@@ -1006,9 +1009,6 @@ repopath=""
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
 # xbps-install --repository $cachedir
 cachedir="/opt"
-
-### Leave repopath & cachedir empty to use default repository /var/cache/xbps
-# xbps-install --repository $repo0
 
 ### Repository Urls
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
