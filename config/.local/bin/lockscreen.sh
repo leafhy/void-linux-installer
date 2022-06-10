@@ -11,6 +11,6 @@ if [[ $screen = "DP-1" ]] || [[ $screen = "LVDS-1" ]] || [[ $screen = "VGA-1" ]]
 amixer set Master mute >/dev/null && sakura -s -x asciiquarium 2>/dev/null & alock -bg none; xdotool key --clearmodifiers q
 
 else 
-amixer set Master mute >/dev/null && ~/.config/i3/lock.sh
+amixer set Master mute >/dev/null && ~/.config/i3/new-lock.sh
 
 fi
