@@ -1164,9 +1164,8 @@ fi
 # Install Prerequisites to Live USB/Cd
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
-xbps-install -u xbps -R $repopath
+xbps-install -u -y xbps -R $repopath
 xbps-install -S -R $repopath
-# xbps-install -uy -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 # setting password requires pam
 
@@ -1174,16 +1173,14 @@ elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex -a *xbps
+xbps-install -u xbps -R $cachedir
 xbps-install -S -R $cachedir
-# xbps-install -uy -R $cachedir
-xbps-install -u xbps
 xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
 xbps-install -S
 xbps-install -u xbps
 xbps-install -S
-# xbps-install -uy -R $repo1 || xbps-install -uy -R $repo2 || xbps-install -uy -R $repo0
 xbps-install -y gptfdisk pam $fstype dosfstools
 fi
 
