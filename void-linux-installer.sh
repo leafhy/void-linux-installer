@@ -1347,7 +1347,7 @@ fi
 
 # Create Chroot Gaol
 for dir in dev proc sys; do
- mkdir /mnt/${dir}
+ mkdir /mnt/$dir
  mount -o bind /$dir /mnt/$dir
 done
 
