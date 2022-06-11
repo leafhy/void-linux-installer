@@ -771,6 +771,10 @@ pkg_listsys='base-minimal'\
 ' bind-utils'\
 ' unbound'\
 ' dnscrypt-proxy'\
+' ffmpeg-devel'
+' libavcodec'\
+' libavformat'\
+' libavutil'\
 ' wavpack-devel'\
 ' libmp4v2-devel'\
 ' libflac-devel'\
@@ -837,7 +841,8 @@ pkg_listsys='base-minimal'\
 ' emacs-x11'\
 ' autocutsel'\
 ' shellcheck'\
-' caddy'
+' caddy\'
+' automake'
 
 # Server Packages
   pkg_listsrv='lftp'\
