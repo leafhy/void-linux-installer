@@ -1001,17 +1001,17 @@ nameserver2="1.1.1.1"
 
 ### [!] Leave repopath & cachedir empty to use default repository /var/cache/xbps [!]
 
-### Create ramfs for repository as xbps errors as usb not writable
+### Path to packages that have already been downloaded
+# xbps-install --download-only --repository $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps 
+repopath=""
+
+### Create ramfs for repository as xbps errors as Live USB not writable
 void_pkgs=void_pkgs
 if [[ -d /run/initramfs/live/$void_pkgs/ && $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
 cp /run/initramfs/live/$void_pkgs/* $repopath
 fi
-
-### Path to packages that have already been downloaded
-# xbps-install --download-only --repository $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps 
-repopath=""
 
 ### Save packages to somewhere other then /var/cache/xbps
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
