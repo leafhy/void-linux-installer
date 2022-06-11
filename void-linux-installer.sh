@@ -155,7 +155,7 @@
 # https://www.kariliq.nl/siren
 # git clone https://www.kariliq.nl/git/siren.git
 # git clone https://github.com/tbvdm/siren.git
-# sed -i 's+.siren+.cache/siren+' siren/siren.h
+# sed -i 's+.siren+.cache/siren+' siren.h
 # ./configure aac=yes mad=no sndio=yes ffmpeg=yes mpg123=yes flac=yes opus=yes sndfile=yes vorbis=yes wavpack=yes sun=no oss=no ao=no portaudio=no pulse=no alsa=no
 # make && make install
 #
