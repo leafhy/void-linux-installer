@@ -845,7 +845,7 @@ pkg_listsys='base-minimal'\
 ' emacs-x11'\
 ' autocutsel'\
 ' shellcheck'\
-' caddy\'
+' caddy'\
 ' automake'
 
 # Server Packages
