@@ -1142,12 +1142,13 @@ pkg_list="$pkg_list openresolv"
 fi
 
 # Install Prerequisites to Live USB/Cd
+# setting password requires pam
+
 if [[ $repopath != "" ]]; then
 xbps-install -S -R $repopath
 xbps-install -u -y xbps -R $repopath
 xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
-# setting password requires pam
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
@@ -1387,7 +1388,7 @@ xbps-install -R $repopath -r /mnt $pkg_listsys -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S --download-only --cachedir $cachedir $pkg_list
+xbps-install -S --download-only --cachedir $cachedir $pkg_list -y
 xbps-install -R $cachedir -r /mnt $pkg_listsys -y
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
