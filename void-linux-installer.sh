@@ -826,6 +826,7 @@ pkg_listsys='base-minimal'\
 ' recoll'\
 ' i3lock-color'\
 ' dbus-elogind-x11'\
+' elogind'\
 ' asciiquarium'\
 ' astroid'\
 ' nerd-fonts'\
