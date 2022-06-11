@@ -1001,17 +1001,23 @@ nameserver2="1.1.1.1"
 
 ### [!] Leave repopath & cachedir empty to use default repository /var/cache/xbps [!]
 
+### Create ramfs for repository as xbps errors as usb not writable
+void_pkgs=void_pkgs
+if [[ -d /run/initramfs/live/$void_pkgs/ && $repopath != "" ]]; then
+echo 'Creating ramfs for repo....'
+mount -t ramfs ramfs $repopath
+cp /run/initramfs/live/$void_pkgs/* $repopath
+fi
+
 ### Path to packages that have already been downloaded
-# xbps-install --download-only $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps
-# xbps-install --repository $repopath 
+# xbps-install --download-only --repository $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps 
 repopath=""
 
 ### Save packages to somewhere other then /var/cache/xbps
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
-# xbps-install --repository $cachedir
 cachedir="/opt"
 
-### Repository Urls
+### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl" # connection tends to be flaky
 repo2="http://alpha.de.repo.voidlinux.org/current/musl"
@@ -1116,29 +1122,13 @@ repository=$repo1/nonfree
 repository=$repo2/nonfree
 EOF
 
-# Create ramfs for repository as xbps errors as usb not writable
-if [[ -d /run/initramfs/live/voidrepo && $repopath != "" ]]; then
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs $repopath
-cp /run/initramfs/live/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-fi
-
-# Mount live usb via live Cd
-usbrepo=$(blkid | grep VOID_LIVE | grep /dev/sd | cut -d : -f 1)
-if [[ $usbrepo && $repopath != "" ]]; then
-mount $usbrepo /media
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs $repopath
-cp /media/voidrepo/voidlinux-setup/voidlinux-xbps-repo/* $repopath
-fi
-
 # Detect if we're in UEFI or legacy mode
 [[ -d /sys/firmware/efi ]] && UEFI=1
 if [[ $UEFI ]]; then
-echo -e "\x1B[1;92m [!] Found UEFI [!] \x1B[0m"
+echo -e "\x1B[1;92m ************ [!] Found UEFI [!] ************ \x1B[0m" 
 pkg_list="$pkg_list efibootmgr"
 else
-echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
+echo -e "\x1B[1;31m ************ [!] UEFI Not found [!] ************ \x1B[0m"
 fi
 
 # Detect if we're on an Intel system
