@@ -771,7 +771,11 @@ pkg_listsys='base-minimal'\
 ' bind-utils'\
 ' unbound'\
 ' dnscrypt-proxy'\
-' ffmpeg-devel'
+' imlib2-devel'\
+' pam-devel'\
+' libgcrypt-devel'\
+' libXrender-devel'\
+' ffmpeg-devel'\
 ' libavcodec'\
 ' libavformat'\
 ' libavutil'\
