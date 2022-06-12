@@ -890,7 +890,7 @@ eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 # Rust pkg path ".local/bin"
 # Python3 pkg path "~/.local/bin"
-# export PATH=".local/bin:$PATH"
+export PATH=".local/bin:$PATH"
 export TERMINAL=sakura
 # Weather Check
 alias weather='curl wttr.in/?0'
@@ -1161,7 +1161,7 @@ xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S --download-only --cachedir $cachedir $pkg_list $fstype
+xbps-install -S -y --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex -a *xbps
 xbps-install -u -y xbps -R $cachedir
@@ -1282,10 +1282,10 @@ mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
 if [[ $fsys3 ]]; then
-echo "Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
-echo "No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
-echo "No Checksums = lost_found"
-echo "None = No Options"
+echo "1) Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
+echo "2) No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
+echo "3) No Checksums = lost_found"
+echo "4) None = No Options"
 echo
 echo "Notes: f2fs-tools v1.14"
 echo "       | encrypt does not work with 'casefold/utf8'"
@@ -1394,16 +1394,15 @@ pkg_list="$pkg_list $kernel"
 
 # Package Installation
 if [[ $repopath != "" ]]; then
-xbps-install -R $repopath -r /mnt $pkg_listsys -y
 xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
 xbps-install -S --download-only --cachedir $cachedir $pkg_list -y
-xbps-install -R $cachedir -r /mnt $pkg_listsys -y
+cd $cachedir
+xbps-rindex -a *xbps
 xbps-install -R $cachedir -r /mnt $pkg_list -y
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S -r /mnt $pkg_listsys -y
 xbps-install -S -r /mnt $pkg_list -y
 fi
 
@@ -1468,7 +1467,7 @@ echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0" >> /mnt/etc/fstab
 fi
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
-xbps-reconfigure -fa -r /mnt ${kernel}
+xbps-reconfigure -fa -r /mnt $kernel
 cp /mnt/boot/initramfs* /mnt/boot/efi
 cp /mnt/boot/vmlinuz* /mnt/boot/efi
 
@@ -1570,7 +1569,7 @@ done
 # Setup $HOME
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
-if [[ username = $username ]]; then
+if [[ $opt = Desktop ]]; then
 echo "$bashprofile" > /mnt/home/$username/.bash_profile
 echo "$xinitrc" > /mnt/home/$username/.xinitrc
 fi
