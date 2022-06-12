@@ -1,3 +1,2 @@
 #!/bin/bash
 notify-send -i display "Switching to $AUTORANDR_CURRENT_PROFILE"
-herbstclient reload
