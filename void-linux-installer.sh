@@ -983,7 +983,7 @@ FONT="Tamsyn8x16r"
 TTYS="2"
 
 ### Create directories /home/$USER/
-dirs="exclusions scripts src"
+dirs="exclusions src"
 
 ###################
 ##### Network #####
