@@ -20,7 +20,7 @@ killall -q redshift-gtk && redshift -x
 killall -q clipster
 killall -q greenclip
 killall -q autocutsel
-killall -q udiskie
+pgrep -f udiskie | xargs kill -9 >/dev/null 2>&1
 pgrep -f nohang | xargs kill -9 >/dev/null 2>&1
 
 # Wait until the processes have been shut down
@@ -34,7 +34,7 @@ while pgrep -u $UID -x udiskie >/dev/null; do sleep 1; done
 
 # Start programs
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
-redshift-gtk &
+redshift-gtk & redshift -x
 udiskie --tray &
 # autocutsel - synchronize CLIPBOARD[default] with PRIMARY
 autocutsel -fork
