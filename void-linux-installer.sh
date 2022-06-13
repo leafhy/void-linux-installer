@@ -745,6 +745,9 @@ pkg_listsys='base-minimal'\
 ' firefox'\
 ' herbstluftwm'\
 ' iwd'\
+' testdisk'\
+' ddrescue'\
+' zpaq'\
 ' kid3'\
 ' libinput-gestures'\
 ' linux-firmware-nvidia'\
