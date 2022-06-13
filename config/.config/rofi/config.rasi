@@ -1,7 +1,7 @@
 configuration {
   location: 0;
   /*xoffset: 200;*/
-  yoffset: -100;
+  yoffset: -46;
   show-icons:         true;
  /* icon-theme:        "Papirus-Dark"; */
   icon-theme:         "Arc";
@@ -17,5 +17,8 @@ configuration {
   terminal:          "sakura";
   font:              "Overpass SemiBold 16";
 }
-/* @import "/usr/share/rofi/themes/Arc-Dark.rasi" */
-@import "Arc-Dark"
+* @import "/usr/share/rofi/themes/Arc-Dark.rasi"
+
+element-icon {                            
+      size: 3.0ch;                            
+} 
