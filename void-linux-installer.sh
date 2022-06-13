@@ -146,6 +146,7 @@
 # autorandr - create monitor profiles
 # audacity - fails to start via icon - starts via cli with errors then stops responding
 # reaper - starts then freezes - need to poweroff
+# testdisk - dependant on sudo (xbps-install fails if sudo not installed)
 # attr-progs - Extended attributes # getfattr,setfattr
 # imgcat - https://github.com/danielgatis/imgcat/releases/download/v1.0.8/imgcat_1.0.8_Linux_x86_64.tar.gz # Binary works
 #        - https://github.com/eddieantonio/imgcat # failed to compile
@@ -745,7 +746,6 @@ pkg_listsys='base-minimal'\
 ' firefox'\
 ' herbstluftwm'\
 ' iwd'\
-' testdisk'\
 ' ddrescue'\
 ' zpaq'\
 ' kid3'\
@@ -914,7 +914,7 @@ bashprofile="$(cat <<'EOF'
 # Get the aliases and functions
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
 # exec startx prevents 'ssh' login
-exec startx
+# exec startx
 EOF
 )"
 
@@ -1018,8 +1018,10 @@ nameserver2="1.1.1.1"
 # xbps-install --download-only --repository $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps 
 repopath=""
 
+### Directory containing downloaded packages
+void_pkgs=voidlinux_pkgs
+
 ### Create ramfs for repository as xbps errors as Live USB not writable
-void_pkgs=void_pkgs
 if [[ -d /run/initramfs/live/$void_pkgs/ && $repopath != "" ]]; then
 echo 'Creating ramfs for repo....'
 mount -t ramfs ramfs $repopath
@@ -1028,7 +1030,7 @@ fi
 
 ### Save packages to somewhere other then /var/cache/xbps
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
-cachedir="/opt"
+cachedir="/opt/$void_pkgs"
 
 ### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
@@ -1163,12 +1165,17 @@ xbps-install -u -y xbps -R $repopath
 xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 
-elif [[ $cachedir != "" ]]; then
+elif [[ $cachedir != "" && -d /opt/$void_pkgs = "" ]]; then
+mkdir /opt/$void_pkgs
 xbps-install -S -y --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex -a *xbps
 xbps-install -u -y xbps -R $cachedir
 xbps-install -S -R $cachedir
+xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
+
+elif [[ $cachedir != "" && -d /opt/$void_pkgs != "" ]]; then
+xbps-install -u -y xbps -R $cachedir
 xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
@@ -1186,7 +1193,7 @@ echo ''
 echo '[!] Retry if valid selection fails [!]'
 echo ''
 PS3='Select file system to format partition: '
-filesystems=('btrfs' 'ext4' 'xfs' 'f2fs' 'nilfs2')
+filesystems=('btrfs' 'ext4' 'xfs' 'f2fs')
 select filesysformat in "${filesystems[@]}"
 do
   case $filesysformat in
@@ -1200,12 +1207,6 @@ do
       fsys1='xfs'
       pkg_list="$pkg_list xfsprogs"
       fstype="xfsprogs"
-      break
-      ;;
-    'nilfs2')
-      fsys1='nilfs2'
-      pkg_list="$pkg_list nilfs-utils"
-      fstype="nilfs-utils"
       break
       ;;
     'ext4')
@@ -1267,7 +1268,6 @@ fi
 # ${fsys1} -f -L
 # btrfs
 # xfs
-# nilfs2
 if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
 mkfs.$fsys1 -f -L $labelroot ${device}p2
 
