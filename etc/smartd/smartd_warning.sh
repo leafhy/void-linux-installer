@@ -12,8 +12,9 @@
 #
 
 set -e
-export SMARTD_MAILER="sendmail"
+export SMARTD_MAILER="femtomail"
 export SMARTD_ADDRESS="root"
+
 # Set by config.status
 export PATH="/usr/local/bin:/usr/bin:/bin"
 PACKAGE="smartmontools"
