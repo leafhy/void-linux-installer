@@ -60,7 +60,7 @@ hc keybind $Mod-Return spawn "${TERMINAL:-xterm}" # use your $TERMINAL with xter
 hc keybind $Mod-Control-t spawn polybar-msg cmd restart
 hc keybind $Mod-n spawn nemo
 hc keybind $Mod-a spawn astroid
-hc keybind $Mod-Control-z spawn ~/.config/i3/lock.sh
+hc keybind $Mod-Control-z spawn ~/.config/i3/new-lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
 hc keybind $Mod-Control-m spawn sakura -x micro
 hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
