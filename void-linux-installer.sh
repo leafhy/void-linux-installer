@@ -903,7 +903,7 @@ alias reboot='doas /sbin/reboot'
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
 alias clipsr="clipster --delete"
 alias clipsc="clipster --erase-entire-board"
-alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -theme ~/.config/rofi/hlwm.rasi"
+alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -dmenu"
 # Firefox has a habit of not responding and 'killall' doesn't always work
 alias kf="pgrep -f firefox | xargs kill -9"
 EOF
