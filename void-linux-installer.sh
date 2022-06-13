@@ -1015,22 +1015,12 @@ nameserver2="1.1.1.1"
 ### [!] Leave repopath & cachedir empty to use default repository /var/cache/xbps [!]
 
 ### Path to packages that have already been downloaded
-# xbps-install --download-only --repository $repopath $pkg_list && cd $repopath && xbps-rindex --add *xbps 
-repopath=""
-
-### Directory containing downloaded packages
-void_pkgs=voidlinux_pkgs
-
-### Create ramfs for repository as xbps errors as Live USB not writable
-if [[ -d /run/initramfs/live/$void_pkgs/ && $repopath != "" ]]; then
-echo 'Creating ramfs for repo....'
-mount -t ramfs ramfs $repopath
-cp /run/initramfs/live/$void_pkgs/* $repopath
-fi
+# xbps-install --repository $repopath $pkg_list
+repopath=""  
 
 ### Save packages to somewhere other then /var/cache/xbps
 # xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
-cachedir="/opt/$void_pkgs"
+cachedir="/opt/void_pkgs"
 
 ### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
@@ -1160,22 +1150,16 @@ fi
 # setting password requires pam
 
 if [[ $repopath != "" ]]; then
-xbps-install -S -R $repopath
 xbps-install -u -y xbps -R $repopath
-xbps-install -S -R $repopath
 xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
 
-elif [[ $cachedir != "" && -d /opt/$void_pkgs = "" ]]; then
-mkdir /opt/$void_pkgs
+elif [[ $cachedir != "" ]]; then
+mkdir -p $cachedir
 xbps-install -S -y --download-only --cachedir $cachedir $pkg_list $fstype
 cd $cachedir
 xbps-rindex -a *xbps
 xbps-install -u -y xbps -R $cachedir
 xbps-install -S -R $cachedir
-xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir != "" && -d /opt/$void_pkgs != "" ]]; then
-xbps-install -u -y xbps -R $cachedir
 xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
@@ -1595,8 +1579,10 @@ echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
 echo ' Boot entry needs to be towards the top of list otherwise '
 echo '       it will not appear in the boot menu                '
 echo '**********************************************************'
+echo '**********************************************************'
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
+sleep 5
 efibootmgr -v
 echo '**********************************************************'
 echo '**********************************************************'
