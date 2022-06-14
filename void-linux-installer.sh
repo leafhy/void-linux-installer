@@ -41,6 +41,13 @@
 # https://www.gnu.org/software/stow
 # https://www.chezmoi.io
 ###################################
+######### Terminal Themes #########
+###################################
+https://github.com/lemnos/theme.sh
+https://github.com/ciembor/4bit
+https://github.com/chriskempson/base16-shell
+https://github.com/nvllsvm/base16-shell-preview
+###################################
 ### Hide/Unhide Terminal Cursor ###
 ###################################
 # echo -en "\e[?25h" # unhide
