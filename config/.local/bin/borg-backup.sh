@@ -6,22 +6,23 @@ DATE=$(date)
 # setup script variables
 # export BORG_PASSPHRASE="secret-passphrase-here!"
 export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
-export BORG_REPO="/mnt/void-backup/borg"
+export BORG_REPO="/void-backup/borg"
 export BACKUP_TARGETS="/"
 #export BACKUP_NAME="voidlinux.local"
 BORG_OPTS="--stats --one-file-system"
 
 # create Vaultwarden(Bitwarden) database backup
-# cd /home/$USER/src/bitwarden_rs/target/release/data
-cd /home/$USER/src/vaultwarden/data
-if [[ -f backup.sqlite3 ]]; then
-rm backup.sqlite3
+
+if [[ -f /home/$USER/src/vaultwarden/data/backup.sqlite3 ]]; then
+rm /home/$USER/src/vaultwarden/data/backup.sqlite3
 else
+cd /home/$USER/src/vaultwarden/data
+# cd /home/$USER/src/bitwarden_rs/target/release/data
 sqlite3 db.sqlite3 ".backup 'backup.sqlite3'"
 fi
 
 # create Borg archive
-if [[ -d /mnt/void-backup/borg ]]; then
+if [[ -d $BORG_REPO ]]; then
 echo "Starting backup at $DATE" >> /var/log/borg.log
 borg create $BORG_OPTS -e "/dev" -e "/tmp" -e "/proc" -e "/sys" -e "/run" -e "/home/$USER/exclusions" ::{now:%Y-%m-%d_T%H-%M-%S}_{hostname} $BACKUP_TARGETS
 
