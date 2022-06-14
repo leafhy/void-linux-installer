@@ -995,7 +995,7 @@ dirs="exclusions src"
 ##### Network #####
 ###################
 ### For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
-ipstaticeth0="192.168.1.X"
+ipstaticeth0="192.168.1.10"
 ### For dhcp leave ipstaticwlan0 empty (iwd includes dhcp)
 ipstaticwlan0=""
 routerssid=""
