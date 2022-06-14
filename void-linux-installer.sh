@@ -690,6 +690,7 @@ pkg_listsys='base-minimal'\
 ' exfat-utils'\
 ' ntfs-3g'\
 ' fcron'\
+' python3-pip'\
 ' fd'\
 ' ffmpeg'\
 ' glances'\
