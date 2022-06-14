@@ -1449,7 +1449,7 @@ echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fsta
 fi
 
 if [[ $opt = Server ]]; then
-echo "/Volumes/data* /Volumes/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0" >> /mnt/etc/fstab
+echo "# /Volumes/data* /Volumes/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0" >> /mnt/etc/fstab
 echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0" >> /mnt/etc/fstab
 fi
 
@@ -1509,8 +1509,8 @@ fi
 echo $hostname > /mnt/etc/hostname
 
 # hosts
-# cp /mnt/etc/hosts /mnt/etc/hosts.bak
-# Apparenty adding hostname to hosts is unnecessary
+# mv /mnt/etc/hosts /mnt/etc/hosts.orig
+# Adding hostname to hosts is not needed
 # echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
 
 echo "TIMEZONE=$TIMEZONE" >> /mnt/etc/rc.conf
