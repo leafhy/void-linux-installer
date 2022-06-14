@@ -12,6 +12,7 @@
 #
 
 set -e
+# Removed '-s "$SMARTD_SUBJECT"' for femtomail to work
 export SMARTD_MAILER="femtomail"
 export SMARTD_ADDRESS="root"
 
@@ -209,7 +210,7 @@ if [ -n "$SMARTD_ADDRESS" ]; then
 $fullmessage
 EOF"
   else
-    exec "$SMARTD_MAILER"  $SMARTD_ADDRESS <<EOF
+    exec "$SMARTD_MAILER" $SMARTD_ADDRESS <<EOF
 $fullmessage
 EOF
   fi
