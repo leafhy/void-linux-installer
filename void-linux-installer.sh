@@ -887,12 +887,10 @@ export HISTFILE=~/.bash_eternal_history
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # ---------------------
-scripts/buffquote
+sh buffquote
 eval "$(starship init bash)"
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
-# Rust pkg path ".local/bin"
-# Python3 pkg path "~/.local/bin"
-export PATH=".local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 export TERMINAL=sakura
 # Weather Check
 alias weather='curl wttr.in/?0'
