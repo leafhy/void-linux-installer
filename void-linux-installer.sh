@@ -982,7 +982,6 @@ KEYMAP="us"
 TIMEZONE="Australia/Adelaide"
 HARDWARECLOCK="UTC"
 FONT="Tamsyn8x16r"
-TTYS="2"
 
 ### Create directories /home/$USER/
 dirs="exclusions src"
@@ -1516,7 +1515,6 @@ echo "TIMEZONE=$TIMEZONE" >> /mnt/etc/rc.conf
 echo "HARDWARECLOCK=$HARDWARECLOCK" >> /mnt/etc/rc.conf
 echo "KEYMAP=$KEYMAP" >> /mnt/etc/rc.conf
 echo "FONT=$FONT" >> /mnt/etc/rc.conf
-echo "TTYS=$TTYS" >> /mnt/etc/rc.conf
 
 # set "root" privileges
 # test doas.conf
