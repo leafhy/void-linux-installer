@@ -960,7 +960,7 @@ export HISTFILE=~/.bash_eternal_history
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # --------------------
-scripts/buffquote
+sh buffquote
 eval "$(starship init bash)"
 export PATH="~/.local/bin:$PATH"
 alias poweroff='doas /sbin/poweroff'
