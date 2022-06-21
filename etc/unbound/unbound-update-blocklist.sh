@@ -15,7 +15,7 @@
     # anudeepND https://github.com/anudeepND/whitelist
 
 # Add to root fcrontab                                                                        
-# @ 1m cd /etc/unbound ./unbound-update-blocklist.sh 2>&1
+# @ 1m cd /etc/unbound && ./unbound-update-blocklist.sh 2>&1
 # wget --timestamping prevents file renaming ie filename filename.1 filename.2
 
     # Check for sudo
