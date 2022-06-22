@@ -1,4 +1,5 @@
 #!/bin/sh -e
+# Bitwarden cli requires DNS.3 = yourdomain.com
 
 openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out cert.pem -config <(
 cat <<-EOF
@@ -27,5 +28,6 @@ nsComment              = "OpenSSL Generated Certificate"
 [ alternate_names ]
 DNS.1                  = 127.0.0.1
 DNS.2                  = ::1
+DNS.3                  = yourdomain.com
 EOF
 )
