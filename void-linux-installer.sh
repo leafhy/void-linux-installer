@@ -1377,10 +1377,11 @@ pkg_list="$pkg_list $kernel"
 
 # Package Installation
 if [[ $repopath != "" ]]; then
+  cd $repopath
+  xbps-rindex -a *xbps
   xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
-  mkdir -p $cachedir
   xbps-install --download-only --cachedir $cachedir $pkg_list -y
   cd $cachedir
   xbps-rindex -a *xbps
