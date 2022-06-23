@@ -1059,7 +1059,7 @@ echo ''
 select device in $(blkid | grep -e sd -e mmcblk0 | cut -d : -f 1 | sed -e 's/\p//g' -e 's/[1-9]\+$//' | uniq | sort)
 do
 if [[ $device = "" ]]; then
-echo "try again"
+  echo "try again"
 continue
 fi
 break
@@ -1119,35 +1119,37 @@ esac
 done
 
 # Add repositories to live USB/Cd
-tee /etc/xbps.d/00-repository-main.conf <<EOF
-repository=$repo0 
-repository=$repo1
-repository=$repo2
+tee /etc/xbps.d/00-repository-main.conf <<-EOF
+  repository=$repo0 
+  repository=$repo1
+  repository=$repo2
 EOF
 
-tee /etc/xbps.d/10-repository-nonfree.conf <<EOF
-repository=$repo0/nonfree
-repository=$repo1/nonfree
-repository=$repo2/nonfree
+tee /etc/xbps.d/10-repository-nonfree.conf <<-EOF
+  repository=$repo0/nonfree
+  repository=$repo1/nonfree
+  repository=$repo2/nonfree
 EOF
 
 # Detect if we're in UEFI or legacy mode
 [[ -d /sys/firmware/efi ]] && UEFI=1
+
 if [[ $UEFI ]]; then
-echo -e "\x1B[1;92m ************ [!] Found UEFI [!] ************ \x1B[0m" 
-pkg_list="$pkg_list efibootmgr"
+  echo -e "\x1B[1;92m ************ [!] Found UEFI [!] ************ \x1B[0m" 
+  pkg_list="$pkg_list efibootmgr"
 else
-echo -e "\x1B[1;31m ************ [!] UEFI Not found [!] ************ \x1B[0m"
+  echo -e "\x1B[1;31m ************ [!] UEFI Not found [!] ************ \x1B[0m"
 fi
 
 # Detect if we're on an Intel system
 cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
+
 if [[ $cpu_vendor = GenuineIntel ]]; then
-pkg_list="$pkg_list intel-ucode"
+  pkg_list="$pkg_list intel-ucode"
 fi
 
 if [[ $openresolv = YES ]]; then
-pkg_list="$pkg_list openresolv"
+  pkg_list="$pkg_list openresolv"
 fi
 
 echo ''
@@ -1196,20 +1198,13 @@ done
 # setting password requires pam
 
 if [[ $repopath != "" ]]; then
-xbps-install -u -y xbps -R $repopath
-xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir != "" ]]; then
-xbps-install -S
-xbps-install -u -y xbps
-xbps-install -S
-xbps-install -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S
-xbps-install -u -y xbps
-xbps-install -S
-xbps-install -y gptfdisk pam $fstype dosfstools
+  xbps-install -u -y xbps -R $repopath
+  xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
+else
+  xbps-install -S
+  xbps-install -u -y xbps
+  xbps-install -S
+  xbps-install -y gptfdisk pam $fstype dosfstools
 fi
 
 # Erase partition table
@@ -1232,10 +1227,10 @@ fi
 # Create GPT partition table
 echo ''
 if [[ $UEFI ]]; then
-sgdisk --zap-all $device
-sgdisk -n 1:2048:550M -t 1:ef00 $device
-sgdisk -n 2:0:0 -t 2:8300 $device
-sgdisk --verify $device
+  sgdisk --zap-all $device
+  sgdisk -n 1:2048:550M -t 1:ef00 $device
+  sgdisk -n 2:0:0 -t 2:8300 $device
+  sgdisk --verify $device
 fi
 echo ''
 
@@ -1244,42 +1239,42 @@ clear
 # Format filesystems
 # fat-32
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
-mkfs.vfat -F 32 -n EFI ${device}p1
+  mkfs.vfat -F 32 -n EFI ${device}p1
  
 elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
-mkfs.vfat -F 32 -n $labelfat ${device}1
+  mkfs.vfat -F 32 -n $labelfat ${device}1
 fi
 
 # ${fsys1} -f -L
 # btrfs
 # xfs
 if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
-mkfs.$fsys1 -f -L $labelroot ${device}p2
+  mkfs.$fsys1 -f -L $labelroot ${device}p2
 
 elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
-mkfs.$fsys1 -f -L $labelroot ${device}2
+  mkfs.$fsys1 -f -L $labelroot ${device}2
 fi 
 
 # ${fsys2} -F -L
 # ext4 
 if [[ $fsys2 && $device = /dev/mmcblk0 ]]; then
-mkfs.$fsys2 -F -L $labelroot ${device}p2
+  mkfs.$fsys2 -F -L $labelroot ${device}p2
 
 elif [[ $fsys2 && $device != /dev/mmcblk0 ]]; then
-mkfs.$fsys2 -F -L $labelroot ${device}2
+  mkfs.$fsys2 -F -L $labelroot ${device}2
 fi
 
 if [[ $fsys3 ]]; then
-echo "1) Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
-echo "2) No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
-echo "3) No Checksums = lost_found"
-echo "4) None = No Options"
-echo
-echo "Notes: f2fs-tools v1.14"
-echo "       | encrypt does not work with 'casefold/utf8'"
-echo "       | casefold doesn't work without utf8"
-echo "       | compression unknown option"
-echo "       | keyboard momentarily stopped working (casefold was used)"
+  echo "1) Encrypt = encrypt,extra_attr,sb_checksum,inode_checksum,lost_found"
+  echo "2) No Encryption = extra_attr,sb_checksum,inode_checksum,lost_found"
+  echo "3) No Checksums = lost_found"
+  echo "4) None = No Options"
+  echo
+  echo "Notes: f2fs-tools v1.14"
+  echo "       | encrypt does not work with 'casefold/utf8'"
+  echo "       | casefold doesn't work without utf8"
+  echo "       | compression unknown option"
+  echo "       | keyboard momentarily stopped working (casefold was used)"
 
 PS3='Select f2fs options to use: '
 select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
@@ -1309,35 +1304,35 @@ fi
 # ${fsys3} -f -l
 # f2fs
 if [[ $fsys3 && $device = /dev/mmcblk0 ]]; then
-mkfs.$fsys3 -f -l $labelroot ${device}p2
+  mkfs.$fsys3 -f -l $labelroot ${device}p2
  
 elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
-mkfs.$fsys3 -f -l $labelroot ${device}2
+  mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
 
 # Mount them
 if [[ $device = /dev/mmcblk0 ]]; then
-mount ${device}p2 /mnt
+  mount ${device}p2 /mnt
 
 elif [[ $device != /dev/mmcblk0 ]]; then 
-mount ${device}2 /mnt
+  mount ${device}2 /mnt
 fi
 
 if [[ $UEFI ]]; then
-mkdir -p /mnt/boot/efi
+  mkdir -p /mnt/boot/efi
 fi
 
 if [[ $device = /dev/mmcblk0 ]]; then
-mount ${device}p1 /mnt/boot/efi
+  mount ${device}p1 /mnt/boot/efi
 
 elif [[ $device != /dev/mmcblk0 ]]; then
-mount ${device}1 /mnt/boot/efi
+  mount ${device}1 /mnt/boot/efi
 fi
 
 # Create Chroot Gaol
 for dir in dev proc sys; do
- mkdir /mnt/$dir
- mount -o bind /$dir /mnt/$dir
+  mkdir /mnt/$dir
+  mount -o bind /$dir /mnt/$dir
 done
 
 # Alternative mount options 
@@ -1372,7 +1367,7 @@ PS3="Select kernel: "
 select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
 do
 if [[ $kernel = "" ]]; then
-echo "$REPLY is not valid"
+  echo "$REPLY is not valid"
 continue
 fi
 break
@@ -1382,17 +1377,17 @@ pkg_list="$pkg_list $kernel"
 
 # Package Installation
 if [[ $repopath != "" ]]; then
-xbps-install -R $repopath -r /mnt $pkg_list -y
+  xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
-mkdir -p $cachedir
-xbps-install --download-only --cachedir $cachedir $pkg_list -y
-cd $cachedir
-xbps-rindex -a *xbps
-xbps-install -R $cachedir -r /mnt $pkg_list -y
+  mkdir -p $cachedir
+  xbps-install --download-only --cachedir $cachedir $pkg_list -y
+  cd $cachedir
+  xbps-rindex -a *xbps
+  xbps-install -R $cachedir -r /mnt $pkg_list -y
 
 elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S -r /mnt $pkg_list -y
+  xbps-install -S -r /mnt $pkg_list -y
 fi
 
 # Add repositories
@@ -1403,7 +1398,7 @@ cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
 
 # Activate services
 for srv in $services; do
- chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
+  chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
 done
 
 # Get / UUID
@@ -1417,42 +1412,42 @@ cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.o
 #       Add "psi=1" to enable
 # OPTIONS=root="${device}2" >> boot will fail if OS is on /dev/sdb and /dev/sda is removed
 if [[ $device != /dev/mmcblk0 ]]; then
-tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
-MODIFY_EFI_ENTRIES=1
-OPTIONS="root=UUID=$rootuuid loglevel=4 Page_Poison=1 psi=1"
-DISK="$device"
-PART=1
+  tee /mnt/etc/default/efibootmgr-kernel-hook <<-EOF
+  MODIFY_EFI_ENTRIES=1
+  OPTIONS="root=UUID=$rootuuid loglevel=4 Page_Poison=1 psi=1"
+  DISK="$device"
+  PART=1
 EOF
 
 elif [[ $device = /dev/mmcblk0 ]]; then
-tee /mnt/etc/default/efibootmgr-kernel-hook <<EOF
-MODIFY_EFI_ENTRIES=1
-OPTIONS=root="${device}p2 loglevel=4 Page_Poison=1"
-DISK="$device"
-PART=1
+  tee /mnt/etc/default/efibootmgr-kernel-hook <<-EOF
+  MODIFY_EFI_ENTRIES=1
+  OPTIONS=root="${device}p2 loglevel=4 Page_Poison=1"
+  DISK="$device"
+  PART=1
 EOF
 fi
 
 # Add fstab entries
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
-echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
+  echo "${device}p1   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
 
 elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
-echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
+  echo "LABEL=$labelfat   /boot/efi   vfat    defaults     0 0" >> /mnt/etc/fstab
 fi
 # echo "LABEL=root  /       ext4    rw,relatime,data=ordered,discard    0 0" > /mnt/etc/fstab
 # echo "LABEL=boot  /boot   ext4    rw,relatime,data=ordered,discard    0 0" >> /mnt/etc/fstab
 
 if [[ $fsys3 ]]; then
-echo "# Boot fails if fsck.f2fs <pass> is enabled" >> /mnt/etc/fstab
-echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
+  echo "# Boot fails if fsck.f2fs <pass> is enabled" >> /mnt/etc/fstab
+  echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
 else
-echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab
+  echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab
 fi
 
 if [[ $opt = Server ]]; then
-echo "# /Volumes/data* /Volumes/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0" >> /mnt/etc/fstab
-echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0" >> /mnt/etc/fstab
+  echo "# /Volumes/data* /Volumes/storage fuse.mergerfs category.create=mfs,defaults,allow_other,minfreespace=20G,fsname=mergerfsPool	0 0" >> /mnt/etc/fstab
+  echo "# /mnt/storage/$USER		/home/$USER		none	bind,rw		0 0" >> /mnt/etc/fstab
 fi
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
@@ -1464,19 +1459,19 @@ cp /mnt/boot/vmlinuz* /mnt/boot/efi
 # iwd requires openresolv to connect to internet which interns uses /etc/resolvconf.conf
 # resolvconf -u # updates /etc/resolv.conf
 if [[ -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
-echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
+  echo "resolv_conf_options=edns0" >> /mnt/etc/resolvconf.conf
 
 elif [[ ! -f /mnt/etc/resolvconf.conf && -f /mnt/sbin/dnscrypt-proxy ]]; then
-echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
-echo "options edns0" >> /mnt/etc/resolv.conf
+  echo "nameserver $nameserver0" >> /mnt/etc/resolv.conf
+  echo "options edns0" >> /mnt/etc/resolv.conf
 
 elif [[ ! -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
-echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
-echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
+  echo "nameserver $nameserver1" >> /mnt/etc/resolv.conf
+  echo "nameserver $nameserver2" >> /mnt/etc/resolv.conf
 
 elif [[ -f /mnt/etc/resolvconf.conf && ! -f /mnt/sbin/dnscrypt-proxy ]]; then
-echo "nameserver $nameserver1" >> /mnt/etc/resolvconf.conf
-echo "nameserver $nameserver2" >> /mnt/etc/resolvconf.conf
+  echo "nameserver $nameserver1" >> /mnt/etc/resolvconf.conf
+  echo "nameserver $nameserver2" >> /mnt/etc/resolvconf.conf
 fi
 
 # Static IP configuration via iproute2
@@ -1487,21 +1482,21 @@ echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 
 # Use static Wifi (dynamic is default)
 if [[ $ipstaticwlan0 ]]; then
-tee /mnt/etc/iwd/main.conf <<EOF
-[General]
-EnableNetworkConfiguration=true
+  tee /mnt/etc/iwd/main.conf <<-EOF
+  [General]
+  EnableNetworkConfiguration=true
 EOF
 fi
 
 # Set static ip address for wifi
 if [[ $ipstaticwlan0 ]]; then 
-tee /mnt/var/lib/iwd/${routerssid}.psk <<EOF
-[IPv4]
-Address="${ipstaticwlan0}"
-#Netmask=255.255.255.0
-Gateway="$gateway"
-#Broadcast=192.168.1.255
-#DNS=""
+  tee /mnt/var/lib/iwd/${routerssid}.psk <<-EOF
+  [IPv4]
+  Address="${ipstaticwlan0}"
+  #Netmask=255.255.255.0
+  Gateway="$gateway"
+  #Broadcast=192.168.1.255
+  #DNS=""
 EOF
 fi
 
@@ -1558,8 +1553,8 @@ done
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
 if [[ $opt = Desktop ]]; then
-echo "$bashprofile" > /mnt/home/$username/.bash_profile
-echo "$xinitrc" > /mnt/home/$username/.xinitrc
+  echo "$bashprofile" > /mnt/home/$username/.bash_profile
+  echo "$xinitrc" > /mnt/home/$username/.xinitrc
 fi
 
 # Herbstluftwm
@@ -1568,7 +1563,7 @@ fi
 
 # Create $HOME directories
 for dir in $dirs; do
- chroot --userspec=$username:users /mnt mkdir -p home/$username/$dir
+  chroot --userspec=$username:users /mnt mkdir -p home/$username/$dir
 done
 
 # Create list of installed packages
