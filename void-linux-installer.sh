@@ -962,7 +962,7 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 # --------------------
 sh buffquote
 eval "$(starship init bash)"
-export PATH="~/.local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
 EOF
