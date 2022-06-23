@@ -1029,7 +1029,7 @@ cachedir="/opt/void_pkgs"
 ### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl" # connection tends to be flaky
-repo2="http://alpha.de.repo.voidlinux.org/current/musl"
+repo2="http://alpha.de.repo.voidlinux.org/current/musl" # connection can be slow
 
 ###########################################
 ###########################################
@@ -1150,29 +1150,6 @@ if [[ $openresolv = YES ]]; then
 pkg_list="$pkg_list openresolv"
 fi
 
-# Install Prerequisites to Live USB/Cd
-# setting password requires pam
-
-if [[ $repopath != "" ]]; then
-xbps-install -u -y xbps -R $repopath
-xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir != "" ]]; then
-mkdir -p $cachedir
-xbps-install -S -y --download-only --cachedir $cachedir $pkg_list $fstype
-cd $cachedir
-xbps-rindex -a *xbps
-xbps-install -u -y xbps -R $cachedir
-xbps-install -S -R $cachedir
-xbps-install -R $cachedir -y gptfdisk pam $fstype dosfstools
-
-elif [[ $cachedir = "" && $repopath = "" ]]; then
-xbps-install -S
-xbps-install -u -y xbps
-xbps-install -S
-xbps-install -y gptfdisk pam $fstype dosfstools
-fi
-
 echo ''
 echo '************************************'
 echo '**** FILE SYSTEM TYPE SELECTION ****'
@@ -1214,6 +1191,26 @@ do
 
 esac
 done
+
+# Install Prerequisites to Live USB/Cd
+# setting password requires pam
+
+if [[ $repopath != "" ]]; then
+xbps-install -u -y xbps -R $repopath
+xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
+
+elif [[ $cachedir != "" ]]; then
+xbps-install -S
+xbps-install -u -y xbps
+xbps-install -S
+xbps-install -y gptfdisk pam $fstype dosfstools
+
+elif [[ $cachedir = "" && $repopath = "" ]]; then
+xbps-install -S
+xbps-install -u -y xbps
+xbps-install -S
+xbps-install -y gptfdisk pam $fstype dosfstools
+fi
 
 # Erase partition table
 # wipefs -a /dev/$devname
@@ -1388,7 +1385,8 @@ if [[ $repopath != "" ]]; then
 xbps-install -R $repopath -r /mnt $pkg_list -y
 
 elif [[ $cachedir != "" ]]; then
-xbps-install -S --download-only --cachedir $cachedir $pkg_list -y
+mkdir -p $cachedir
+xbps-install --download-only --cachedir $cachedir $pkg_list -y
 cd $cachedir
 xbps-rindex -a *xbps
 xbps-install -R $cachedir -r /mnt $pkg_list -y
