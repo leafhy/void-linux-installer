@@ -1201,6 +1201,8 @@ done
 # setting password requires pam
 
 if [[ $repopath != "" ]]; then
+  cd $repopath
+  xbps-rindex -a *xbps
   xbps-install -u -y xbps -R $repopath
   xbps-install -R $repopath -y $prereqs $fstype
 else
