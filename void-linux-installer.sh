@@ -673,6 +673,9 @@ setfont Lat2-Terminus16
 # Ignored Packages
 echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 
+# Prerequisites
+prereqs='gptfdisk pam dosfstools'
+
 # System Packages
 pkg_listsys='base-minimal'\
 ' void-repo-nonfree'\
@@ -1095,7 +1098,7 @@ select opt in "${options[@]}"
 do
 case $opt in
     'Desktop')
-      pkg_list="$pkg_list $pkg_listc $pkg_listsys"
+      pkg_list="$pkg_list $pkg_listc $pkg_listsys $prereqs"
       username="$username"
       services="$services"
       groups="$groups"
@@ -1104,7 +1107,7 @@ case $opt in
       break
       ;;
     'Server')
-      pkg_list="$pkg_listsrv $pkg_listc $pkg_listsys"
+      pkg_list="$pkg_listsrv $pkg_listc $pkg_listsys $prereqs"
       username="$usernamesrv"
       services="$srvservices"
       groups="$groupsrv"
@@ -1199,12 +1202,12 @@ done
 
 if [[ $repopath != "" ]]; then
   xbps-install -u -y xbps -R $repopath
-  xbps-install -R $repopath -y gptfdisk pam $fstype dosfstools
+  xbps-install -R $repopath -y $prereqs $fstype
 else
   xbps-install -S
   xbps-install -u -y xbps
   xbps-install -S
-  xbps-install -y gptfdisk pam $fstype dosfstools
+  xbps-install -y $prereqs $fstype
 fi
 
 # Erase partition table
