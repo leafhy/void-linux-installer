@@ -876,6 +876,7 @@ pkg_listsys='base-minimal'\
 ###################
 ##### Desktop #####
 ###################
+
 username="void"
 groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
 services="caddy dnscrypt-proxy unbound cupsd cups-browsed sshd chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
@@ -941,6 +942,7 @@ EOF
 ##################
 ##### Server #####
 ##################
+
 usernamesrv="void-srv"
 groupsrv="wheel,storage,cdrom,optical,socklog"
 srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
@@ -974,6 +976,7 @@ EOF
 ##################
 ##### System #####
 ##################
+
 ### /etc/doas.conf
 doasconf="$(cat <<'EOF'
 permit persist :wheel
@@ -998,6 +1001,7 @@ dirs="exclusions src"
 ###################
 ##### Network #####
 ###################
+
 ### For dhcp leave ipstaticeth0 empty and install dhcpd ie ndhc
 ipstaticeth0="192.168.1.10"
 ### For dhcp leave ipstaticwlan0 empty (iwd includes dhcp)
@@ -1026,7 +1030,7 @@ nameserver2="1.1.1.1"
 repopath=""  
 
 ### Save packages to somewhere other then /var/cache/xbps
-# xbps-install -R $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
+# xbps-install --repository $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
 cachedir="/opt/void_pkgs"
 
 ### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
