@@ -1369,7 +1369,7 @@ echo '**************************'
 echo 'Choose a kernel to install'
 echo '**************************'
 PS3="Select kernel: " 
-select kernel in $(xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq | grep linux)
+select kernel in $(xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
 do
 if [[ $kernel = "" ]]; then
   echo "$REPLY is not valid"
