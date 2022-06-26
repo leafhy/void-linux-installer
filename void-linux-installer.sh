@@ -876,7 +876,7 @@ pkg_listsys='base-minimal'\
 ###################
 ##### Desktop #####
 ###################
-username="vade"
+username="void"
 groups="wheel,storage,video,audio,lp,cdrom,optical,scanner,socklog"
 services="caddy dnscrypt-proxy unbound cupsd cups-browsed sshd chronyd fcron iwd socklog-unix nanoklogd hddtemp popcorn tlp sndiod dbus statd rpcbind cgmanager polkitd"
 hostname="void"
@@ -941,7 +941,7 @@ EOF
 ##################
 ##### Server #####
 ##################
-usernamesrv="void"
+usernamesrv="void-srv"
 groupsrv="wheel,storage,cdrom,optical,socklog"
 srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
 hostnamesrv="void2"
@@ -1369,7 +1369,7 @@ echo '**************************'
 echo 'Choose a kernel to install'
 echo '**************************'
 PS3="Select kernel: " 
-select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
+select kernel in $(xbps-query --repository=$repopath --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq | grep linux)
 do
 if [[ $kernel = "" ]]; then
   echo "$REPLY is not valid"
