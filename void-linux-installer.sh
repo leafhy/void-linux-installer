@@ -1543,7 +1543,7 @@ done
 
 echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
 echo ''
-chroot /mnt useradd -g users -G $groups $username
+useradd --root /mnt --user-group --groups $groups --create-home $username
 # Bug? useradd -R /mnt 
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
 # home directory is still created
@@ -1561,6 +1561,7 @@ echo "$bashrc" > /mnt/home/$username/.bashrc
 if [[ $opt = Desktop ]]; then
   echo "$bashprofile" > /mnt/home/$username/.bash_profile
   echo "$xinitrc" > /mnt/home/$username/.xinitrc
+  chown $username:$username /mnt/home/$username/.xinitrc
 fi
 
 # Herbstluftwm
