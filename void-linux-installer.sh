@@ -944,7 +944,7 @@ EOF
 usernamesrv="void-srv"
 groupsrv="wheel,storage,cdrom,optical,socklog"
 srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
-hostnamesrv="void2"
+hostnamesrv="void-srv"
 
 ### /home/$USER/.bashrc
 bashrcsrv="$(cat <<'EOF'
