@@ -63,9 +63,15 @@ hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/new-lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
 hc keybind $Mod-Control-m spawn sakura -x micro
-hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" ".config/siren" not valid in herbstluftwm 
+hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" & ".config/siren" are not valid in herbstluftwm 
 hc keybind $Mod-Control-g spawn sakura -x glances
 hc keybind $Mod-Control-a spawn sakura -x aerc
+
+# Volume Control 
+# Lenovo ThinkPad T420 volume & mute hardware buttons are non functional
+hc keybind Shift-Up spawn amixer set Master 1+ # volume increase
+hc keybind Shift-Down spawn amixer set Master 1- # volume decrease
+hc keybind $Mod-Shift-x spawn amixer set Master toggle # mute|unmute
 
 # herbstluftwm extras > /usr/share/doc/herbstluftwm/examples/
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
