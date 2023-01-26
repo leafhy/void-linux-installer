@@ -807,7 +807,6 @@ pkg_listsys='base-minimal'\
 ' sox'\
 ' polybar'\
 ' vlc'\
-' w_scan'\
 ' xset'\
 ' fontmanager'\
 ' libmnl-devel'\
@@ -826,7 +825,6 @@ pkg_listsys='base-minimal'\
 ' gvfs-afc'\
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
-' gconf-editor'\
 ' alsa-utils'\
 ' libopenal'\
 ' upower'\
