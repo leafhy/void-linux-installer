@@ -43,10 +43,10 @@
 ###################################
 ######### Terminal Themes #########
 ###################################
-https://github.com/lemnos/theme.sh
-https://github.com/ciembor/4bit
-https://github.com/chriskempson/base16-shell
-https://github.com/nvllsvm/base16-shell-preview
+# https://github.com/lemnos/theme.sh
+# https://github.com/ciembor/4bit
+# https://github.com/chriskempson/base16-shell
+# https://github.com/nvllsvm/base16-shell-preview
 ###################################
 ### Hide/Unhide Terminal Cursor ###
 ###################################
@@ -1382,6 +1382,14 @@ done
 
 pkg_list="$pkg_list $kernel"
 
+# Add repositories
+# cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
+mkdir -p /etc/xbps.d
+
+cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
+cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
+
 # Package Installation
 if [[ $repopath != "" ]]; then
   cd $repopath
@@ -1397,12 +1405,6 @@ elif [[ $cachedir != "" ]]; then
 elif [[ $cachedir = "" && $repopath = "" ]]; then
   xbps-install -S -r /mnt $pkg_list -y
 fi
-
-# Add repositories
-# cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
-cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
-cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
-cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
 
 # Activate services
 for srv in $services; do
