@@ -672,6 +672,10 @@ setfont Lat2-Terminus16
 
 # Ignored Packages
 echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
+# Installing with void-live-x86_64-musl-20221001-base.iso
+# gawk fails to install due to chroot-gawk
+# Need to install gawk manually "xbps-install gawk"
+echo "ignorepkg=gawk" >> /etc/xbps.d/10-ignore.conf
 
 # Prerequisites
 prereqs='gptfdisk pam dosfstools'
@@ -1383,9 +1387,8 @@ done
 pkg_list="$pkg_list $kernel"
 
 # Add repositories
-# cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
 mkdir -p /etc/xbps.d
-
+# cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-repository-nonfree.conf /mnt/etc/xbps.d
@@ -1461,7 +1464,8 @@ if [[ $opt = Server ]]; then
 fi
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
-xbps-reconfigure -fa -r /mnt $kernel
+# xbps-reconfigure -fa -r /mnt $kernel
+chroot /mnt xbps-reconfigure -fa $kernel
 cp /mnt/boot/initramfs* /mnt/boot/efi
 cp /mnt/boot/vmlinuz* /mnt/boot/efi
 
@@ -1565,7 +1569,7 @@ echo "$bashrc" > /mnt/home/$username/.bashrc
 if [[ $opt = Desktop ]]; then
   echo "$bashprofile" > /mnt/home/$username/.bash_profile
   echo "$xinitrc" > /mnt/home/$username/.xinitrc
-  chown $username:$username /mnt/home/$username/.xinitrc
+  chown 1000:1000 /mnt/home/$username/.xinitrc
 fi
 
 # Herbstluftwm
