@@ -601,6 +601,7 @@ menu-0-4-foreground = ${colors.foreground}
 
 ;; monitor
 ;; herbstclient reload is needed to make sure windows/frames are resized correctly
+;; Use CMD+Shift+R or "herbstclient reload" in cli if command fails to run
 menu-0-5 = 
 menu-0-5-exec = xrandr --output LVDS-1 --auto --output DP-1 --off && notify-send "Display Switching to LVDS-1" && /sbin/herbstclient reload
 menu-0-6 = 
