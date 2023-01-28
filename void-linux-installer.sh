@@ -713,6 +713,7 @@ pkg_listsys='base-minimal'\
 ' inxi'\
 ' iproute2'\
 ' kbd'\
+' exa'\
 ' linux-firmware'\
 ' linux-firmware-intel'\
 ' lm_sensors'\
