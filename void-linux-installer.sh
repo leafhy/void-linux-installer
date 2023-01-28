@@ -704,6 +704,8 @@ pkg_listsys='base-minimal'\
 ' fcron'\
 ' python3-pip'\
 ' fd'\
+' sshuttle'\
+' newsboat'\
 ' ffmpeg'\
 ' glances'\
 ' hddtemp'\
