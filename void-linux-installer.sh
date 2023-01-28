@@ -350,9 +350,14 @@
 # https://sourceforge.net/projects/keepboard
 # https://downloads.sourceforge.net/project/keepboard/Keepboard_Linux_5.5.zip
 #
+# Greenclip - required for rofi
 # https://github.com/erebe/greenclip
+# wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
+# chmod +x greenclip
+#
 # https://github.com/gilbertw1/roficlip
-# https://github.com/mrichar1/clipster
+#
+# git clone https://github.com/mrichar1/clipster
 ##################################################################
 # Osync
 # https://github.com/deajan/osync
