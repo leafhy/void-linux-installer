@@ -606,4 +606,4 @@ menu-0-5-exec = xrandr --output LVDS-1 --auto --output DP-1 --off && notify-send
 menu-0-6 = 
 menu-0-6-exec = xrandr --output LVDS-1 --off --output DP-1 --auto && notify-send "Display Switching to DP-1" && /sbin/herbstclient reload
 menu-0-7 = " | "
-menu-0-7-exec = xrandr --output DP-1 --auto --primary --output LVDS-1 --auto --left-of --above DP-1 && /sbin/herbstclient reload
+menu-0-7-exec = xrandr --output DP-1 --auto --primary --output LVDS-1 --auto --left-of DP-1 --above DP-1 && /sbin/herbstclient reload
