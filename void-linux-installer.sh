@@ -878,7 +878,6 @@ pkg_listsys='base-minimal'\
 ' snapraid'\
 ' mergerfs'\
 ' castget'\
-' newsboat'\
 ' minidlna'\
 ' ipmitool'
 
