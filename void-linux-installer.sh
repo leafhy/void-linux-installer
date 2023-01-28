@@ -673,7 +673,7 @@ setfont Lat2-Terminus16
 # Ignored Packages
 echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 # Installing with void-live-x86_64-musl-20221001-base.iso
-# gawk fails to install due to chroot-gawk
+# gawk fails to install due to chroot-gawk being already installed
 # Need to install gawk manually "xbps-install gawk"
 echo "ignorepkg=gawk" >> /etc/xbps.d/10-ignore.conf
 
