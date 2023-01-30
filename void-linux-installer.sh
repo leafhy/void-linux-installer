@@ -1338,9 +1338,8 @@ fi
 
 if [[ $UEFI ]]; then
   mkdir -p /mnt/boot/efi
-fi
 
-if [[ $device = /dev/mmcblk0 ]]; then
+elif [[ $device = /dev/mmcblk0 ]]; then
   mount ${device}p1 /mnt/boot/efi
 
 elif [[ $device != /dev/mmcblk0 ]]; then
