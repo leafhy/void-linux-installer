@@ -63,7 +63,7 @@ hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/new-lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
 hc keybind $Mod-Control-m spawn sakura -x micro
-hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" & ".config/siren" are not valid in herbstluftwm 
+hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" --> does not work
 hc keybind $Mod-Control-g spawn sakura -x glances
 hc keybind $Mod-Control-a spawn sakura -x aerc
 
