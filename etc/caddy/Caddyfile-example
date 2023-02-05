@@ -1,16 +1,18 @@
-#$HOSTNAME
-:2016 {
-tls /etc/caddy/cert.crt /etc/caddy/cert.key
+{IP ADDRESS:PORT}, {HOSTNAME:PORT}, {localhost:PORT}, {APPNAME.local:PORT} {
+        # tls /etc/caddy/cert.crt /etc/caddy/cert.key
+        tls internal
 
-# The negotiation endpoint is also proxied to Rocket
-reverse_proxy /notifications/hub/negotiate 127.0.0.1:2016
+        # The negotiation endpoint is also proxied to Rocket
+        reverse_proxy /notifications/hub/negotiate 127.0.0.1:2016
 
-# Notifications redirected to the websockets server
-reverse_proxy /notifications/hub 127.0.0.1:3012
+        # Notifications redirected to the websockets server
+        reverse_proxy /notifications/hub 127.0.0.1:3012
+        reverse_proxy 127.0.0.1:8000
 
-reverse_proxy 127.0.0.1:8000
+        log {
+                output file /var/log/caddy.log
+                level debug
+        }
 
-log {
-     output file /var/log/caddy.log
- }
- }
+}
+
