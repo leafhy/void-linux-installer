@@ -1428,7 +1428,6 @@ rootuuid=$(blkid -s UUID -o value ${device}2 | cut -d = -f 3 | cut -d " " -f 1 |
 cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.orig
 
 # Pressure Stall Information (PSI)
-#       Add "psi=1" to enable
 # OPTIONS=root="${device}2" >> boot will fail if OS is on /dev/sdb and /dev/sda is removed
 if [[ $device != /dev/mmcblk0 ]]; then
   tee /mnt/etc/default/efibootmgr-kernel-hook <<-EOF
