@@ -914,8 +914,8 @@ eval "$(starship init bash)"
 PATH="$HOME/.local/bin:$PATH"
 export TERMINAL=sakura
 # Weather Check
-alias weather='curl wttr.in/?0'
-alias w="curl wttr.in/~Adelaide"
+alias weath='curl wttr.in/?0'
+alias weather="curl wttr.in/~Adelaide"
 alias poweroff='doas /sbin/poweroff'
 alias reboot='doas /sbin/reboot'
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
