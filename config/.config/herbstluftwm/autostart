@@ -62,10 +62,10 @@ hc keybind $Mod-n spawn nemo
 hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/new-lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
-hc keybind $Mod-Control-m spawn sakura -x micro
-hc keybind $Mod-Control-s spawn sakura -x "siren -c $HOME/.config/siren" # "~/.config/siren" --> does not work
-hc keybind $Mod-Control-g spawn sakura -x glances
-hc keybind $Mod-Control-a spawn sakura -x aerc
+hc keybind $Mod-Control-m spawn sakura --title micro -x micro
+hc keybind $Mod-Control-s spawn sakura --title siren -x "siren -c $HOME/.config/siren" # "~/.config/siren" --> does not work
+hc keybind $Mod-Control-g spawn sakura --title glances -x glances
+hc keybind $Mod-Control-a spawn sakura --title aerc -x aerc
 
 # Volume Control 
 # Lenovo ThinkPad T420 volume & mute hardware buttons are non functional
