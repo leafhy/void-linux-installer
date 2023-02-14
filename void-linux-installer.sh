@@ -775,6 +775,8 @@ pkg_listsys='base-minimal'\
 ' linux-firmware-nvidia'\
 ' micro'\
 ' smplayer'\
+' mplayer'\
+' mpv'\
 ' sndio'\
 ' tlp'\
 ' xf86-input-wacom'\
