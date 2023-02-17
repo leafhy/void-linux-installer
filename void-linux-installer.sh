@@ -137,7 +137,7 @@
 # autox - caused login to loop switching monitor off & on (herbstluftwm)
 # iwd - includes dhcp
 # unbound - will not start if interface is wrong
-# zathura - mupdf,poppler,djvu,epub (mupdf stand alone is faster)
+# zathura - mupdf,poppler,djvu,epub (mupdf is faster then poppler)
 # aucatctl - changes volume in sndiod
 # bind-utils - dig (dns lookup), nslookup, host
 # lsyncd - service failed to start # erred with listed option as unknown
