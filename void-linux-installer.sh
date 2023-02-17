@@ -147,7 +147,7 @@
 #      >> Network Mount >> /home/user/.cache/gvfs/sftp\:host\=XXXXXXXXXXX
 #      >> Archive Extract >> file-roller
 #      >> Video Thumbnails >> ffmpegthumbnailer
-# tumbler -  "D-Bus Thumbnailer service" >> unsure of difference with ffmpegthumbnailer
+# tumbler -  "D-Bus Thumbnailer service" - unsure if unecassary
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
 # autorandr - create monitor profiles
