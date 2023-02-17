@@ -839,6 +839,7 @@ pkg_listsys='base-minimal'\
 ' gvfs-afc'\
 ' gvfs-mtp'\
 ' gvfs-gphoto2'\
+' gnome-epub-thumbnailer'\
 ' alsa-utils'\
 ' libopenal'\
 ' upower'\
