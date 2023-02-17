@@ -147,6 +147,8 @@
 #      >> Network Mount >> /home/user/.cache/gvfs/sftp\:host\=XXXXXXXXXXX
 #      >> Archive Extract >> file-roller
 #      >> Video Thumbnails >> ffmpegthumbnailer
+#      >> RAW & PDF thumbnails show after using thunar
+# gthumbs & rawtherapee display RAW
 # tumbler -  "D-Bus Thumbnailer service" - unsure if unecassary
 # cherrytree - https://www.giuspen.com/cherrytree - note taking application
 # lsscsi - list drives
@@ -853,6 +855,7 @@ pkg_listsys='base-minimal'\
 ' xwininfo'\
 ' redshift-gtk'\
 ' xbanish'\
+' gthumbs'\
 ' arc-theme'\
 ' arc-icon-theme'\
 ' faience-icon-theme'\
