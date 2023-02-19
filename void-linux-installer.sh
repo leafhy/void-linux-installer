@@ -138,6 +138,8 @@
 # iwd - includes dhcp
 # unbound - will not start if interface is wrong
 # zathura - mupdf,poppler,djvu,epub (mupdf is faster then poppler)
+# apvlv - Alf's PDF Viewer Like Vim
+# xreader (Document Viewer)
 # aucatctl - changes volume in sndiod
 # bind-utils - dig (dns lookup), nslookup, host
 # lsyncd - service failed to start # erred with listed option as unknown
