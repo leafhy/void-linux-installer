@@ -857,7 +857,7 @@ pkg_listsys='base-minimal'\
 ' xwininfo'\
 ' redshift-gtk'\
 ' xbanish'\
-' gthumbs'\
+' gthumb'\
 ' arc-theme'\
 ' arc-icon-theme'\
 ' faience-icon-theme'\
@@ -1360,6 +1360,10 @@ for dir in dev proc sys; do
   mount -o bind /$dir /mnt/$dir
 done
 
+# EFI varibles
+# /sys/firmware/efi/efivars/ 
+mount --rbind /sys /mnt/sys
+
 # Alternative mount options 
 # Conflicting information abounds
 # mount -t proc proc /mnt/proc
@@ -1401,7 +1405,7 @@ done
 pkg_list="$pkg_list $kernel"
 
 # Add repositories
-mkdir -p /etc/xbps.d
+mkdir -p /mnt/etc/xbps.d
 # cp /mnt/usr/share/xbps.d/*-repository-*.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/10-ignore.conf /mnt/etc/xbps.d
 cp /etc/xbps.d/00-repository-main.conf /mnt/etc/xbps.d
@@ -1477,8 +1481,7 @@ if [[ $opt = Server ]]; then
 fi
 
 # Reconfigure kernel and create initramfs (dracut) and efi boot entry (efibootmgr)
-# xbps-reconfigure -fa -r /mnt $kernel
-chroot /mnt xbps-reconfigure -fa $kernel
+xbps-reconfigure -fa -r /mnt $kernel
 cp /mnt/boot/initramfs* /mnt/boot/efi
 cp /mnt/boot/vmlinuz* /mnt/boot/efi
 
@@ -1607,7 +1610,7 @@ echo '**********************************************************'
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
 sleep 5
-efibootmgr -v
+efibootmgr
 echo '**********************************************************'
 echo '**********************************************************'
 echo -e "\x1B[1;32m [!] VOID LINUX INSTALL IS COMPLETE [!] \x1B[0m"
