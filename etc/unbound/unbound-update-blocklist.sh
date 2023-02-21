@@ -24,7 +24,10 @@ then
   echo 'Please use "sudo" to run this script.' >&2
   exit 1
 fi
-    
+
+mkdir -p /etc/unbound/unbound-blocklists
+pushd  /etc/unbound/unbound-blocklists
+
     wget --timestamping --quiet https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
     
     if [[ $? -ne 0 ]]; then
