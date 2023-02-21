@@ -26,7 +26,7 @@ then
 fi
 
 mkdir -p /etc/unbound/unbound-blocklists
-pushd  /etc/unbound/unbound-blocklists
+pushd    /etc/unbound/unbound-blocklists
 
     wget --timestamping --quiet https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
     
