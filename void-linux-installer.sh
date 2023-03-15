@@ -1355,11 +1355,11 @@ elif [[ $device != /dev/mmcblk0 ]]; then
 fi
 
 # Create Chroot Gaol
-for dir in dev proc sys; do
-  mkdir /mnt/$dir
-  mount -o bind /$dir /mnt/$dir
-done
+mkdir /mnt/{dev,proc,sys}
 
+mount -o bind /dev /mnt/dev
+mount -o bind /proc /mnt/proc
+  
 # EFI varibles
 # /sys/firmware/efi/efivars/ 
 mount --rbind /sys /mnt/sys
