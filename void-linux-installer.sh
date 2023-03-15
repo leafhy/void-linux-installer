@@ -1300,7 +1300,7 @@ if [[ $fsys3 ]]; then
   echo "       | encrypt does not work with 'casefold/utf8'"
   echo "       | casefold doesn't work without utf8"
   echo "       | compression unknown option"
-  echo "       | keyboard momentarily stopped working (casefold was used)"
+  echo "       | keyboard functioned intermittently (casefold was used)"
 
 PS3='Select f2fs options to use: '
 select opts in "Encrypt" "No Encryption" "No Checksums" "None"; do
