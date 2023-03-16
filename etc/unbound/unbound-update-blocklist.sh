@@ -53,7 +53,7 @@ pushd    /etc/unbound/unbound-blocklists
     sed '/#/d; /*/d; /^$/d; /^\./d' mybase.txt > mybase
     touch -a blacklist.txt
     cat block mybase blacklist.txt | sort -u > merged
-    touch -a whitelist.txt
+    touch -a whitelist.text
     cat whitelist.text whitelist.txt | sort -u > whitelist
     comm -23 merged whitelist > merged_corrected
     
