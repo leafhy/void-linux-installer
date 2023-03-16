@@ -690,13 +690,14 @@ Note: NVIDIA-Linux-x86-390.138 Latest
 doas ln -s /var/lib/dbus/machine-id /etc/
 
 ### VLC
+https://github.com/stefantalpalaru/w_scan2 # fork
+
+w_scan -c AU -L >> channels.xspf
 
 Note: prevent/mitigate TS discontinuity errors
       | disable "Trust in-stream PCR"
       | enable "Seek based on percent not time"
 installing xset prevents screensaver error
-
-w_scan -c AU -L >> channels.xspf
 # -------------------------------------------------- #
 
 ### Gparted
