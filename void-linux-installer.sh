@@ -484,6 +484,7 @@ if [[ $UEFI ]]; then
   pkg_list="$pkg_list efibootmgr"
 else
   echo -e "\x1B[1;31m ************ [!] UEFI Not found [!] ************ \x1B[0m"
+  exit 1
 fi
 
 # Detect if we're on an Intel system
