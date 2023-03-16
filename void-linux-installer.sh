@@ -382,7 +382,6 @@ repo2="http://alpha.de.repo.voidlinux.org/current/musl" # connection can be slow
 ###########################################
 ###########################################
 
-# /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
 echo ''
 echo '************************************************'
 echo -e '******************* \x1B[1;31m WARNING \x1B[0m ******************'
@@ -392,12 +391,26 @@ echo '****                                        ****'
 echo '**** Partition Layout : Fat-32 EFI of 550MB ****'
 echo '****                  : / 100%              ****'
 echo '************************************************'
-echo ''
+
+# Detect if we're in UEFI or legacy mode
+[[ -d /sys/firmware/efi ]] && UEFI=1
+
+if [[ $UEFI ]]; then
+  echo -e "\x1B[1;92m [!] Found UEFI [!] \x1B[0m" 
+  pkg_list="$pkg_list efibootmgr"
+else
+  echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
+  exit 1
+fi
+
 lsblk -f -l | grep -e sd -e mmcblk
+
 echo ''
 echo '****************************************'
 echo '[!] Verify Connected Drive Is Listed [!]'
 echo '****************************************'
+# /dev/mmcblk0 is SDCARD on Lenovo Thinkpad T420 & T520
+
 # Generate drive options dynamically
 PS3="Select drive to format: "
 echo ''
@@ -475,17 +488,6 @@ tee /etc/xbps.d/10-repository-nonfree.conf <<-EOF
   repository=$repo1/nonfree
   repository=$repo2/nonfree
 EOF
-
-# Detect if we're in UEFI or legacy mode
-[[ -d /sys/firmware/efi ]] && UEFI=1
-
-if [[ $UEFI ]]; then
-  echo -e "\x1B[1;92m ************ [!] Found UEFI [!] ************ \x1B[0m" 
-  pkg_list="$pkg_list efibootmgr"
-else
-  echo -e "\x1B[1;31m ************ [!] UEFI Not found [!] ************ \x1B[0m"
-  exit 1
-fi
 
 # Detect if we're on an Intel system
 cpu_vendor=$(grep vendor_id /proc/cpuinfo | awk '{print $3}')
