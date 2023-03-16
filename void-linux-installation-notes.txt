@@ -384,10 +384,10 @@ https://github.com/erebe/greenclip
 wget https://github.com/erebe/greenclip/releases/download/v4.2/greenclip
 chmod +x greenclip
 
-### roficlip
+### Roficlip
 https://github.com/gilbertw1/roficlip
 
-### clipster
+### Clipster
 git clone https://github.com/mrichar1/clipster
 # -------------------------------------------------- #
 
