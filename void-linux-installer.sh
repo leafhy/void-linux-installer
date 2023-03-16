@@ -941,9 +941,8 @@ EOF
 
 ### /home/$USER/.bash_profile
 bashprofile="$(cat <<'EOF'
-# Get the aliases and functions
-[ -f $HOME/.bashrc ] && . $HOME/.bashrc
-# exec startx prevents 'ssh' login
+# Uncomment startx after sym linking 'config/.config/herbstluftwm'
+# 'exec startx' prevents 'ssh' login
 # exec startx
 EOF
 )"
@@ -1562,7 +1561,7 @@ done
 echo "$bashrc" > /mnt/home/$username/.bashrc
 
 if [[ $opt = Desktop ]]; then
-  echo "$bashprofile" > /mnt/home/$username/.bash_profile
+  echo "$bashprofile" >> /mnt/home/$username/.bash_profile
   echo "$xinitrc" > /mnt/home/$username/.xinitrc
   chown 1000:1000 /mnt/home/$username/.xinitrc
 fi
