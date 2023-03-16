@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# exit on error 
+# Exit on error 
 set -e
 
 # Make terminal clean
