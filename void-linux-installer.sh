@@ -878,7 +878,6 @@ echo "$doasconf" > /mnt/etc/doas.conf
 
 # Configure user accounts
 echo ''
-# Add ansi colour codes
 echo -e "[!] Create \x1B[1;31m root \x1B[0m password [!]"
 echo ''
 
