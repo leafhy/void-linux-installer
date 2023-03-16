@@ -901,7 +901,7 @@ hostname="void"
 
 ### /home/$USER/.bashrc
 bashrc="$(cat <<'EOF'
-# ---------------------
+# --------------------
 # Eternal bash history.
 # ---------------------
 # Undocumented feature which sets the size to "unlimited".
@@ -915,17 +915,21 @@ export HISTFILE=~/.bash_eternal_history
 # Force prompt to write history after every command.
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-# ---------------------
-sh buffquote
+# --------------------
 eval "$(starship init bash)"
-# export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 PATH="$HOME/.local/bin:$PATH"
+alias poweroff='doas /sbin/poweroff'
+alias reboot='doas /sbin/reboot'
+EOF
+)"
+
+bashrcwm="$(cat <<'EOF'
+sh buffquote
+# export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export TERMINAL=sakura
 # Weather Check
 alias weath='curl wttr.in/?0'
 alias weather="curl wttr.in/~Adelaide"
-alias poweroff='doas /sbin/poweroff'
-alias reboot='doas /sbin/reboot'
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
 alias clipsr="clipster --delete"
 alias clipsc="clipster --erase-entire-board"
@@ -964,31 +968,6 @@ usernamesrv="void-srv"
 groupsrv="wheel,storage,cdrom,optical,socklog"
 srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
 hostnamesrv="void-srv"
-
-### /home/$USER/.bashrc
-bashrcsrv="$(cat <<'EOF'
-# --------------------
-# Eternal bash history.
-# ---------------------
-# Undocumented feature which sets the size to "unlimited".
-# http://stackoverflow.com/questions/9457233/unlimited-bash-history
-export HISTFILESIZE=
-export HISTSIZE=
-export HISTTIMEFORMAT="[%F %T] "
-# Change the file location because certain bash sessions truncate .bash_history file upon close.
-# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
-export HISTFILE=~/.bash_eternal_history
-# Force prompt to write history after every command.
-# http://superuser.com/questions/20900/bash-history-loss
-PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-# --------------------
-sh buffquote
-eval "$(starship init bash)"
-PATH="$HOME/.local/bin:$PATH"
-alias poweroff='doas /sbin/poweroff'
-alias reboot='doas /sbin/reboot'
-EOF
-)"
 
 ##################
 ##### System #####
@@ -1124,7 +1103,7 @@ case $opt in
       services="$services"
       groups="$groups"
       hostname="$hostname"
-      bashrc="$bashrc"
+      bashrc="$bashrc $bashrcwm"
       break
       ;;
     'Server')
@@ -1133,7 +1112,7 @@ case $opt in
       services="$srvservices"
       groups="$groupsrv"
       hostname="$hostnamesrv"
-      bashrc="$bashrcsrv"
+      bashrc="$bashrc"
       break
       ;;
     *)
