@@ -249,7 +249,7 @@ wget https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/.env.templat
 fcrontab -e
 # &bootrun,first(2) * * * * * cd /home/$USER/src/vaultwarden ./vaultwarden >> /var/log/vaultwarden.log 2>&1
 
-# install rustup
+# Install rustup
 curl https://sh.rustup.rs -sSf | sh # installs to $HOME
 select (1)
 rustup self uninstall
@@ -258,6 +258,7 @@ rustup self uninstall
 export RUSTUP_HOME=".local/share/rustup"
 export CARGO_HOME=".local/share/cargo"
 
+# Build Vaultwarden
 https://github.com/dani-garcia/vaultwarden
 git clone https://github.com/dani-garcia/bitwarden_rs && pushd bitwarden_rs
 cargo clean && cargo build --features sqlite --release
