@@ -8,7 +8,7 @@
     # be use to sanatize the blocklist
 
     # You can also manually add domains to the blacklist or whitelist
-    # by adding them in blacklist.txt or whitelist.txt in /etc/unbound
+    # by adding them in blacklist.txt or whitelist.text in /etc/unbound
     # CREDITS
     # Steven Black https://github.com/StevenBlack/hosts
     # DNScrypt.info https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Public-blacklists
@@ -54,7 +54,7 @@ pushd    /etc/unbound/unbound-blocklists
     touch -a blacklist.txt
     cat block mybase blacklist.txt | sort -u > merged
     touch -a whitelist.txt
-    cat whitelist.txt whitelist.txt | sort -u > whitelist
+    cat whitelist.text whitelist.txt | sort -u > whitelist
     comm -23 merged whitelist > merged_corrected
     
     # Change "/etc/unbound/unbound-blocked.conf" to match the include setting in unbound.conf file
