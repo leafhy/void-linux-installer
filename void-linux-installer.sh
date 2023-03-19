@@ -671,10 +671,10 @@ fi
 if [[ $UEFI ]]; then
   mkdir -p /mnt/boot/efi
 
-elif [[ $device = /dev/mmcblk0 ]]; then
+  [[ $device = /dev/mmcblk0 ]] && \
   mount ${device}p1 /mnt/boot/efi
 
-elif [[ $device != /dev/mmcblk0 ]]; then
+  [[ $device != /dev/mmcblk0 ]] && \
   mount ${device}1 /mnt/boot/efi
 fi
 
