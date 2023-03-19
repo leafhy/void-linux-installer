@@ -308,7 +308,7 @@ EOF
 
 usernamesrv="void-srv"
 groupsrv="wheel,storage,cdrom,optical,socklog"
-srvservices="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
+servicessrv="sshd acpid chronyd fcron socklog-unix nanoklogd hddtemp popcorn statd rpcbind smartd"
 hostnamesrv="void-srv"
 
 ##################
@@ -464,7 +464,7 @@ case $opt in
     'Server')
       pkg_list="$pkg_listsrv $pkg_listc $pkg_listsys $prereqs"
       username="$usernamesrv"
-      services="$srvservices"
+      services="$servicessrv"
       groups="$groupsrv"
       hostname="$hostnamesrv"
       bashrc="$bashrc"
