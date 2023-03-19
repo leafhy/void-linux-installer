@@ -917,7 +917,7 @@ fi
 
 # Create $HOME directories
 for dir in $dirs; do
-  chroot --userspec=$username:users /mnt mkdir -p home/$username/$dir
+  chroot --userspec=$username:$username /mnt mkdir -p home/$username/$dir
 done
 
 # Create list of installed packages
