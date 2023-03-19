@@ -922,7 +922,6 @@ done
 
 # Create list of installed packages
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
-clear
  
 echo '**********************************************************'
 echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
@@ -933,6 +932,7 @@ echo '**********************************************************'
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
 sleep 5
+clear
 efibootmgr
 echo '**********************************************************'
 echo '**********************************************************'
