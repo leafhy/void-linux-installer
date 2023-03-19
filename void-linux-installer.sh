@@ -30,6 +30,7 @@ echo "ignorepkg=sudo" > /etc/xbps.d/10-ignore.conf
 echo "ignorepkg=gawk" >> /etc/xbps.d/10-ignore.conf
 
 # Prerequisites
+# setting password requires pam
 prereqs='gptfdisk pam dosfstools'
 
 # System Packages
@@ -543,7 +544,6 @@ esac
 done
 
 # Install Prerequisites to Live USB/Cd
-# setting password requires pam
 
 if [[ $repopath != "" ]]; then
   cd $repopath
