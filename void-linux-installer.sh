@@ -931,9 +931,8 @@ echo '**********************************************************'
 echo '**********************************************************'
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
-sleep 5
-clear
-efibootmgr
+efibootmgr | grep BootOrder
+efibootmgr | grep vmlinuz
 echo '**********************************************************'
 echo '**********************************************************'
 echo -e "\x1B[1;32m [!] VOID LINUX INSTALL IS COMPLETE [!] \x1B[0m"
