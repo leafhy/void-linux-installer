@@ -903,7 +903,7 @@ while true; do
 done
 
 # Setup $HOME
-echo "$bashrc" > /mnt/home/$username/.bashrc
+echo "$bashrc" >> /mnt/home/$username/.bashrc
 
 if [[ $opt = Desktop ]]; then
   echo "$bashprofile" >> /mnt/home/$username/.bash_profile
