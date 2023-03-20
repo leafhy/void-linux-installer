@@ -344,8 +344,8 @@ $ make && make install
 # -------------------------------------------------- #
 
 ### Dmenu-Extended
- git clone https://github.com/MarkHedleyJones/dmenu-extended.git
- python setup.py install
+git clone https://github.com/MarkHedleyJones/dmenu-extended.git
+python setup.py install
  .config/dmenu-extended/config/dmenuExtended_preferences.txt
  "menu": "rofi",
  "menu_arguments": [
