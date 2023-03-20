@@ -918,14 +918,15 @@ done
 
 # Create list of installed packages
 xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
- 
+
+echo '**********************************************************'
 echo '**********************************************************'
 echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
 echo ' Boot entry needs to be towards the top of list otherwise '
 echo '       it will not appear in the boot menu                '
-echo '**********************************************************'
-echo '**********************************************************'
+echo '                                                          '
 echo '      Resetting BIOS will restore default boot order      '
+echo '**********************************************************'
 echo '**********************************************************'
 efibootmgr | grep BootOrder
 efibootmgr | grep vmlinuz
