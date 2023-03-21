@@ -456,7 +456,8 @@ case $opt in
       services="$services"
       groups="$groups"
       hostname="$hostname"
-      bashrc="$bashrc $bashrcwm"
+      bashrc="$bashrc
+      $bashrcwm"
       break
       ;;
     'Server')
