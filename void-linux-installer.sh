@@ -92,6 +92,7 @@ pkg_listsys='base-minimal'\
 ' unzip'\
 ' unrar'\
 ' zstd'\
+' lzip'\
 ' ranger'\
 ' font-tamsyn'\
 ' starship'\
