@@ -477,7 +477,7 @@ done
 
 # Add repositories to live USB/Cd
 tee /etc/xbps.d/00-repository-main.conf <<-EOF
-  repository=$repo0 
+  repository=$repo0
   repository=$repo1
   repository=$repo2
 EOF
