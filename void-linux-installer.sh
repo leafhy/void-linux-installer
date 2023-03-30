@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Exit on error 
+# Exit on error
 set -e
 
 # Make terminal clean
@@ -348,12 +348,12 @@ wifipassword=""
 ### openresolv is required for iwd (wifi) to access internet
 # and uses /etc/resolvconf.conf with optional /etc/resolv.conf
 openresolv="YES" # any other value if not used
-### nameserver0 is for dnscrypt-proxy (not needed if using openresolv)		
+### nameserver0 is for dnscrypt-proxy (not needed if using openresolv)
 nameserver0="127.0.0.1"
 ### nameserver{1,2} is for /etc/resolv.conf or resolvconf.conf
 # Cloudflare "1.0.0.1" "1.1.1.1" # Google "8.8.4.4" "8.8.8.8"
 nameserver1="1.0.0.1"
-nameserver2="1.1.1.1" 
+nameserver2="1.1.1.1"
 
 ######################
 ##### Repository #####
@@ -363,7 +363,7 @@ nameserver2="1.1.1.1"
 
 ### Path to packages that have already been downloaded
 # xbps-install --repository $repopath $pkg_list
-repopath=""  
+repopath=""
 
 ### Save packages to somewhere other then /var/cache/xbps
 # xbps-install --repository $repo0..2 --download-only --cachedir $cachedir $pkg_list && cd $repopath && xbps-rindex --add *xbps
@@ -394,7 +394,7 @@ echo '************************************************'
 [[ -d /sys/firmware/efi ]] && UEFI=1
 
 if [[ $UEFI ]]; then
-  echo -e "\x1B[1;92m [!] Found UEFI [!] \x1B[0m" 
+  echo -e "\x1B[1;92m [!] Found UEFI [!] \x1B[0m"
   pkg_list="$pkg_list efibootmgr"
 else
   echo -e "\x1B[1;31m [!] UEFI Not found [!] \x1B[0m"
@@ -588,7 +588,7 @@ clear
 # fat-32
 if [[ $UEFI && $device = /dev/mmcblk0 ]]; then
   mkfs.vfat -F 32 -n EFI ${device}p1
- 
+
 elif [[ $UEFI && $device != /dev/mmcblk0 ]]; then
   mkfs.vfat -F 32 -n $labelfat ${device}1
 fi
@@ -601,10 +601,10 @@ if [[ $fsys1 && $device = /dev/mmcblk0 ]]; then
 
 elif [[ $fsys1 && $device != /dev/mmcblk0 ]]; then
   mkfs.$fsys1 -f -L $labelroot ${device}2
-fi 
+fi
 
 # ${fsys2} -F -L
-# ext4 
+# ext4
 if [[ $fsys2 && $device = /dev/mmcblk0 ]]; then
   mkfs.$fsys2 -F -L $labelroot ${device}p2
 
@@ -653,7 +653,7 @@ fi
 # f2fs
 if [[ $fsys3 && $device = /dev/mmcblk0 ]]; then
   mkfs.$fsys3 -f -l $labelroot ${device}p2
- 
+
 elif [[ $fsys3 && $device != /dev/mmcblk0 ]]; then
   mkfs.$fsys3 -f -l $labelroot ${device}2
 fi
@@ -662,7 +662,7 @@ fi
 if [[ $device = /dev/mmcblk0 ]]; then
   mount ${device}p2 /mnt
 
-elif [[ $device != /dev/mmcblk0 ]]; then 
+elif [[ $device != /dev/mmcblk0 ]]; then
   mount ${device}2 /mnt
 fi
 
@@ -681,12 +681,12 @@ mkdir /mnt/{dev,proc,sys}
 
 mount -o bind /dev /mnt/dev
 mount -o bind /proc /mnt/proc
-  
+
 # EFI varibles
-# /sys/firmware/efi/efivars/ 
+# /sys/firmware/efi/efivars/
 mount --rbind /sys /mnt/sys
 
-# Alternative mount options 
+# Alternative mount options
 # Conflicting information abounds
 # mount -t proc proc /mnt/proc
 # mount -t sysfs sys /mnt/sys
@@ -714,7 +714,7 @@ echo "Live CD kernel version $kver"
 echo '**************************'
 echo 'Choose a kernel to install'
 echo '**************************'
-PS3="Select kernel: " 
+PS3="Select kernel: "
 select kernel in $(xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+' | sed -e 's/\[-\] //' -e 's/_.*$//' | cut -d - -f 1 | sort | uniq)
 do
 if [[ $kernel = "" ]]; then
@@ -792,7 +792,7 @@ fi
 
 if [[ $fsys3 ]]; then
   echo "# Boot fails if fsck.f2fs <pass> is enabled" >> /mnt/etc/fstab
-  echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab 
+  echo "UUID=$rootuuid   /       f2fs   defaults           0 0" >> /mnt/etc/fstab
 else
   echo "UUID=$rootuuid   /       $fsys1 $fsys2   defaults    0 1" >> /mnt/etc/fstab
 fi
@@ -841,7 +841,7 @@ EOF
 fi
 
 # Set static ip address for wifi
-if [[ $ipstaticwlan0 ]]; then 
+if [[ $ipstaticwlan0 ]]; then
   tee /mnt/var/lib/iwd/${routerssid}.psk <<-EOF
   [IPv4]
   Address="${ipstaticwlan0}"
@@ -889,7 +889,7 @@ done
 echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
 echo ''
 useradd --root /mnt --user-group --groups $groups --create-home $username
-# Bug? useradd -R /mnt 
+# Bug? useradd -R /mnt
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
 # home directory is still created
 
@@ -941,7 +941,7 @@ echo ''
 echo "(U)nmount $device and exit"
 echo ''
 echo '(E)xit'
-echo '' 
+echo ''
 echo '(R)eboot'
 echo ''
 echo '(P)oweroff'
