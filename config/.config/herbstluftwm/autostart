@@ -36,9 +36,9 @@ while pgrep -u $UID -x udiskie >/dev/null; do sleep 1; done
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 redshift-gtk & redshift -x
 udiskie --tray &
-# autocutsel - synchronize CLIPBOARD[default] with PRIMARY
-autocutsel -fork
-autocutsel -selection PRIMARY -fork # Run as a daemon program in the background
+autocutsel -fork  # Run as a daemon program in the background
+autocutsel -selection PRIMARY -fork # Synchronize CLIPBOARD[default] with PRIMARY
+
 clipster --daemon &
 greenclip daemon &
 nohang --monitor --config /usr/local/share/nohang/nohang-desktop.conf &
@@ -56,16 +56,16 @@ hc keybind $Mod-Shift-c close
 
 # Applications
 hc keybind $Mod-Return spawn "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
-# polybar-msg cmd {hide,show,toggle,quit}
-hc keybind $Mod-Control-t spawn polybar-msg cmd restart
 hc keybind $Mod-n spawn nemo
 hc keybind $Mod-a spawn astroid
 hc keybind $Mod-Control-z spawn ~/.config/i3/new-lock.sh
 hc keybind $Mod-Shift-z spawn ~/.local/bin/lockscreen.sh
-hc keybind $Mod-Control-m spawn sakura --title micro -x micro
-hc keybind $Mod-Control-s spawn sakura --title siren -x "siren -c $HOME/.config/siren" # "~/.config/siren" --> does not work
-hc keybind $Mod-Control-g spawn sakura --title glances -x glances
-hc keybind $Mod-Control-a spawn sakura --title aerc -x aerc
+hc keybind $Mod-Control-m spawn sakura --title Micro -x micro
+hc keybind $Mod-Control-s spawn sakura --title Siren -x "siren -c $HOME/.config/siren" # "~/.config/siren" --> does not work
+hc keybind $Mod-Control-g spawn sakura --title Glances -x glances
+hc keybind $Mod-Control-a spawn sakura --title Aerc -x aerc
+hc keybind $Mod-Control-b spawn sakura --title Bower -x bower
+hc keybind $Mod-Control-t spawn polybar-msg cmd restart # polybar-msg cmd [hide,show,toggle,quit]
 
 # Volume Control 
 # Lenovo ThinkPad T420 volume & mute hardware buttons are non functional
