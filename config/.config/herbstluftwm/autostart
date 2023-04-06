@@ -20,6 +20,7 @@ killall -q redshift-gtk && redshift -x
 killall -q clipster
 killall -q greenclip
 killall -q autocutsel
+killall -q xbanish
 pgrep -f udiskie | xargs kill -9 >/dev/null 2>&1
 pgrep -f nohang | xargs kill -9 >/dev/null 2>&1
 
@@ -31,14 +32,14 @@ while pgrep -u $UID -x clipster >/dev/null; do sleep 1; done
 while pgrep -u $UID -x greenclip >/dev/null; do sleep 1; done
 while pgrep -u $UID -x autocutsel >/dev/null; do sleep 1; done
 while pgrep -u $UID -x udiskie >/dev/null; do sleep 1; done
-
+while pgrep -u $UID -x xbanish >/dev/null; do sleep 1; done
 # Start programs
 polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
 redshift-gtk & redshift -x
 udiskie --tray &
 autocutsel -fork  # Run as a daemon program in the background
 autocutsel -selection PRIMARY -fork # Synchronize CLIPBOARD[default] with PRIMARY
-
+xbanish &
 clipster --daemon &
 greenclip daemon &
 nohang --monitor --config /usr/local/share/nohang/nohang-desktop.conf &
