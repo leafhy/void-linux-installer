@@ -283,8 +283,10 @@ EOF
 ### /home/$USER/.bash_profile
 bashprofile="$(cat <<'EOF'
 # Uncomment startx after sym linking 'config/.config/herbstluftwm'
-# 'exec startx' prevents 'ssh' login
+# Disallow 'ssh' login
 # exec startx
+# Allow 'ssh' login
+# [[ -z $DISPLAY && -z $SSH_CLIENT ]] && exec startx
 EOF
 )"
 
