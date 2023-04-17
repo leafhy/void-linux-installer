@@ -573,14 +573,12 @@ fi
 # parted /dev/${devname} set 1 boot on
 
 # Create GPT partition table
-echo ''
 if [[ $UEFI ]]; then
   sgdisk --zap-all $device
   sgdisk -n 1:2048:550M -t 1:ef00 $device
   sgdisk -n 2:0:0 -t 2:8300 $device
   sgdisk --verify $device
 fi
-echo ''
 
 clear
 
@@ -875,19 +873,19 @@ echo "FONT=$FONT" >> /mnt/etc/rc.conf
 echo "$doasconf" > /mnt/etc/doas.conf
 
 # Configure user accounts
-echo ''
+echo '--------------------------------------------------'
 echo -e "[!] Create \x1B[1;31m root \x1B[0m password [!]"
-echo ''
+echo '--------------------------------------------------'
 
 while true; do
   passwd -R /mnt root && break
   echo 'Password did not match. Please try again'
   sleep 3s
-  echo ''
 done
 
+echo '-----------------------------------------------------------------'
 echo -e "[!] Create password for user \x1B[01;96m $username \x1B[0m [!]"
-echo ''
+echo '-----------------------------------------------------------------'
 useradd --root /mnt --user-group --groups $groups --create-home $username
 # Bug? useradd -R /mnt
 # error: configuration error unknown item 'HOME_MODE' (notify administrator)
@@ -925,7 +923,7 @@ echo '**********************************************************'
 echo '**********************************************************'
 echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
 echo ' Boot entry needs to be towards the top of list otherwise '
-echo '       it will not appear in the boot menu                '
+echo '       it will not appear in the UEFI boot menu           '
 echo '                                                          '
 echo '      Resetting BIOS will restore default boot order      '
 echo '**********************************************************'
