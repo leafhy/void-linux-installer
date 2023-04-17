@@ -477,15 +477,15 @@ done
 
 # Add repositories to live USB/Cd
 tee /etc/xbps.d/00-repository-main.conf <<-EOF
-  repository=$repo0
-  repository=$repo1
-  repository=$repo2
+	repository=$repo0
+	repository=$repo1
+	repository=$repo2
 EOF
 
 tee /etc/xbps.d/10-repository-nonfree.conf <<-EOF
-  repository=$repo0/nonfree
-  repository=$repo1/nonfree
-  repository=$repo2/nonfree
+	repository=$repo0/nonfree
+	repository=$repo1/nonfree
+	repository=$repo2/nonfree
 EOF
 
 # Detect if we're on an Intel system
@@ -765,18 +765,18 @@ cp /etc/default/efibootmgr-kernel-hook /mnt/etc/default/efibootmgr-kernel-hook.o
 # OPTIONS=root="${device}2" >> boot will fail if OS is on /dev/sdb and /dev/sda is removed
 if [[ $device != /dev/mmcblk0 ]]; then
   tee /mnt/etc/default/efibootmgr-kernel-hook <<-EOF
-  MODIFY_EFI_ENTRIES=1
-  OPTIONS="root=UUID=$rootuuid loglevel=4 Page_Poison=1 psi=1"
-  DISK="$device"
-  PART=1
+	MODIFY_EFI_ENTRIES=1
+	OPTIONS="root=UUID=$rootuuid loglevel=4 Page_Poison=1 psi=1"
+	DISK="$device"
+	PART=1
 EOF
 
 elif [[ $device = /dev/mmcblk0 ]]; then
   tee /mnt/etc/default/efibootmgr-kernel-hook <<-EOF
-  MODIFY_EFI_ENTRIES=1
-  OPTIONS=root="${device}p2 loglevel=4 Page_Poison=1"
-  DISK="$device"
-  PART=1
+	MODIFY_EFI_ENTRIES=1
+	OPTIONS=root="${device}p2 loglevel=4 Page_Poison=1"
+	DISK="$device"
+	PART=1
 EOF
 fi
 
@@ -835,20 +835,20 @@ echo "ip route add default via $gateway" >> /mnt/etc/rc.local
 # Use static Wifi (dynamic is default)
 if [[ $ipstaticwlan0 ]]; then
   tee /mnt/etc/iwd/main.conf <<-EOF
-  [General]
-  EnableNetworkConfiguration=true
+	[General]
+	EnableNetworkConfiguration=true
 EOF
 fi
 
 # Set static ip address for wifi
 if [[ $ipstaticwlan0 ]]; then
   tee /mnt/var/lib/iwd/${routerssid}.psk <<-EOF
-  [IPv4]
-  Address="${ipstaticwlan0}"
-  #Netmask=255.255.255.0
-  Gateway="$gateway"
-  #Broadcast=192.168.1.255
-  #DNS=""
+	[IPv4]
+	Address="${ipstaticwlan0}"
+	#Netmask=255.255.255.0
+	Gateway="$gateway"
+	#Broadcast=192.168.1.255
+	#DNS=""
 EOF
 fi
 
