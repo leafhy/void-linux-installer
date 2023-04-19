@@ -28,6 +28,15 @@ http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, U
 http://www.secfs.net/winfsp # mount remote folder on windows # root "\\sshfs.r\user@host/" # home '\\sshfs\user@host"
 https://github.com/billziss-gh/winfsp
 https://github.com/billziss-gh/sshfs-win
+https://github.com/nicm/fdm # email suite
+https://github.com/leahneukirchen/mblaze # email suite
+http://gmvault.org # fetch gmail
+https://pyropus.ca./software/getmail # mail retriever
+https://www.fetchmail.info # mail retrieval and forwarding utility
+https://github.com/foxcpp/maddy # mail server
+https://mailinabox.email
+https://imapsync.lamiral.info
+https://github.com/imapsync/imapsync
 ##############################
 ###### Symlink Managers ######
 ##############################
