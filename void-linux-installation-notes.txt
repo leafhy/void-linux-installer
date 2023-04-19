@@ -28,6 +28,8 @@ http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, U
 http://www.secfs.net/winfsp # mount remote folder on windows # root "\\sshfs.r\user@host/" # home '\\sshfs\user@host"
 https://github.com/billziss-gh/winfsp
 https://github.com/billziss-gh/sshfs-win
+https://github.com/computefoundation/gnu-linux-shell-scripting/tree/master/scripts/x11_management-output_only#x11-management---output-only
+https://github.com/paulihano/focus # window switcher
 #############
 ### Email ###
 #############
