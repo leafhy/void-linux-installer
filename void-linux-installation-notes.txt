@@ -28,6 +28,9 @@ http://pinyinjoe.com/index.html # Chinese language setup in Microsoft Windows, U
 http://www.secfs.net/winfsp # mount remote folder on windows # root "\\sshfs.r\user@host/" # home '\\sshfs\user@host"
 https://github.com/billziss-gh/winfsp
 https://github.com/billziss-gh/sshfs-win
+#############
+### Email ###
+#############
 https://github.com/nicm/fdm # email suite
 https://github.com/leahneukirchen/mblaze # email suite
 http://gmvault.org # fetch gmail
@@ -37,9 +40,9 @@ https://github.com/foxcpp/maddy # mail server
 https://mailinabox.email
 https://imapsync.lamiral.info
 https://github.com/imapsync/imapsync
-##############################
-###### Symlink Managers ######
-##############################
+########################
+### Symlink Managers ###
+########################
 https://github.com/anishathalye/dotbot
 https://github.com/lra/mackup
 https://github.com/kairichard/lace
@@ -48,9 +51,9 @@ https://gitlab.com/grm-grm/ck
 https://gitlab.com/semente/summon
 https://www.gnu.org/software/stow
 https://www.chezmoi.io
-###################################
-######### Terminal Themes #########
-###################################
+#######################
+### Terminal Themes ###
+#######################
 https://github.com/lemnos/theme.sh
 https://github.com/ciembor/4bit
 https://github.com/chriskempson/base16-shell
