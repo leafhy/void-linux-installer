@@ -1,3 +1,6 @@
+# 'format s16_le' causes Alsa to play too fast
+# Appears to be 'Void Linux' specific as it doesn't occur on 'Kiss Linux' with the same config
+
 pcm.sndio {
 type asym
 playback.pcm "sndio-play"
@@ -12,7 +15,7 @@ hint {
 	    slave {
 	    pcm "sndio-raw"
 	    rate 48000
-	    format s16_le
+	    format s32_le
 	    channels 2
 }
 }
