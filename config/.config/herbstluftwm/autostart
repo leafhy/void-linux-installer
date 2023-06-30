@@ -12,11 +12,12 @@ hc emit_hook reload
 
 # Wallpaper
 xsetroot -solid '#5A8E3A'
-xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard.jpg"
+#xwallpaper --output LVDS-1 --center ".config/herbstluftwm/Snow Leopard.jpg" --output DP-1 --center ".config/herbstluftwm/Snow Leopard.jpg"
 
 # Terminate already running processes
 killall -q polybar
-killall -q redshift-gtk && redshift -x
+killall -q redshift-gtk
+killall -q redshift
 killall -q clipster
 killall -q greenclip
 killall -q autocutsel
@@ -33,9 +34,11 @@ while pgrep -u $UID -x greenclip >/dev/null; do sleep 1; done
 while pgrep -u $UID -x autocutsel >/dev/null; do sleep 1; done
 while pgrep -u $UID -x udiskie >/dev/null; do sleep 1; done
 while pgrep -u $UID -x xbanish >/dev/null; do sleep 1; done
+
 # Start programs
-polybar -l info -c /home/$USER/.config/polybar/polybar-config herbstluftwm &
-redshift-gtk & redshift -x
+polybar -l info -c /home/"$USER"/.config/polybar/polybar-config herbstluftwm &
+redshift-gtk &
+redshift -x &
 udiskie --tray &
 autocutsel -fork  # Run as a daemon program in the background
 autocutsel -selection PRIMARY -fork # Synchronize CLIPBOARD[default] with PRIMARY
@@ -55,6 +58,11 @@ hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 
+# Monitor Switching
+hc keybind $Mod-Control-1 spawn ~/.local/bin/monitor-switch.sh lvds-1
+hc keybind $Mod-Control-2 spawn ~/.local/bin/monitor-switch.sh dp-1
+hc keybind $Mod-Control-3 spawn ~/.local/bin/monitor-switch.sh extend
+
 # Applications
 hc keybind $Mod-Return spawn "${TERMINAL:-xterm}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-n spawn nemo
@@ -68,14 +76,14 @@ hc keybind $Mod-Control-a spawn sakura --title Aerc -x aerc
 hc keybind $Mod-Control-b spawn sakura --title Bower -x bower
 hc keybind $Mod-Control-t spawn polybar-msg cmd restart # polybar-msg cmd [hide,show,toggle,quit]
 
-# Volume Control 
+# Volume Control
 # Lenovo ThinkPad T420 volume & mute hardware buttons are non functional
 hc keybind Shift-Up spawn amixer set Master 1+ # volume increase
 hc keybind Shift-Down spawn amixer set Master 1- # volume decrease
 hc keybind $Mod-Shift-x spawn amixer set Master toggle # mute|unmute
 
 # herbstluftwm extras > /usr/share/doc/herbstluftwm/examples/
-hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh 
+hc keybind $Mod-z spawn ~/.config/herbstluftwm/scripts/scratchpad.sh
 hc keybind $Mod-q spawn ~/.config/herbstluftwm/scripts/q3terminal.sh
 hc keybind $Mod-y spawn ~/.config/herbstluftwm/scripts/windowmenu.sh
 hc keybind $Mod-t spawn ~/.config/herbstluftwm/scripts/toggledualhead.sh
@@ -227,7 +235,8 @@ hc unlock
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
 # hc set_monitors 1366x768+0+0 1920x1200+1366+0
 # or simply:
-hc detect_monitors
+#hc detect_monitors
+hc set auto_detect_monitors on
 
 # find the panel
 panel=~/.config/herbstluftwm/panel.sh
