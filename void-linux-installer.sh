@@ -925,9 +925,9 @@ echo '**********************************************************'
 echo '**********************************************************'
 echo -e "[!] Check \x1B[1;92m BootOrder: \x1B[1;0m is correct [!]"
 echo ' Boot entry needs to be towards the top of list otherwise '
-echo '       it will not appear in the UEFI boot menu           '
+echo ' it will not appear in the UEFI boot menu.                 '
 echo '                                                          '
-echo '      Resetting BIOS will restore default boot order      '
+echo ' Resetting BIOS will restore default boot order.           '
 echo '**********************************************************'
 echo '**********************************************************'
 efibootmgr | grep BootOrder
