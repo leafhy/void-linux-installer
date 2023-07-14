@@ -268,6 +268,7 @@ bashrcwm="$(cat <<'EOF'
 sh buffquote
 # export PS1="\n\[\e[0;32m\]\u@\h[\t]\[\e[0;31m\] \['\$PWD'\] \[\e[0;32m\]\[\e[0m\]\[\e[0;32m\]>>>\[\e[0m\]\n "
 export TERMINAL=sakura
+export EXA_COLORS=da=37:di=36:uu=33:un=31
 # Weather Check
 alias weath='curl wttr.in/?0'
 alias weather="curl wttr.in/~Adelaide"
