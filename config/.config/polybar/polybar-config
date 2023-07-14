@@ -167,14 +167,14 @@ label = %title%
 format = <label>
 format-background = ${colors.background-1}
 format-foreground = ${colors.foreground}
-format-padding = 2
-label-minlen = 10
-label-maxlen = 10
+format-padding = 1
+label-minlen = 18
+label-maxlen = 18
 label-alignment = center
-label-padding = 2
+label-padding = 1
 label-empty = 
-label-empty-minlen = 10
-label-empty-maxlen = 10
+label-empty-minlen = 18
+label-empty-maxlen = 18
 
 [module/ewmh]
 type = internal/xworkspaces
