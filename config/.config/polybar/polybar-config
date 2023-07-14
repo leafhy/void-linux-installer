@@ -32,7 +32,7 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 0
 
-include = ~/.config/polybar/modules/herbstluftwm
+;include = ~/.config/polybar/modules/herbstluftwm
 
 #################
 #### COLOURS ####
@@ -103,18 +103,18 @@ tray-padding =
 ;font-1 = unifont:fontformat=truetype:size=9:antialias=false;0
 ;font-2  = siji:pixelsize=10;1
 ;font-0  = "Iosevka Term SS10:style=Regular:size=10;3" 
-font-0  = iosevka:style=Regular:size=10;3
+font-0  = "Iosevka:style=Regular:size=10;3"
 ;font-1 = icomoon\\-feather:size=10;3
-font-1 = IcoMoon\\-Free:size=10;3
-font-2 = "NotoEmoji Nerd Font Mono:size=10;2"
+;font-1 = IcoMoon\\-Free:size=10;3
+font-1 = "NotoEmoji Nerd Font Mono:size=10;3"
 
 #################
 #### Modules ####
 #################
 modules-left = ewmh xwindow
 modules-center = 
-;;wired-network
-modules-right = alsa2 memory wireless-network battery date powermenu
+;wired-network
+modules-right = dac alsa2 memory wireless-network battery date powermenu
 
 [module/subscriber]
 type = custom/ipc
@@ -145,7 +145,7 @@ double-click-left = polybar-msg -p %pid% hook demo
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = ""
+format-prefix = 
 format-prefix-foreground = ${colors.foreground}
 ;format-underline = #f90000
 label = %percentage:3%%
@@ -154,7 +154,8 @@ label-padding = 1
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = ""
+format-prefix = 
+;
 format-prefix-foreground = ${colors.foreground}
 ;format-underline = #4bffdc
 label = %percentage_used:3%%
@@ -167,13 +168,13 @@ format = <label>
 format-background = ${colors.background-1}
 format-foreground = ${colors.foreground}
 format-padding = 2
-label-minlen = 20
-label-maxlen = 20
+label-minlen = 10
+label-maxlen = 10
 label-alignment = center
 label-padding = 2
 label-empty = 
-label-empty-minlen = 20
-label-empty-maxlen = 20
+label-empty-minlen = 10
+label-empty-maxlen = 10
 
 [module/ewmh]
 type = internal/xworkspaces
@@ -341,7 +342,7 @@ label = %date% %time%
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 ;interface = wlp3s0
-interface = enp0s25
+;interface = enp0sXX
 label-connected = "%upspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = " "
@@ -353,7 +354,7 @@ format-connected-foreground = ${colors.foreground}
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 ;interface = wlp3s0
-interface = enp0s25
+;interface = enp0sXX
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = "  "
@@ -393,29 +394,30 @@ label-disconnected-foreground = ${colors.foreground}
 [module/wireless-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-interface = wlan0
+interface = wlp3s0
+;wlan0
 interval = 3.0
 label-connected = %essid%
 label-padding = 1
-
+label-separator = "  "
 format-connected = <label-connected>
 ;format-connected = <ramp-signal> <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-background = ${colors.background}
-format-connected-prefix =  "直"
+format-connected-prefix =  直
 ;
 format-connected-prefix-foreground = ${colors.foreground}
 format-connected-prefix-background = ${colors.background}
 format-connected-underline = ${colors.underline2}
 
-label-disconnected = "直"
+label-disconnected = 直
 ;
 label-disconnected-foreground = ${colors.foreground-1}
 label-disconnected-background = ${colors.background}
 format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.alert}
 format-disconnected-background = ${colors.background}
-;format-disconnected-prefix = "直"
+;format-disconnected-prefix = 直
 format-disconnected-prefix-foreground = ${colors.alert}
 format-disconnected-prefix-background = ${colors.background}
 ;format-disconnected-underline =${colors.alert}
@@ -478,7 +480,7 @@ ramp-free-4 = ▅
 ramp-free-5 = ▆
 ramp-free-6 = ▇
 ramp-free-7 = █
-
+label-separator = "  "
 format-padding = 2
 
 [module/cpu1]
@@ -507,27 +509,22 @@ label-padding = 1
 type = internal/alsa
 format-volume = <ramp-volume> <bar-volume>
 ;label-volume = ""
-label-volume-foreground = ${colors.background}
+label-volume-foreground = ${colors.foreground}
 ;label-volume-padding-right = ${paddings.inner}
 ;label-volume-padding-left = ${paddings.outer}
-;label-volume-font = 2
-;format-muted-prefix = ""
+label-muted-font = 1
+;format-muted-prefix =
 format-muted-foreground = ${colors.foreground-3}
-;format-muted-background = ${colors.blue}
-
-label-muted =  
-;label-padding = 1
-
-ramp-volume-0 =                                                                             
-ramp-volume-1 =                                                                             
-ramp-volume-2 =                                                                             
-ramp-volume-3 =  
-
-format-volume-padding = 1
+label-muted = " ----------"
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+ramp-volume-3 = 墳
+;format-volume-padding = 1
 ramp-volume-padding = 0
-format-muted-padding = 12
 bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.foreground}
+
+;bar-volume-foreground-0 = ${colors.foreground}
 ;bar-volume-foreground-1 = ${colors.green}
 ;bar-volume-foreground-2 = ${colors.green}
 ;bar-volume-foreground-3 = ${colors.green}
@@ -543,7 +540,6 @@ bar-volume-foreground-0 = ${colors.foreground}
 
 bar-volume-gradient = true
 bar-volume-indicator = ▓
-; █
 bar-volume-indicator-font = 2
 bar-volume-fill = ─
 ;█
@@ -553,7 +549,7 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.underline5}
 
-format-padding = 1
+;format-padding = 1
 
 [module/powermenu]
 type = custom/menu
@@ -561,50 +557,59 @@ type = custom/menu
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
-label-open = "襤 "
-label-close = "| " 
+label-open = "襤 |"
+label-close = "| "
 label-close-foreground = ${colors.foreground}
-; "space" allows icons to fit display of 1366x768
 label-separator = "  "
 label-separator-foreground = ${colors.foreground}
-
-;; reboot
-menu-0-1 = 
-menu-0-1-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
-menu-0-1-foreground = ${colors.foreground}
 
 ;; shutdown
 menu-0-0 = 
 menu-0-0-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.PowerOff" boolean:true
 menu-0-0-foreground = ${colors.foreground}
 
+;; reboot
+menu-0-1 = 
+menu-0-1-exec = dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Reboot" boolean:true
+menu-0-1-foreground = ${colors.foreground}
+
 ;; logoff
-menu-0-2 = ""
-;
+menu-0-2 = 
+;
 ;; Using pkill on Void Linux results in blank screen - Need to reboot
-; pkill -KILL -u $USER
 menu-0-2-exec = /sbin/herbstclient quit
+; pkill -KILL -u $USER
 menu-0-2-foreground = ${colors.foreground}
 
 ;; lock screen
-menu-0-3 = ""
+menu-0-3 = 
 menu-0-3-exec = ~/.local/bin/lockscreen.sh
 menu-0-3-foreground = ${colors.foreground}
 
 ;; suspend to ram
-menu-0-4 = "鈴"
+menu-0-4 = 鈴
 ;; /sbin/zzz exposes desktop on resume
-menu-0-4-exec = amixer set Master mute && ~/.config/i3/new-lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
+menu-0-4-exec = ~/.config/i3/new-lock.sh && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
 menu-0-4-foreground = ${colors.foreground}
-
 ;format-padding = 1
 
 ;; monitor
-;; herbstclient reload is needed to make sure windows/frames are resized correctly
-;; Use CMD+Shift+R or "herbstclient reload" in cli if command fails to run
 menu-0-5 = 
-menu-0-5-exec = xrandr --output LVDS-1 --auto --output DP-1 --off && notify-send "Display Switching to LVDS-1" && /sbin/herbstclient reload
-menu-0-6 = 
-menu-0-6-exec = xrandr --output LVDS-1 --off --output DP-1 --auto && notify-send "Display Switching to DP-1" && /sbin/herbstclient reload
-menu-0-7 = " | "
-menu-0-7-exec = xrandr --output DP-1 --auto --primary --output LVDS-1 --auto --left-of DP-1 --above DP-1 && /sbin/herbstclient reload
+menu-0-5-exec = ~/.local/bin/monitor-switch.sh lvds-1 &
+;xrandr --output LVDS-1 --auto --output DP-1 --off && notify-send "Display Switching to LVDS-1"
+menu-0-6 = 
+menu-0-6-exec = ~/.local/bin/monitor-switch.sh dp-1 &
+;xrandr --output LVDS-1 --off --output DP-1 --auto && notify-send "Display Switching to DP-1"
+menu-0-7 = " |"
+menu-0-7-exec = ~/.local/bin/monitor-switch.sh extend &
+;xrandr --output DP-1 --auto --primary --output LVDS-1 --auto --left-of DP-1 --above DP-1 && notify-send "Extending Display"
+
+[module/dac]
+type = custom/script
+format-prefix = DAC
+exec = ~/.local/bin/snd-switch.sh
+click-left = ~/.local/bin/snd-switch.sh int &
+click-right = ~/.local/bin/snd-switch.sh ext &
+click-middle = ~/.local/bin/snd-switch.sh toggle-mute &
+;format-padding = 1
+label-separator-foreground = ${colors.foreground}
