@@ -1,7 +1,7 @@
 #!/bin/bash
 # https://raw.githubusercontent.com/evelyndooley/dotfiles/master/linux_old/i3/lock.sh
 # requires i3lock-color >2.13.c.3 due to additions of hyphens in options
-# 
+
 OUTPUT_IMAGE=/tmp/i3lock.png
 
 RESOLUTION=$(xrandr -q | awk -F'current' -F',' 'NR==1 {gsub("( |current)","");print $2}')
@@ -20,7 +20,8 @@ lock() {
         i3lock \
                 -t -i "$OUTPUT_IMAGE" \
                 --time-str="%H:%M" \
-                --clock --date-str "Type password..." \
+                --clock \
+                --date-str "Type password..." \
                 --inside-color=$background \
                 --ring-color=$foreground \
                 --line-uses-inside \
@@ -31,7 +32,8 @@ lock() {
                 --insidewrong-color=$passwordIncorrect \
                 --ringver-color=$foreground \
                 --ringwrong-color=$foreground  \
-                --verif-text="" --wrong-text="" \
+                --verif-text="" \
+                --wrong-text="" \
                 --verif-color="$foreground" \
                 --time-color="$foreground" \
                 --date-color="$foreground" \
@@ -39,6 +41,6 @@ lock() {
                 --force-clock
 }
 
-lock  
+lock
 
 rm $OUTPUT_IMAGE
