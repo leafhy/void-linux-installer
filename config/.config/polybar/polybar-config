@@ -112,7 +112,7 @@ font-1 = "NotoEmoji Nerd Font Mono:size=10;3"
 #### Modules ####
 #################
 modules-left = ewmh xwindow
-modules-center = 
+modules-center =
 ;wired-network
 modules-right = dac alsa2 memory wireless-network battery date powermenu
 
@@ -207,13 +207,13 @@ label-active-background = ${colors.background}
 label-active-overline =
 label-active-underline = ${colors.underline1}
 label-active-padding = 1
-label-active-margin = 1 
+label-active-margin = 1
 
 ;label-occupied = %name%
 label-occupied-foreground = ${colors.foreground}
 label-occupied-background = ${colors.background}
 label-occupied-padding = 1
-label-occupied-margin = 1 
+label-occupied-margin = 1
 
 ;label-urgent = %name%
 label-urgent-foreground = ${colors.foreground}
