@@ -749,6 +749,8 @@ elif [[ $cachedir = "" && $repopath = "" ]]; then
   xbps-install -S -r /mnt $pkg_list -y
 fi
 
+xbps-pkgdb -m hold "$kernel" -r /mnt
+
 # Activate services
 for srv in $services; do
   chroot /mnt ln -s /etc/sv/$srv /etc/runit/runsvdir/default/
