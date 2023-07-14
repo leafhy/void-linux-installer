@@ -859,7 +859,7 @@ fi
 # [!] Kernel Panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
 echo $hostname > /mnt/etc/hostname
 
-# hosts
+# Locale setup
 # mv /mnt/etc/hosts /mnt/etc/hosts.orig
 # Adding hostname to hosts is not needed
 # echo "127.0.0.1 $HOSTNAME localhost" > /mnt/etc/hosts
@@ -869,7 +869,7 @@ echo "HARDWARECLOCK=$HARDWARECLOCK" >> /mnt/etc/rc.conf
 echo "KEYMAP=$KEYMAP" >> /mnt/etc/rc.conf
 echo "FONT=$FONT" >> /mnt/etc/rc.conf
 
-# set "root" privileges
+# Set "root" privileges
 # test doas.conf
 # $ doas -C /etc/doas.conf
 # check permission of command
