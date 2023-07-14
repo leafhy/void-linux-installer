@@ -612,4 +612,3 @@ click-left = ~/.local/bin/snd-switch.sh int &
 click-right = ~/.local/bin/snd-switch.sh ext &
 click-middle = ~/.local/bin/snd-switch.sh toggle-mute &
 ;format-padding = 1
-label-separator-foreground = ${colors.foreground}
