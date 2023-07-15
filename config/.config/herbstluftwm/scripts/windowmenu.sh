@@ -25,15 +25,15 @@ print_menu() {
 title=$(herbstclient attr clients.focus.title)
 title=${title//&/&amp;}
 rofiflags=(
-    -p "herbstclient:"
-    -mesg "<i>$title</i>"
+    -p "$title:"
+    # -mesg "<i>$title</i>"
     -columns 3
-    -location 0
+    -location 2
     -width 100
     -no-custom
-    -yoffset -10
+    -yoffset 20
 )
-result=$(action_list print_menu | rofi -i -dmenu -m -1 "${rofiflags[@]}")
+result=$(action_list print_menu | rofi -font "Overpass SemiBold 12" -i -dmenu -m -2 -l 10 "${rofiflags[@]}")
 [ $? -ne 0 ] && exit 0
 
 exec_entry() {
