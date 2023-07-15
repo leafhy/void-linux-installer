@@ -23,11 +23,9 @@ killall -q greenclip
 killall -q autocutsel
 killall -q xbanish
 pgrep -f udiskie | xargs kill -9 >/dev/null 2>&1
-pgrep -f nohang | xargs kill -9 >/dev/null 2>&1
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-while pgrep -u $UID -x nohang >/dev/null; do sleep 1; done
 while pgrep -u $UID -x redshift-gtk >/dev/null; do sleep 1; done
 while pgrep -u $UID -x clipster >/dev/null; do sleep 1; done
 while pgrep -u $UID -x greenclip >/dev/null; do sleep 1; done
@@ -45,7 +43,6 @@ autocutsel -selection PRIMARY -fork # Synchronize CLIPBOARD[default] with PRIMAR
 xbanish &
 clipster --daemon &
 greenclip daemon &
-nohang --monitor --config /usr/local/share/nohang/nohang-desktop.conf &
 
 # remove all existing keybindings
 hc keyunbind --all
