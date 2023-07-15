@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 #
 # dependencies:
 #
@@ -28,11 +28,12 @@ rofiflags=(
     -p "herbstclient:"
     -mesg "<i>$title</i>"
     -columns 3
-    -location 2
+    -location 0
     -width 100
     -no-custom
+    -yoffset -10
 )
-result=$(action_list print_menu | rofi -i -dmenu -m -2 "${rofiflags[@]}")
+result=$(action_list print_menu | rofi -i -dmenu -m -1 "${rofiflags[@]}")
 [ $? -ne 0 ] && exit 0
 
 exec_entry() {

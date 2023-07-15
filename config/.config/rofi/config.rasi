@@ -3,7 +3,7 @@
 configuration {
   location: 0;
  /*xoffset: 200;*/
-  yoffset: -46;
+  yoffset: -10;
   show-icons:         true;
  /* icon-theme:        "Papirus-Dark"; */
   icon-theme:         "Arc";
