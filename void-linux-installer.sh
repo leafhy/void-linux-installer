@@ -165,6 +165,7 @@ pkg_listsys='base-minimal'\
 ' aucatctl'\
 ' sox'\
 ' polybar'\
+' libwnck'\
 ' vlc'\
 ' xset'\
 ' fontmanager'\
