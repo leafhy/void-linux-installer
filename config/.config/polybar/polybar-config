@@ -68,7 +68,6 @@ underline6 = #55aa55
 monitor = ${env:MONITOR:DP-1}
 monitor-fallback = ${env:MONITOR:LVDS-1}
 width = 100%
-;; some icons do not display correctly if height is too low
 height = 22
 ;offset-x = 1%
 ;offset-y = 1%
