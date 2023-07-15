@@ -13,6 +13,7 @@ action_list() {
     "$a" "Close" herbstclient close
     "$a" "Toggle fullscreen" herbstclient fullscreen toggle
     "$a" "Toggle pseudotile" herbstclient pseudotile toggle
+    "$a" "Toggle floating" herbstclient floating toggle
     for tag in $(herbstclient complete 1 move) ; do
         "$a" "Move to tag $tag" herbstclient move "$tag"
     done
