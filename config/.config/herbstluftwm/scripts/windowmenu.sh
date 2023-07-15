@@ -34,7 +34,7 @@ rofiflags=(
     -no-custom
     -yoffset 20
 )
-result=$(action_list print_menu | rofi -font "Overpass SemiBold 12" -i -dmenu -m -2 -l 10 "${rofiflags[@]}")
+result=$(action_list print_menu | rofi -font "Overpass SemiBold 12" -i -dmenu -m -2 -l 11 "${rofiflags[@]}")
 [ $? -ne 0 ] && exit 0
 
 exec_entry() {
