@@ -923,7 +923,7 @@ for dir in $dirs; do
 done
 
 # Create list of installed packages
-xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
+ xbps-query -r /mnt --list-pkgs > /mnt/home/$username/void-pkgs.log
 
 echo '**********************************************************'
 echo '**********************************************************'
@@ -954,9 +954,9 @@ read -n 1 -p "[ U \ E \ R \ P ]: " ans
 # Chroot may fail to unmount hence -l
 case $ans in
    r|R)
-      umount -l -R /mnt && reboot;;
+      reboot;;
    p|P)
-      umount -l -R /mnt && poweroff;;
+      poweroff;;
    e|E)
       exit;;
    u|U)
