@@ -751,6 +751,7 @@ elif [[ $cachedir = "" && $repopath = "" ]]; then
   xbps-install -S -r /mnt $pkg_list -y
 fi
 
+# Keep kernel from updating
 xbps-pkgdb -m hold "$kernel" -r /mnt
 
 # Activate services
