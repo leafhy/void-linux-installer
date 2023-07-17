@@ -951,7 +951,7 @@ echo ''
 echo '(P)oweroff'
 echo ''
 read -n 1 -p "[ U \ E \ R \ P ]: " ans
-# Chroot may fail to unmount hence -l
+# Use 'umount --lazy --recursive' if umount fails.
 case $ans in
    r|R)
       reboot;;
@@ -960,7 +960,8 @@ case $ans in
    e|E)
       exit;;
    u|U)
-      umount -l -R /mnt && exit
+      umount -R /mnt
+      exit
 esac
 
 #########################
