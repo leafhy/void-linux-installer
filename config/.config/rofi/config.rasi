@@ -1,4 +1,5 @@
-@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+//@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+@theme "~/.config/rofi/themes/purple.rasi"
 
 configuration {
   location: 0;
