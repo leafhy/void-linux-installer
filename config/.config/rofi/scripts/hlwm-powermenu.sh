@@ -20,7 +20,7 @@ list_icons() {
 
 
 case "$SELECTION" in
-    
+
     "$SHUTDOWN")
         ~/.config/rofi/scripts/rofi-confirm.sh 'Shutdown?' && dbus-send --system --print-reply --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.PowerOff" boolean:true
         ;;
