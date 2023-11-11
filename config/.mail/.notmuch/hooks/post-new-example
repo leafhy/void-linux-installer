@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mbsync --config ~/.config/mbsync/mbsyncrc --all
+mbsync --config ~/.config/mbsync/mbsyncrc --quiet --all
 
 #cd ~/.mail/email-1@gmail.com
 #gmi pull
