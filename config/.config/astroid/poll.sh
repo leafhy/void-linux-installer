@@ -16,7 +16,7 @@ set -e
 # offlineimap
 
 # Import new mail into the notmuch database.
-notmuch new
+notmuch new --quiet
 
 # Here you can process the mail in any way you see fit. See the following link
 # for examples:
