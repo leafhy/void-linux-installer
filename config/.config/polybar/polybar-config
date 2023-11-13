@@ -294,7 +294,7 @@ format-charging-background = ${colors.background}
 format-charging-underline = ${colors.underline3}
 
 format-discharging = <ramp-capacity>
-;label-discharging = %percentage%%
+label-discharging = %percentage%%
 ;format-discharging-underline = ${colors.underline4}
 format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background}
