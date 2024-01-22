@@ -109,6 +109,7 @@ pkg_listsys='base-minimal'\
 
 # Desktop Packages
   pkg_list='chromium'\
+' gcompat'\
 ' filezilla'\
 ' firefox'\
 ' herbstluftwm'\

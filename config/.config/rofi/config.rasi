@@ -11,15 +11,19 @@ configuration {
   cycle:              true;
  /* hide-scrollbar:     true; */
   disable-history:    false;
-  modi:              "drun,window,ssh,clipboard:greenclip print,calc,run,keys";
+  modi:              "drun,clipboard:greenclip print,ssh,window,calc,keys";
   sidebar-mode:       true;
   display-drun:      "apps";
   columns:            1;
-  fullscreen:         false;
   lines:              20;
   terminal:          "sakura";
-  font:              "Overpass SemiBold 16";
+  font:              "Overpass Nerd Font Propo Semi-Bold 16";
 }
+
+window {
+    fullscreen: false;
+}
+
 element-icon {                            
       size: 2.60ch;                            
 }
