@@ -377,7 +377,7 @@ cachedir="/opt/void_pkgs"
 ### Repository Urls /etc/xbps.d/00-repository-{main.conf,nonfree.conf}
 repo0="https://ftp.swin.edu.au/voidlinux/current/musl"
 repo1="https://mirror.aarnet.edu.au/pub/voidlinux/current/musl" # connection tends to be flaky
-repo2="http://alpha.de.repo.voidlinux.org/current/musl" # connection can be slow
+repo2="https://repo-fi.voidlinux.org/current/musl"
 
 ###########################################
 ###########################################
