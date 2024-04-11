@@ -33,10 +33,10 @@ case "$SELECTION" in
        ~/.config/rofi/scripts/rofi-confirm.sh 'Lock Screen?' && ~/.local/bin/lockscreen.sh
      ;;
      "$SLEEP")
-       ~/.config/rofi/scripts/rofi-confirm.sh 'Sleep?' && ~/.config/i3/lock.sh && dbus-send \
-                                                                                       --system \
-                                                                                       --print-reply \
-                                                                                       --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
+       ~/.config/rofi/scripts/rofi-confirm.sh 'Sleep?' && ~/.config/i3/new-lock.sh && dbus-send \
+                                                                                           --system \
+                                                                                           --print-reply \
+                                                                                           --dest=org.freedesktop.login1 /org/freedesktop/login1 "org.freedesktop.login1.Manager.Suspend" boolean:true
      ;;
      "$LOGOUT")
        /sbin/herbstclient quit
