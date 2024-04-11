@@ -14,7 +14,7 @@ list_icons() {
     echo $SHUTDOWN
 }
 
-SELECTION="$(list_icons | rofi -dmenu -theme ~/.config/rofi/themes/purple.rasi)"
+SELECTION="$(list_icons | rofi -dmenu -i -theme ~/.config/rofi/themes/purple.rasi)"
 
 case "$SELECTION" in
      "$SHUTDOWN")
