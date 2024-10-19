@@ -105,7 +105,8 @@ pkg_listsys='base-minimal'\
 ' lsscsi'\
 ' lsof'\
 ' pam'\
-' detox'
+' detox'\
+' ipmitool'
 
 # Desktop Packages
   pkg_list='chromium'\
@@ -230,8 +231,7 @@ pkg_listsys='base-minimal'\
 ' snapraid'\
 ' mergerfs'\
 ' castget'\
-' minidlna'\
-' ipmitool'
+' minidlna'
 
 ###################
 ##### Desktop #####
@@ -277,7 +277,7 @@ alias weather="curl wttr.in/~Adelaide"
 alias clips="clipster -o -n 10000 -0 | fzf --read0 --no-sort --reverse --preview='echo {}' | sed -ze 's/\n$//' | clipster"
 alias clipsr="clipster --delete"
 alias clipsc="clipster --erase-entire-board"
-alias key="grep Mod ~/.config/herbstluftwm/autostart | sed 's/hc\ keybind\ / /' | sed 's/hc\ / /' | rofi -dmenu"
+alias key="awk /Mod/ ~/.config/herbstluftwm/autostart | sed 's/hc\ //g' | rofi -dmenu"
 # Firefox has a habit of not responding and 'killall' doesn't always work
 alias kf="pgrep -f firefox | xargs kill -9"
 EOF
