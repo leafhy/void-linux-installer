@@ -21,7 +21,7 @@ lock() {
                 -t -i "$OUTPUT_IMAGE" \
                 --time-str="%H:%M" \
                 --clock \
-                --date-str "Type password..." \
+                --date-str "Type password...[Enter]" \
                 --inside-color=$background \
                 --ring-color=$foreground \
                 --line-uses-inside \

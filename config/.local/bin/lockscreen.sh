@@ -3,7 +3,6 @@
 # i3 lock allows notifications.
 # Underlying text can show on asciiquarium.
 ####################################################
-set -e
 
 # Mute ALL sound cards
 awk '/ \[/ { print $1 }' /proc/asound/cards | \
@@ -15,13 +14,16 @@ awk '/ \[/ { print $1 }' /proc/asound/cards | \
 {
 read screen1
 read screen2
-} < <(xrandr --listactivemonitors | awk '/-1/ { print $4 }')
+read screen3
+} < <(cat /sys/class/drm/card0-*-1/enabled)
 
-screen=$screen1$screen2
+screen=`echo $screen{1,2,3} | tr " " "\n" | grep -c enabled`
 
-if [[ $screen = "DP-1" ]] || [[ $screen = "LVDS-1" ]] || [[ $screen = "VGA-1" ]]; then
-    sakura -s -x asciiquarium 2>/dev/null & alock -bg none; xdotool key --clearmodifiers q
-
-elif [[ $screen1 ]] && [[ $screen2 ]]; then
-    ~/.config/i3/new-lock.sh
+if [[ $screen -eq 1 ]]; then
+   sakura -s -x asciiquarium 2>/dev/null &
+   alock -bg none
+   xdotool key --clearmodifiers q
+elif [[ $screen -gt 1 ]]; then
+   ~/.config/i3/new-lock.sh
 fi
+
